@@ -12,7 +12,7 @@ const cache = require('./cache');
 const extend = require('util')._extend;
 const _ = require('lodash');
 const shared = require('../service/search/shared');
-const folderPath = path.join(__dirname, '..', 'data_files','GDC', 'model');
+const folderPath = path.join(__dirname, '..', 'data_files', 'GDC', 'model');
 var allTerm = {};
 var icdo_mapping = shared.getICDOMapping();
 var icdo2Exclude = shared.getParentICDO();
@@ -32,18 +32,18 @@ const helper_gdc = (fileJson, syns) => {
   let properties = fileJson.properties;
 
   let n_ncit = [];
-  if(gdc_nodes[fileJson.id]){
+  if (gdc_nodes[fileJson.id]) {
     let n_tmp = {};
     n_tmp.c = gdc_nodes[fileJson.id].toUpperCase();
     n_tmp.l = (n_tmp.c !== '' && syns[n_tmp.c] ? syns[n_tmp.c].label : "");
     let synonyms = (n_tmp.c !== '' && syns[n_tmp.c] ? syns[n_tmp.c].synonyms : []);
-    if(syns[n_tmp.c] == undefined){
+    if (syns[n_tmp.c] == undefined) {
       console.log("Don't have the ncit data for:" + n_tmp.c);
-      if(unloaded_ncits.indexOf(n_tmp.c) == -1){
+      if (unloaded_ncits.indexOf(n_tmp.c) == -1) {
         unloaded_ncits.push(n_tmp.c);
       }
     }
-    if(synonyms.length > 0){
+    if (synonyms.length > 0) {
       n_tmp.s = [];
       synonyms.forEach(s => {
         n_tmp.s.push({
@@ -55,7 +55,7 @@ const helper_gdc = (fileJson, syns) => {
     }
     n_ncit.push(n_tmp);
   }
-  
+
 
   for (var prop in properties) {
     let entry = {};
@@ -67,28 +67,28 @@ const helper_gdc = (fileJson, syns) => {
     p.node = {};
     p.node.n = fileJson.id;
     p.node.d = fileJson.description;
-    if(n_ncit.length > 0){
+    if (n_ncit.length > 0) {
       p.node.ncit = n_ncit;
     }
     p.prop = {};
     p.prop.n = prop;
     p.prop.d = entryRaw.description;
     p.id = p.prop.n + "/" + p.node.n + "/" + p.category;
-    
+
     let p_id = p.category + "." + p.node.n + "." + p.prop.n;
-    if(p_id in gdc_props){
+    if (p_id in gdc_props) {
       p.prop.ncit = [];
       let tmp = {};
       tmp.c = gdc_props[p_id].toUpperCase();
       tmp.l = (tmp.c !== '' && syns[tmp.c] ? syns[tmp.c].label : "");
       let synonyms = (tmp.c !== '' && syns[tmp.c] ? syns[tmp.c].synonyms : []);
-      if(syns[tmp.c] == undefined){
+      if (syns[tmp.c] == undefined) {
         console.log("Don't have the ncit data for:" + tmp.c);
-        if(unloaded_ncits.indexOf(tmp.c) == -1){
+        if (unloaded_ncits.indexOf(tmp.c) == -1) {
           unloaded_ncits.push(tmp.c);
         }
       }
-      if(synonyms.length > 0){
+      if (synonyms.length > 0) {
         tmp.s = [];
         synonyms.forEach(s => {
           tmp.s.push({
@@ -100,11 +100,11 @@ const helper_gdc = (fileJson, syns) => {
       }
       p.prop.ncit.push(tmp);
     }
-    
+
     p.type = entryRaw.type;
 
     entry.enum = extend([], entryRaw.enum || (entryRaw.items && entryRaw.items.enum ? entryRaw.items.enum : []));
-    entry.enumDef = entryRaw.enumDef? entryRaw.enumDef : [];
+    entry.enumDef = entryRaw.enumDef ? entryRaw.enumDef : [];
     entry.termDef = extend({}, entryRaw.termDef);
     entry.deprecated_enum = extend([], entryRaw.deprecated_enum);
 
@@ -172,40 +172,40 @@ const helper_gdc = (fileJson, syns) => {
     let prop_full_name = p.category + '.' + p.node.n + '.' + p.prop.n;
 
     // 3. work on gdc_values to pull out icd-o-3 code and ncit code for all the values saved in the previous 3 steps
-    if(prop_full_name in gdc_values){
+    if (prop_full_name in gdc_values) {
       let enums = [];
       let obj = gdc_values[prop_full_name];
       obj.forEach(v => {
-        if(!(v.term_type && v.term_type == "HT")){
+        if (!(v.term_type && v.term_type == "HT")) {
           //only pick data at child level instead of parent level
-          if(icdo2Exclude.indexOf(v.nm) > -1){
+          if (icdo2Exclude.indexOf(v.nm) > -1) {
             return;
           }
           let pv = v.nm.toLowerCase();
           let icdo = v.i_c;
           let ncits = v.n_c;
-          if(pv in values_ncit_mapping){
+          if (pv in values_ncit_mapping) {
             //save values to ncit mapping
             if (Array.isArray(ncits)) {
               ncits.forEach(code => {
-                if(values_ncit_mapping[pv].indexOf(code.trim()) == -1){
-                    values_ncit_mapping[pv].push(code.trim());
+                if (values_ncit_mapping[pv].indexOf(code.trim()) == -1) {
+                  values_ncit_mapping[pv].push(code.trim());
                 }
               });
-            } 
+            }
             else {
-              if(ncits != "" && values_ncit_mapping[pv].indexOf(ncits.trim()) == -1){
+              if (ncits != "" && values_ncit_mapping[pv].indexOf(ncits.trim()) == -1) {
                 values_ncit_mapping[pv].push(ncits.trim());
               }
             }
 
             //save values to icdo mapping
-            if(!(pv in values_icdo_mapping)){
+            if (!(pv in values_icdo_mapping)) {
               values_icdo_mapping[pv] = icdo;
             }
           }
         }
-        
+
       });
     }
 
@@ -214,42 +214,42 @@ const helper_gdc = (fileJson, syns) => {
     }
 
     //generate p.enum
-    if(values.length > 0){
+    if (values.length > 0) {
       p.enum = [];
-      values.forEach(function(v){
+      values.forEach(function (v) {
         let tmp = {};
         tmp.n = v;
         let v_lowcase = v.toLowerCase();
-        if(v_lowcase in values_icdo_mapping){
-          
-          if(values_icdo_mapping[v_lowcase] != ""){
+        if (v_lowcase in values_icdo_mapping) {
+
+          if (values_icdo_mapping[v_lowcase] != "") {
             tmp.icdo = {};
             tmp.icdo.c = values_icdo_mapping[v_lowcase];
             tmp.icdo.have = shared.generateICDOHaveWords(tmp.icdo.c),
-            tmp.icdo.s = [];
-            for(let key in icdo_mapping[tmp.icdo.c].syn){
-              let entry = {n: key, t: icdo_mapping[tmp.icdo.c].syn[key]};
+              tmp.icdo.s = [];
+            for (let key in icdo_mapping[tmp.icdo.c].syn) {
+              let entry = { n: key, t: icdo_mapping[tmp.icdo.c].syn[key] };
               tmp.icdo.s.push(entry);
             }
           }
-          
+
         }
-        if(v_lowcase in values_ncit_mapping){
+        if (v_lowcase in values_ncit_mapping) {
           tmp.ncit = [];
           let ncits = values_ncit_mapping[v_lowcase];
           ncits.forEach(n => {
-            if(n == undefined || n == '') return;
+            if (n == undefined || n == '') return;
             let dict = {};
             dict.c = n.toUpperCase();
             dict.l = (n !== '' && syns[dict.c] ? syns[dict.c].label : "");
             let synonyms = (n !== '' && syns[dict.c] ? syns[dict.c].synonyms : []);
-            if(syns[dict.c] == undefined){
+            if (syns[dict.c] == undefined) {
               console.log("Don't have the ncit data for:" + dict.c);
-              if(unloaded_ncits.indexOf(dict.c) == -1){
+              if (unloaded_ncits.indexOf(dict.c) == -1) {
                 unloaded_ncits.push(dict.c);
               }
             }
-            if(synonyms.length > 0){
+            if (synonyms.length > 0) {
               dict.s = [];
               synonyms.forEach(s => {
                 dict.s.push({
@@ -297,8 +297,8 @@ const helper_gdc = (fileJson, syns) => {
     }
 
     //collect values
-    if(values.length > 0){
-      values.forEach(function(v){
+    if (values.length > 0) {
+      values.forEach(function (v) {
         let em = v.toString().trim().toLowerCase();
         if (em in allTerm) {
           // if exist, then check if have the same type
@@ -367,14 +367,14 @@ const helper_gdc = (fileJson, syns) => {
         }
       });
     }
-    
+
 
     //collect values' NCIt codes
     if (Object.keys(values_ncit_mapping).length > 0) {
       for (let key in values_ncit_mapping) {
         let ncits = values_ncit_mapping[key];
         ncits.forEach(n => {
-          if(n == undefined || n == '') return;
+          if (n == undefined || n == '') return;
           let em = n.toString().trim().toLowerCase();
           if (em in allTerm) {
             //if exist, then check if have the same type
@@ -403,16 +403,16 @@ const helper_gdc = (fileJson, syns) => {
 }
 
 const helper_icdc = (dict, icdc_mapping, syns) => {
-  for(let node_name in dict){
+  for (let node_name in dict) {
     let properties = dict[node_name].properties;
 
     let mapping_dict = {};
-    if(icdc_mapping[node_name] && icdc_mapping[node_name].properties){
+    if (icdc_mapping[node_name] && icdc_mapping[node_name].properties) {
       icdc_mapping[node_name].properties.forEach(prop => {
         mapping_dict[prop.p_name] = prop;
       });
     }
-    
+
 
     for (var prop in properties) {
       let entry = {};
@@ -432,16 +432,16 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
       p.prop.d = entryRaw.description;
       p.id = p.prop.n + "/" + p.node.n + "/" + p.category;
 
-      if(["string", "number", "integer", "boolean", "TBD", "datetime"].indexOf(entryRaw.type) > -1){
+      if (["string", "number", "integer", "boolean", "TBD", "datetime"].indexOf(entryRaw.type) > -1) {
         p.type = entryRaw.type;
       }
-      else if(Array.isArray(entryRaw.type)){
+      else if (Array.isArray(entryRaw.type)) {
         let arr = entryRaw.type;
-        if(arr.length == 1 && arr[0].indexOf('http') == 0){
+        if (arr.length == 1 && arr[0].indexOf('http') == 0) {
           //this is a reference to other http resource
           p.type = arr[0];
         }
-        else{
+        else {
           //p.enum should have the following format:
           //enum:[
           //  {
@@ -472,29 +472,29 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
           //add values and ncit codes
           p.enum = [];
           let values_dict = {};
-          if(mappingEntryRaw && mappingEntryRaw.values){
+          if (mappingEntryRaw && mappingEntryRaw.values) {
             mappingEntryRaw.values.forEach(entry => {
               values_dict[entry.v_name.toLowerCase()] = entry;
             });
           }
-          
+
           entryRaw.type.forEach(v => {
             let tmp = {};
             tmp.n = v;
             let v_lowcase = v.toLowerCase();
             tmp.ncit = [];
-            if(values_dict[v_lowcase] && values_dict[v_lowcase].v_n_code && values_dict[v_lowcase].v_n_code.trim() != ""){
+            if (values_dict[v_lowcase] && values_dict[v_lowcase].v_n_code && values_dict[v_lowcase].v_n_code.trim() != "") {
               let dict = {};
               dict.c = values_dict[v_lowcase].v_n_code.trim();
               dict.l = (syns[values_dict[v_lowcase].v_n_code] ? syns[values_dict[v_lowcase].v_n_code].label : "");
               let synonyms = (syns[values_dict[v_lowcase].v_n_code] ? syns[values_dict[v_lowcase].v_n_code].synonyms : []);
-              if(syns[values_dict[v_lowcase].v_n_code] == undefined){
+              if (syns[values_dict[v_lowcase].v_n_code] == undefined) {
                 console.log("Don't have the ncit data for:" + dict.c);
-                if(unloaded_ncits.indexOf(dict.c) == -1){
+                if (unloaded_ncits.indexOf(dict.c) == -1) {
                   unloaded_ncits.push(dict.c);
                 }
               }
-              if(synonyms.length > 0){
+              if (synonyms.length > 0) {
                 dict.s = [];
                 synonyms.forEach(s => {
                   dict.s.push({
@@ -514,11 +514,17 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
           ncits = _.uniq(ncits);
         }
       }
-      else{
-        p.type = "object";
+      else {
+        if (entryRaw.type && entryRaw.type.value_type) {
+          //this is a reference to other http resource
+          p.type = entryRaw.type.value_type + " units " + entryRaw.type.units.join('/');
+        } else {
+          p.type = "object";
+        }
+
       }
 
-      if(mappingEntryRaw && mappingEntryRaw.p_n_code){
+      if (mappingEntryRaw && mappingEntryRaw.p_n_code) {
         /*
         p.cde = {};
         p.cde.id = mappingEntryRaw.p_n_code;
@@ -531,13 +537,13 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
         tmp.c = mappingEntryRaw.p_n_code.toUpperCase();
         tmp.l = (tmp.c !== '' && syns[tmp.c] ? syns[tmp.c].label : "");
         let synonyms = (tmp.c !== '' && syns[tmp.c] ? syns[tmp.c].synonyms : []);
-        if(syns[tmp.c] == undefined){
+        if (syns[tmp.c] == undefined) {
           console.log("Don't have the ncit data for:" + tmp.c);
-          if(unloaded_ncits.indexOf(tmp.c) == -1){
+          if (unloaded_ncits.indexOf(tmp.c) == -1) {
             unloaded_ncits.push(tmp.c);
           }
         }
-        if(synonyms.length > 0){
+        if (synonyms.length > 0) {
           tmp.s = [];
           synonyms.forEach(s => {
             tmp.s.push({
@@ -565,8 +571,8 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
       }
 
       //collect values
-      if(values.length > 0){
-        values.forEach(function(em){
+      if (values.length > 0) {
+        values.forEach(function (em) {
           if (em in allTerm) {
             // if exist, then check if have the same type
             let t = allTerm[em];
@@ -602,20 +608,20 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
 
       //collect values' NCIt codes
       if (ncits.length > 0) {
-          ncits.forEach(em => {
-            if(em == undefined || em == '') return;
-            if (em in allTerm) {
-              //if exist, then check if have the same type
-              let t = allTerm[em];
-              if (t.indexOf("ncit code") == -1) {
-                t.push("ncit code");
-              }
-            } else {
-              let t = [];
+        ncits.forEach(em => {
+          if (em == undefined || em == '') return;
+          if (em in allTerm) {
+            //if exist, then check if have the same type
+            let t = allTerm[em];
+            if (t.indexOf("ncit code") == -1) {
               t.push("ncit code");
-              allTerm[em] = t;
             }
-          });
+          } else {
+            let t = [];
+            t.push("ncit code");
+            allTerm[em] = t;
+          }
+        });
       }
 
       allProperties.push(p);
@@ -624,29 +630,29 @@ const helper_icdc = (dict, icdc_mapping, syns) => {
 }
 
 const helper_ctdc = (dict, ctdc_mapping, syns) => {
-  for(let node_name in dict){
+  for (let node_name in dict) {
     let properties = dict[node_name].properties;
 
     let mapping_dict = {};
-    if(ctdc_mapping[node_name] && ctdc_mapping[node_name].properties){
+    if (ctdc_mapping[node_name] && ctdc_mapping[node_name].properties) {
       ctdc_mapping[node_name].properties.forEach(prop => {
         mapping_dict[prop.p_name] = prop;
       });
     }
 
     let n_ncit = [];
-    if(ctdc_mapping[node_name] && ctdc_mapping[node_name].n_n_code){
+    if (ctdc_mapping[node_name] && ctdc_mapping[node_name].n_n_code) {
       let n_tmp = {};
       n_tmp.c = ctdc_mapping[node_name].n_n_code.toUpperCase();
       n_tmp.l = (n_tmp.c !== '' && syns[n_tmp.c] ? syns[n_tmp.c].label : "");
       let synonyms = (n_tmp.c !== '' && syns[n_tmp.c] ? syns[n_tmp.c].synonyms : []);
-      if(syns[n_tmp.c] == undefined){
+      if (syns[n_tmp.c] == undefined) {
         console.log("Don't have the ncit data for:" + n_tmp.c);
-        if(unloaded_ncits.indexOf(n_tmp.c) == -1){
+        if (unloaded_ncits.indexOf(n_tmp.c) == -1) {
           unloaded_ncits.push(n_tmp.c);
         }
       }
-      if(synonyms.length > 0){
+      if (synonyms.length > 0) {
         n_tmp.s = [];
         synonyms.forEach(s => {
           n_tmp.s.push({
@@ -658,7 +664,7 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
       }
       n_ncit.push(n_tmp);
     }
-    
+
 
     for (var prop in properties) {
       let entry = {};
@@ -673,7 +679,7 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
       p.node = {};
       p.node.n = dict[node_name].id;
       p.node.d = dict[node_name].description || "";
-      if(n_ncit.length > 0){
+      if (n_ncit.length > 0) {
         p.node.ncit = n_ncit;
       }
       p.prop = {};
@@ -681,16 +687,16 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
       p.prop.d = entryRaw.description;
       p.id = p.prop.n + "/" + p.node.n + "/" + p.category;
 
-      if(["string", "number", "integer", "boolean", "TBD", "datetime"].indexOf(entryRaw.type) > -1){
+      if (["string", "number", "integer", "boolean", "TBD", "datetime"].indexOf(entryRaw.type) > -1) {
         p.type = entryRaw.type;
       }
-      else if(Array.isArray(entryRaw.type)){
+      else if (Array.isArray(entryRaw.type)) {
         let arr = entryRaw.type;
-        if(arr.length == 1 && arr[0].indexOf('http') == 0){
+        if (arr.length == 1 && arr[0].indexOf('http') == 0) {
           //this is a reference to other http resource
           p.type = arr[0];
         }
-        else{
+        else {
           //p.enum should have the following format:
           //enum:[
           //  {
@@ -721,29 +727,29 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
           //add values and ncit codes
           p.enum = [];
           let values_dict = {};
-          if(mappingEntryRaw && mappingEntryRaw.values){
+          if (mappingEntryRaw && mappingEntryRaw.values) {
             mappingEntryRaw.values.forEach(entry => {
               values_dict[entry.v_name.toLowerCase()] = entry;
             });
           }
-          
+
           entryRaw.type.forEach(v => {
             let tmp = {};
             tmp.n = v;
             let v_lowcase = v.toLowerCase();
             tmp.ncit = [];
-            if(values_dict[v_lowcase] && values_dict[v_lowcase].v_n_code && values_dict[v_lowcase].v_n_code.trim() != ""){
+            if (values_dict[v_lowcase] && values_dict[v_lowcase].v_n_code && values_dict[v_lowcase].v_n_code.trim() != "") {
               let dict = {};
               dict.c = values_dict[v_lowcase].v_n_code.trim();
               dict.l = (syns[values_dict[v_lowcase].v_n_code] ? syns[values_dict[v_lowcase].v_n_code].label : "");
               let synonyms = (syns[values_dict[v_lowcase].v_n_code] ? syns[values_dict[v_lowcase].v_n_code].synonyms : []);
-              if(syns[values_dict[v_lowcase].v_n_code] == undefined){
+              if (syns[values_dict[v_lowcase].v_n_code] == undefined) {
                 console.log("Don't have the ncit data for:" + dict.c);
-                if(unloaded_ncits.indexOf(dict.c) == -1){
+                if (unloaded_ncits.indexOf(dict.c) == -1) {
                   unloaded_ncits.push(dict.c);
                 }
               }
-              if(synonyms.length > 0){
+              if (synonyms.length > 0) {
                 dict.s = [];
                 synonyms.forEach(s => {
                   dict.s.push({
@@ -763,11 +769,11 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
           ncits = _.uniq(ncits);
         }
       }
-      else{
+      else {
         p.type = "object";
       }
 
-      if(mappingEntryRaw && mappingEntryRaw.p_n_code){
+      if (mappingEntryRaw && mappingEntryRaw.p_n_code) {
         /*
         p.cde = {};
         p.cde.id = mappingEntryRaw.p_n_code;
@@ -780,13 +786,13 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
         tmp.c = mappingEntryRaw.p_n_code.toUpperCase();
         tmp.l = (tmp.c !== '' && syns[tmp.c] ? syns[tmp.c].label : "");
         let synonyms = (tmp.c !== '' && syns[tmp.c] ? syns[tmp.c].synonyms : []);
-        if(syns[tmp.c] == undefined){
+        if (syns[tmp.c] == undefined) {
           console.log("Don't have the ncit data for:" + tmp.c);
-          if(unloaded_ncits.indexOf(tmp.c) == -1){
+          if (unloaded_ncits.indexOf(tmp.c) == -1) {
             unloaded_ncits.push(tmp.c);
           }
         }
-        if(synonyms.length > 0){
+        if (synonyms.length > 0) {
           tmp.s = [];
           synonyms.forEach(s => {
             tmp.s.push({
@@ -814,8 +820,8 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
       }
 
       //collect values
-      if(values.length > 0){
-        values.forEach(function(em){
+      if (values.length > 0) {
+        values.forEach(function (em) {
           if (em in allTerm) {
             // if exist, then check if have the same type
             let t = allTerm[em];
@@ -868,20 +874,20 @@ const helper_ctdc = (dict, ctdc_mapping, syns) => {
 
       //collect values' NCIt codes
       if (ncits.length > 0) {
-          ncits.forEach(em => {
-            if(em == undefined || em == '') return;
-            if (em in allTerm) {
-              //if exist, then check if have the same type
-              let t = allTerm[em];
-              if (t.indexOf("ncit code") == -1) {
-                t.push("ncit code");
-              }
-            } else {
-              let t = [];
+        ncits.forEach(em => {
+          if (em == undefined || em == '') return;
+          if (em in allTerm) {
+            //if exist, then check if have the same type
+            let t = allTerm[em];
+            if (t.indexOf("ncit code") == -1) {
               t.push("ncit code");
-              allTerm[em] = t;
             }
-          });
+          } else {
+            let t = [];
+            t.push("ncit code");
+            allTerm[em] = t;
+          }
+        });
       }
 
       allProperties.push(p);
@@ -905,7 +911,7 @@ const helper_pcdc = (pcdc_data, syns) => {
         p.category = project;
         p.node = {};
         p.node.n = node_name;
-        if(n_n_code.trim() != ""){
+        if (n_n_code.trim() != "") {
           p.node.ncit = [];
           let dict = {};
           dict.c = n_n_code.trim();
@@ -929,11 +935,11 @@ const helper_pcdc = (pcdc_data, syns) => {
           }
           p.node.ncit.push(dict);
         }
-        
+
         p.prop = {};
         p.prop.n = prop.p_name;
         p.prop.d = prop.p_desc;
-        if(prop.p_n_code.trim() != ""){
+        if (prop.p_n_code.trim() != "") {
           p.prop.ncit = [];
           let dict = {};
           dict.c = prop.p_n_code.trim();
@@ -1052,7 +1058,7 @@ const helper_pcdc = (pcdc_data, syns) => {
   }
 };
 
-const bulkIndex = async function(next){
+const bulkIndex = async function (next) {
 
   gdc_values = shared.readGDCValues();
   gdc_props = shared.readGDCProps();
@@ -1063,8 +1069,8 @@ const bulkIndex = async function(next){
   //collect gdc data
   let jsonData = await shared.getGraphicalGDCDictionary();
 
-  for(let node in jsonData){
-    if(node !== '_terms' || node !== '_definitions' ){
+  for (let node in jsonData) {
+    if (node !== '_terms' || node !== '_definitions') {
       helper_gdc(jsonData[node], syns);
     }
   }
@@ -1092,7 +1098,7 @@ const bulkIndex = async function(next){
   for (var term in allTerm) {
     let doc = {};
     doc.id = term.toString();
-    if(doc.id != ''){
+    if (doc.id != '') {
       doc.type = allTerm[term];
       suggestionBody.push({
         index: {
@@ -1124,7 +1130,7 @@ const bulkIndex = async function(next){
     propertyBody.push(doc);
   });
 
-  esClient.bulk({body: propertyBody}, (err_p, data_p) => {
+  esClient.bulk({ body: propertyBody }, (err_p, data_p) => {
     if (err_p) {
       return next(err_p);
     }
@@ -1134,7 +1140,7 @@ const bulkIndex = async function(next){
         logger.error(++errorCount_p, item.index.error);
       }
     });
-    esClient.bulk({body: suggestionBody}, (err_s, data_s) => {
+    esClient.bulk({ body: suggestionBody }, (err_s, data_s) => {
       if (err_s) {
         return next(err_s);
       }
@@ -1161,6 +1167,7 @@ const query = (index, dsl, source_excludes, highlight, next) => {
     from: 0
   };
   body.query = dsl;
+
   if (highlight) {
     body.highlight = highlight;
   }
@@ -1171,8 +1178,9 @@ const query = (index, dsl, source_excludes, highlight, next) => {
     "node": "asc"
   }];
   */
-  if(source_excludes == ""){
-    esClient.search({index: index, body: body}, (err, data) => {
+  //console.log(JSON.stringify(body, null, 4))
+  if (source_excludes == "") {
+    esClient.search({ index: index, body: body }, (err, data) => {
       if (err) {
         logger.error(err);
         next(err);
@@ -1181,8 +1189,8 @@ const query = (index, dsl, source_excludes, highlight, next) => {
       }
     });
   }
-  else{
-    esClient.search({index: index, "_source_excludes": source_excludes, body: body}, (err, data) => {
+  else {
+    esClient.search({ index: index, "_source_excludes": source_excludes, body: body }, (err, data) => {
       if (err) {
         logger.error(err);
         next(err);
@@ -1191,12 +1199,12 @@ const query = (index, dsl, source_excludes, highlight, next) => {
       }
     });
   }
-  
+
 }
 
 exports.query = query;
 
-const query_all = async function(index, dsl, source_excludes, highlight) {
+const query_all = async function (index, dsl, source_excludes, highlight) {
   var body = {
     size: 10000,
     from: 0
@@ -1212,8 +1220,10 @@ const query_all = async function(index, dsl, source_excludes, highlight) {
     "node": "asc"
   }];
   */
-  
-  if(source_excludes == ""){
+
+  // console.log(JSON.stringify(body, null, 4))
+
+  if (source_excludes == "") {
     /*
     esClient.search({index: index, body: body}, (err, data) => {
       if (err) {
@@ -1224,10 +1234,10 @@ const query_all = async function(index, dsl, source_excludes, highlight) {
       }
     });
     */
-    const result = await esClient.search({index: index, body: body});
+    const result = await esClient.search({ index: index, body: body });
     return result;
   }
-  else{
+  else {
     /*
     esClient.search({index: index, "_source_excludes": source_excludes, body: body}, (err, data) => {
       if (err) {
@@ -1238,8 +1248,8 @@ const query_all = async function(index, dsl, source_excludes, highlight) {
       }
     });
     */
-   const result = await esClient.search({index: index, "_source_excludes": source_excludes, body: body});
-   return result;
+    const result = await esClient.search({ index: index, "_source_excludes": source_excludes, body: body });
+    return result;
   }
 }
 
@@ -1248,7 +1258,11 @@ exports.query_all = query_all;
 const suggest = (index, suggest, next) => {
   let body = {};
   body.suggest = suggest;
-  esClient.search({index: index, "_source": true, body: body}, (err, data) => {
+
+  //console.log(JSON.stringify(body));
+  //console.log(JSON.stringify(body, null, 4))
+
+  esClient.search({ index: index, "_source": true, body: body }, (err, data) => {
     if (err) {
       logger.error(err);
       next(err);

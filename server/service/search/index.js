@@ -1,10 +1,12 @@
 const express = require("express");
 const controller = require("./controller");
+const report = require("./report");
 
 const router = express.Router();
 
 router.get("/buildIndex", controller.indexing);
 router.get("/suggest", controller.suggestion);
+
 
 // property based api
 router.get("/all/p", controller.searchP);
@@ -29,5 +31,8 @@ router.get('/exportAllCompareResult', controller.exportAllCompareResult);
 //router.get('/updateGDCPropertyMappings', controller.updateGDCPropertyMappings);
 //router.get("/updateGDCDataMappings", controller.updateGDCDataMappings);
 //router.get("/preloadPCDCDataMappings", controller.preloadPCDCDataMappings);
+
+//get report Diff from mysql table
+router.get('/report/reportDiff', report.getReportDiff);
 
 module.exports = router;

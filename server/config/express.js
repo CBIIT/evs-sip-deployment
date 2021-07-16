@@ -9,7 +9,7 @@ const config = require('./index');
 
 // const indexRouter = require('./routes/index')
 
-module.exports = function(app) {
+module.exports = function (app) {
   // if (config.env !== 'prod') { 
   //   app.use(logger('dev')) 
   // };
@@ -19,20 +19,21 @@ module.exports = function(app) {
   app.use(express.static(path.resolve(config.root, 'build')));
 
   app.use(compression());
-  
-  app.use(function (req, res, next) {
-		res.header('Access-Control-Allow-Origin', '*');
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-		res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-		if (next) {
-			next();
-		}
-	});
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    if (next) {
+      next();
+    }
+  });
 
   //Routers
   //app.use('/api', indexRouter)
   app.use('/api/search', require('../service/search'));
+  app.use('/service/search', require('../service/search'));
 
   app.get('*', (req, res) => {
     res.sendFile('build/index.html', { root: config.root });

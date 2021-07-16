@@ -15,7 +15,7 @@ const folderPath = path.join(
   "..",
   "data_files",
   "GDC",
-  "model"
+  "model-2.3.0"
 );
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
 const dataFilesDir = path.join(__dirname, "..", "..", "data_files", "GDC");
