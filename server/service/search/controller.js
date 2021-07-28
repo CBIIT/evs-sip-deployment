@@ -12,6 +12,7 @@ const shared = require("./shared");
 const export_excel = require('node-excel-export');
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
 var syns = {};
+const xmlBuilder = require("../xmlBuilder")
 
 const indexing = (req, res) => {
   let configs = [];
@@ -381,59 +382,77 @@ const suggestion = (req, res) => {
   });
 };
 
-const searchP = (req, res) => {
+const searchP = (req, res, formatFlag) => {
   //let keyword = req.query.keyword.trim().replace(/\+/g, "\\+").replace(/-/g, "\\-").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
-  let keyword = req.query.keyword.trim();
+  if (req.query.keyword) {
+    let keyword = req.query.keyword.trim();
+    let sources = req.query.sources ? req.query.sources.replace(/\ /g,"").replace(/\"/g,"").replace(/\'/g,"").trim().split(',') : [];
 
-  let option = {};
-  if (req.query.options) {
-    option.match = req.query.options.indexOf("exact") !== -1 ? "exact" : "partial";
-    option.syn = req.query.options.indexOf('syn') !== -1 ? true : false;
-    option.n_syn = req.query.options.indexOf('n_syn') !== -1 ? true : false;
-    option.p_syn = req.query.options.indexOf('p_syn') !== -1 ? true : false;
-    option.desc = req.query.options.indexOf('desc') !== -1 ? true : false;
-    option.sources = req.query.sources ? req.query.sources.split(',') : [];
-  }
-  else {
-    option = {
-      match: "partial",
-      syn: false,
-      n_syn: false,
-      p_syn: false,
-      desc: false
-    };
-    option.sources = [];
-  }
-  if (keyword.trim() === "") {
-    res.json([]);
+    let option = {};
+    if (req.query.options) {
+      option.match = req.query.options.indexOf("exact") !== -1 ? "exact" : "partial";
+      option.syn = req.query.options.indexOf('syn') !== -1 ? true : false;
+      option.n_syn = req.query.options.indexOf('n_syn') !== -1 ? true : false;
+      option.p_syn = req.query.options.indexOf('p_syn') !== -1 ? true : false;
+      option.desc = req.query.options.indexOf('desc') !== -1 ? true : false;
+      option.sources = sources;
+    }
+    else {
+      option = {
+        match: "partial",
+        syn: false,
+        n_syn: false,
+        p_syn: false,
+        desc: false
+      };
+      option.sources = sources;
+    }
+    if (keyword && keyword.trim() !== "") {
+      let query = shared.generateQuery(keyword, option);
+      logger.debug("keyword: " + keyword)
+      logger.debug("------ query ------  %o ", query)
+      let highlight = shared.generateHighlight();
+      elastic.query(config.index_p, query, "enum", highlight, (result) => {
+        if (result.hits === undefined) {
+          res.json({ total: 0, returnList: [], timedOut: true });
+          //return handleError.error(res, result);
+        } else {
+          let total = result.hits.total.value;
+          let data = result.hits.hits;
+          data.forEach((entry) => {
+            delete entry.sort;
+            delete entry._index;
+            delete entry._score;
+            delete entry._type;
+            delete entry._id;
+          });
+          const pcdc_project_fullName = shared.getPCDCProjectsFullName();
+          if (formatFlag === 'xml') {
+            res.header('Content-Type', 'text/xml').send(xmlBuilder.xmlBuilder.buildObject(({
+              total: total,
+              returnList: data,
+              timedOut: false,
+              info: pcdc_project_fullName,
+            })));
+          } else {
+            res.json({
+              total: total,
+              returnList: data,
+              timedOut: false,
+              info: pcdc_project_fullName,
+            });
+          }
+        }
+      });
+    }
   } else {
-    let query = shared.generateQuery(keyword, option);
-    logger.debug("keyword: " + keyword)
-    logger.debug("------ query ------  %o ", query)
-    let highlight = shared.generateHighlight();
-    elastic.query(config.index_p, query, "enum", highlight, (result) => {
-      if (result.hits === undefined) {
-        res.json({ total: 0, returnList: [], timedOut: true });
-        //return handleError.error(res, result);
-      } else {
-        let total = result.hits.total.value;
-        let data = result.hits.hits;
-        data.forEach((entry) => {
-          delete entry.sort;
-          delete entry._index;
-          delete entry._score;
-          delete entry._type;
-          delete entry._id;
-        });
-        const pcdc_project_fullName = shared.getPCDCProjectsFullName();
-        res.json({
-          total: total,
-          returnList: data,
-          timedOut: false,
-          info: pcdc_project_fullName,
-        });
+    if (formatFlag === 'xml') {
+      res.header('Content-Type', 'text/xml').status(200).send(xmlBuilder.buildObject({
+        Message: 'Empty keyword'
+      }));
+    } else {
+        res.json([]);
       }
-    });
   }
 };
 

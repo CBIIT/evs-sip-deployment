@@ -32,7 +32,7 @@ module.exports = function (app) {
 
   //Routers
   //app.use('/api', indexRouter)
-  app.use('/api/search', require('../service/search'));
+  app.use('/api', require('../service/api'));
   app.use('/service/search', require('../service/search'));
 
   app.get('*', (req, res) => {
