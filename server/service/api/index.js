@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
     res.json({
         'version': '1.0.0',
         'title': 'EVS-SIP Restful API',
-        'documentation': 'https://' + req.headers.host + '/api/docs/'
+        'documentation': 'https://' + req.headers.host+ ['300','80'].some((e) => req.headers.host.includes(e))?'/api/docs/':'/evssip/api/docs/'
     });
 });
 
@@ -20,7 +20,7 @@ router.use('/docs',
     function (req, res) {
         const protocol = 'http';
         const host = req.get('host');
-        const baseUrl = '/api';
+        const baseUrl = ['300','80'].some((e) => host.includes(e))?'/api':'/evssip/api';
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
     }
 );
