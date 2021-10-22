@@ -1130,7 +1130,7 @@ const genearteCompareResult = async function(){
 		let GDCDict = await getGDCDictionaryByVersion("2.3.0");
 		let data = await elastic.query_all(config.index_p, query, "", null);
 		if (data.hits === undefined) {
-			return handleError.error(res, data);
+			// return handleError.error(res, data);
 		}
 		let rs = data.hits.hits;
 		let local_data = {};

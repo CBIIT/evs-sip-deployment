@@ -3,7 +3,7 @@
  */
 
 const winston = require('winston');
-const config = require('../config');
+const config = require('../routes');
 winston.emitErrs = true;
 
 const tsFormat = () => (new Date()).toLocaleTimeString();

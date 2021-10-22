@@ -3,7 +3,7 @@ const controller = require("../search/controller");
 const apicontroller = require("./apicontroller");
 const report = require("../search/report");
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../../config/swagger');
+const swaggerDocument = require('../../routes/swagger');
 
 const router = express.Router();
 

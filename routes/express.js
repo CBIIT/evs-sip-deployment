@@ -1,10 +1,13 @@
 const express = require('express');
+const session = require('express-session');
 const compression = require('compression');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const logger = require('morgan');
 const config = require('./index');
+const nconf = require("../config");
+const { login, logout, getUserSession, updateSession } = require('./authentication');
 
 
 // const indexRouter = require('./routes/index')
@@ -17,7 +20,7 @@ module.exports = function (app) {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(express.static(path.resolve(config.root, 'build')));
-
+  app.use(require('./session'));
   app.use(compression());
 
   app.use(function (req, res, next) {
@@ -30,10 +33,21 @@ module.exports = function (app) {
     }
   });
 
+   // healthcheck route
+	app.get('/api/ping', (req, res) => {
+		res.status(200).json('true');
+	});
+
   //Routers
   //app.use('/api', indexRouter)
   app.use('/api', require('../service/api'));
   app.use('/service/search', require('../service/search'));
+  app.use('/dashboard/login', login);
+	app.use('/dashboard/logout', logout);
+  app.use('/service/user-session', getUserSession);
+	app.use('/service/update-session', updateSession);
+
+ 
 
   app.get('*', (req, res) => {
     res.sendFile('build/index.html', { root: config.root });

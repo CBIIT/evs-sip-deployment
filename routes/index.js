@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== "prod") {
 // ============================================
 var all = {
   // Root path of server
-  root: path.resolve(__dirname, "../../"),
+  root: path.resolve(__dirname, "../"),
 
   // Server port
   port: process.env.PORT || 3001,

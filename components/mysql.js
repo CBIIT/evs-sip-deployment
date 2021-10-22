@@ -7,7 +7,7 @@
 var logger = require('./logger');
 const mysql = require('mysql2');
 const { promisify } = require('util');
-const configAll = require("../config/dev");
+const configAll = require("../routes/dev");
 
 const config = configAll.mysql
 

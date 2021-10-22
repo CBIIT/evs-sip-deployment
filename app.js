@@ -1,16 +1,17 @@
 const express = require('express');
-const config = require('./server/config');
+const routes = require('./routes');
 
 // Setup server
 const app = express();
+app.set('trust proxy', 1);
 // var server = require('http').createServer(app);
-require('./server/config/express')(app);
+require('./routes/express')(app);
 // require('./routes')(app);
 //require('./components/exchange');
 
 // Start server
-app.listen(config.port, config.ip, function () {
-  console.log('Server listening on %d, in %s mode', config.port, config.env);
+app.listen(routes.port, routes.ip, function () {
+  console.log('Server listening on %d, in %s mode', routes.port, routes.env);
 });
 
 // Expose app
