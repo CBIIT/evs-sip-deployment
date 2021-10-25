@@ -11,7 +11,7 @@ module.exports = {
     updateSession,
 }
 
-const baseURL = "http://localhost:3000/evssip"
+const baseURL = "http://localhost:3001/evssip"
 async function login(request, response) {
     const { headers, session, app, params, query } = request;
     const { loginType } = params;
@@ -135,7 +135,7 @@ async function login(request, response) {
         //     };
         // }
 
-        let redirectUrl = baseURL+ '/dashboard';
+        let redirectUrl = baseURL+ '/mainboard';
 
         // if (!user || !session.user.active) {
         //     redirectUrl = '/unauthorized';
