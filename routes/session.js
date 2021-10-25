@@ -3,12 +3,12 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const timeoutMinutes = 150;
 const maxSessionAge = timeoutMinutes * 60 * 1000; // convert minutes to ms
-const production = process.env.NODE_ENV !== 'development';
+const isProd = process.env.NODE_ENV !== 'development'&& process.env.NODE_ENV !== 'dev' ;
 
 module.exports = session({
     cookie: { 
       maxAge: maxSessionAge,
-      secure: false, //production,
+      secure: isProd,
     },
     store: new MemoryStore({
       checkPeriod: maxSessionAge / 10
