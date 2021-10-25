@@ -42,8 +42,8 @@ module.exports = function (app) {
   //app.use('/api', indexRouter)
   app.use('/api', require('../service/api'));
   app.use('/service/search', require('../service/search'));
-  app.use('/dashboard/login', login);
-	app.use('/dashboard/logout', logout);
+  app.use('/private/login', login);
+	app.use('/private/logout', logout);
   app.use('/service/user-session', getUserSession);
 	app.use('/service/update-session', updateSession);
 

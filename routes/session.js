@@ -8,7 +8,7 @@ const production = process.env.NODE_ENV !== 'development';
 module.exports = session({
     cookie: { 
       maxAge: maxSessionAge,
-      secure: production,
+      secure: false, //production,
     },
     store: new MemoryStore({
       checkPeriod: maxSessionAge / 10

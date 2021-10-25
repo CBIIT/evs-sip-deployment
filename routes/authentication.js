@@ -11,10 +11,15 @@ module.exports = {
     updateSession,
 }
 
+const baseURL = "http://localhost:3000/evssip"
 async function login(request, response) {
     const { headers, session, app, params, query } = request;
     const { loginType } = params;
     const { mysql } = app.locals;
+    logger.debug(headers)
+    logger.info("session")
+    logger.info(session)
+
     let {
         //user_auth_type: userAuthType,
        // user_email: userEmail,
@@ -40,22 +45,31 @@ async function login(request, response) {
 
         if (!smUser) {
             userName = 'admin';
-            userRole = 'admin';
+            session.user = {
+                        id: 0,
+                        name: 'Test',
+                        role: null,
+                        project: [],
+                        active: true,
+                        expires,
+                        // headers,
+            };
         } else {
             // otherwise, update user-session variable when hitting authRoutes
             // const isFederated = userAuthType === 'federated';
             userName = smUser;
+            session.user = {
+                id: 1,
+                name: userName,
+                role: 'admin',
+                project: [],
+                active: true,
+                expires,
+                // headers,
+            };
         }
-
-        session.user = {
-            id: 1,
-            name: userName,
-            role: 'admin',
-            project: [],
-            active: true,
-            expires,
-            // headers,
-        };
+        logger.info("login session:----")
+        logger.debug(session.user)
 
         // const [user] = await mysql.query(
         //     `SELECT 
@@ -121,7 +135,7 @@ async function login(request, response) {
         //     };
         // }
 
-        let redirectUrl = '/dashboard';
+        let redirectUrl = baseURL+ '/dashboard';
 
         // if (!user || !session.user.active) {
         //     redirectUrl = '/unauthorized';
@@ -187,5 +201,7 @@ function logout(request, response) {
 }
 
 function getUserSession(request, response) {
+    logger.info("request.session")
+    logger.info(request.session)
     response.json(request.session.user || null);
 }
