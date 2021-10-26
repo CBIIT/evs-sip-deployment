@@ -11,7 +11,7 @@ module.exports = {
     updateSession,
 }
 
-const baseURL = "http://localhost:3001/evssip"
+const baseURL = "/evssip"
 async function login(request, response) {
     const { headers, session, app, params, query } = request;
     const { loginType } = params;
