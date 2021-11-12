@@ -1,3 +1,6 @@
+// import { neo4jSessionCleanup } from '../middlewares/neo4jSessionCleanup'
+const nconf = require('../config');
+const neo4jSessionCleanup = require("../middlewares/neo4jSessionCleanup");
 const express = require('express');
 const session = require('express-session');
 const compression = require('compression');
@@ -6,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const logger = require('morgan');
 const config = require('./index');
-const nconf = require("../config");
+// const nconf = require("../config");
 const { login, logout, getUserSession, updateSession } = require('./authentication');
 
 
@@ -16,23 +19,28 @@ module.exports = function (app) {
   // if (config.env !== 'prod') { 
   //   app.use(logger('dev')) 
   // };
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+     //res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+     //res.header('Access-Control-Allow-Origin', 'https://*.nih.gov');
+		//res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+    if (next) {
+      next();
+    }
+  });
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(express.static(path.resolve(config.root, 'build')));
   app.use(require('./session'));
   app.use(compression());
+  app.use(neo4jSessionCleanup);
 
-  app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-    if (next) {
-      next();
-    }
-  });
-
+ 
    // healthcheck route
 	app.get('/api/ping', (req, res) => {
 		res.status(200).json('true');

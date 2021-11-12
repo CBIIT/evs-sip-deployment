@@ -2,7 +2,7 @@ const logger = require("../components/logger");
 
 const timeoutMinutes = 150;
 const maxSessionAge = timeoutMinutes * 60 * 1000; // convert minutes to ms
-const logoutUrl= 'https://authtest.nih.gov/siteminderagent/smlogoutredirector.asp';
+const logoutUrl= 'https://authdev.nih.gov/siteminderagent/smlogoutredirector.asp';
 
 module.exports = {
     login,
@@ -11,7 +11,7 @@ module.exports = {
     updateSession,
 }
 
-const baseURL = "/evssip"
+const baseURL = "http://localhost:3000/evssip"
 async function login(request, response) {
     const { headers, session, app, params, query } = request;
     const { loginType } = params;
@@ -29,10 +29,7 @@ async function login(request, response) {
         let match = smUser.match(/CN=([^,]+)/i);
         if (match) smUser = match[1];
     }
-    // if (!['login'].includes(loginType)) {
-    //     logger.info("line 28 " , loginType)
-    //     return response.status(301).redirect('/');
-    // }
+    
     const expires = new Date().getTime() + maxSessionAge;
 
     if (query.refresh && session.user) {
@@ -47,7 +44,7 @@ async function login(request, response) {
             userName = 'admin';
             session.user = {
                         id: 0,
-                        name: 'Test',
+                        name: 'zhangchao',
                         role: null,
                         project: [],
                         active: true,
@@ -191,13 +188,17 @@ async function updateSession(request, response) {
     request.session.user = { ...user };
     response.json(user || null);
 }
-
+var request2 = require('request');
 // note: both federated NIH Auth use siteminder under the hood to authenticate users
 // so we can use the global siteminder agent logout route to invalidate our current session
 function logout(request, response) {
-    request.session.destroy(error => {
-        response.json(logoutUrl || '/');
-    });
+
+    
+    // request.session.destroy(error => {
+    //     response.json(logoutUrl || '/');
+    // });
+    
+    //response.json(logoutUrl || '/');
 }
 
 function getUserSession(request, response) {

@@ -1,6 +1,7 @@
 const express = require("express");
 const controller = require("../search/controller");
 const apicontroller = require("./apicontroller");
+const metauser = require("../meta/user");
 const report = require("../search/report");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../../routes/swagger');
@@ -35,6 +36,13 @@ router.get("/source/ctdc", apicontroller.getGraphicalCTDCDictionary);
 router.get("/source/pcdc", apicontroller.getGraphicalPCDCDictionary);
 router.get("/graph/p/vs", controller.getValuesForGraphicalView);
 router.get("/p/local/vs", controller.getGDCData);
+
+// neo4j data
+router.get("/user/userprofile", metauser.getUserProfile);
+router.get("/user/allusers", metauser.getAllUser);
+//router.get("/admin/updateuser", metauser.updateUser);
+//router.get("/admin/createuser", metauser.createUser);
+
 
 
 //get report Diff from mysql table

@@ -1,3 +1,4 @@
+const writeError = require("../../components/response").writeError;
 const elastic = require("../../components/elasticsearch");
 const handleError = require("../../components/handleError");
 const logger = require("../../components/logger");
@@ -347,11 +348,11 @@ const indexing = (req, res) => {
   configs.push(config_suggestion);
   elastic.createIndexes(configs, (result) => {
     if (result.acknowledged === undefined) {
-      return handleError.error(res, result);
+      return writeError.error(res, result);
     }
     elastic.bulkIndex((data) => {
       if (data.property_indexed === undefined) {
-        return handleError.error(res, data);
+        return writeError.error(res, data);
       }
       return res.status(200).json(data);
     });
@@ -371,7 +372,7 @@ const suggestion = (req, res) => {
   };
   elastic.suggest(config.suggestionName, suggest, (result) => {
     if (result.suggest === undefined) {
-      return handleError.error(res, result);
+      return writeError.error(res, result);
     }
     let dt = result.suggest.term_suggest;
     let data = [];
@@ -415,7 +416,7 @@ const searchP = (req, res, formatFlag) => {
       elastic.query(config.index_p, query, "enum", highlight, (result) => {
         if (result.hits === undefined) {
           res.json({ total: 0, returnList: [], timedOut: true });
-          //return handleError.error(res, result);
+          //return writeError.error(res, result);
         } else {
           let total = result.hits.total.value;
           let data = result.hits.hits;
@@ -464,7 +465,7 @@ const getGDCData = (req, res) => {
   query.terms.id.push(uid);
   elastic.query(config.index_p, query, "", null, (result) => {
     if (result.hits === undefined) {
-      return handleError.error(res, result);
+      return writeError.error(res, result);
     }
     let data = result.hits.hits;
     res.json(data);
@@ -502,7 +503,7 @@ const getValuesForGraphicalView = async function (req, res) {
     query.terms.id.push(uid);
     elastic.query(config.index_p, query, "", null, (data) => {
       if (data.hits === undefined) {
-        return handleError.error(res, data);
+        return writeError.error(res, data);
       }
       let rs = data.hits.hits;
       result = [];
