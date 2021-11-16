@@ -1,0 +1,6107 @@
+
+id: _terms
+
+a260_a280_ratio:
+  common:
+    description: >-
+      Numeric value that represents the sample ratio of nucleic acid absorbance at
+      260 nm and 280 nm, used to determine a measure of DNA purity.
+    termDef:
+      term: >-
+        Nucleic Acid Absorbance at 260 And Absorbance at 280 DNA Purity Ratio Value
+      source: caDSR
+      cde_id: 5432595
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432595&version=1.0"
+
+aa_change:
+  common:
+    description: >-
+      Alphanumeric value used to describe the amino acid change for a specific genetic
+      variant. Example: R116Q.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Amino Acid Change Text
+      source: caDSR
+      cde_id: 6142508
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142508&version=1.0"
+
+adapter_name:
+  common:
+    description: >-
+      Name of the sequencing adapter.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+adapter_sequence:
+  common:
+    description: >-
+      Base sequence of the sequencing adapter.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+adverse_event:
+  common:
+    description: >-
+      Text that represents the Common Terminology Criteria for Adverse Events low
+      level term name for an adverse event.
+    termDef:
+      term: >-
+        Common Terminology Criteria for Adverse Events Version 4.0 Low Level Term
+        Name
+      source: caDSR
+      cde_id: 3125302
+      cde_version: 1.1
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3125302&version=1.1"
+
+age_at_diagnosis:
+  common:
+    description: >-
+      Age at the time of diagnosis expressed in number of days since birth.
+    termDef:
+      term: >-
+        Patient Diagnosis Age Day Value
+      source: caDSR
+      cde_id: 3225640
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3225640&version=2.0"
+
+age_at_index:
+  common:
+    description: >-
+      The patient's age (in years) on the reference or anchor date date used during
+      date obfuscation.
+    termDef:
+      term: >-
+        Patient Age at Index
+      source: caDSR
+      cde_id: 6028530
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6028530&version=1.0"
+
+age_is_obfuscated:
+  common:
+    description: >-
+      The age or other properties related to the patient's age have been modified
+      for compliance reasons. The actual age may differ from what was reported in
+      order to comply with the Health Insurance Portability and Accountability Act
+      (HIPAA).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+ajcc_clinical_m:
+  common:
+    description: >-
+      Extent of the distant metastasis for the cancer based on evidence obtained from
+      clinical assessment parameters determined prior to treatment.
+    termDef:
+      term: >-
+        Neoplasm American Joint Committee on Cancer Clinical Distant Metastasis M
+        Stage
+      source: caDSR
+      cde_id: 3440331
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440331&version=1.0"
+
+ajcc_clinical_n:
+  common:
+    description: >-
+      Extent of the regional lymph node involvement for the cancer based on evidence
+      obtained from clinical assessment parameters determined prior to treatment.
+    termDef:
+      term: >-
+        Neoplasm American Joint Committee on Cancer Clinical Regional Lymph Node N
+        Stage
+      source: caDSR
+      cde_id: 3440330
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440330&version=1.0"
+
+ajcc_clinical_stage:
+  common:
+    description: >-
+      Stage group determined from clinical information on the tumor (T), regional
+      node (N) and metastases (M) and by grouping cases with similar prognosis for
+      cancer.
+    termDef:
+      term: >-
+        Neoplasm American Joint Committee on Cancer Clinical Group Stage
+      source: caDSR
+      cde_id: 3440332
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440332&version=1.0"
+
+ajcc_clinical_t:
+  common:
+    description: >-
+      Extent of the primary cancer based on evidence obtained from clinical assessment
+      parameters determined prior to treatment.
+    termDef:
+      term: >-
+        Neoplasm American Joint Committee on Cancer Clinical Primary Tumor T Stage
+      source: caDSR
+      cde_id: 3440328
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440328&version=1.0"
+
+ajcc_pathologic_m:
+  common:
+    description: >-
+      Code to represent the defined absence or presence of distant spread or metastases
+      (M) to locations via vascular channels or lymphatics beyond the regional lymph
+      nodes, using criteria established by the American Joint Committee on Cancer
+      (AJCC).
+    termDef:
+      term: >-
+        American Joint Committee on Cancer Metastasis Stage Code
+      source: caDSR
+      cde_id: 3045439
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3045439&version=1.0"
+
+ajcc_pathologic_n:
+  common:
+    description: >-
+      The codes that represent the stage of cancer based on the nodes present (N stage)
+      according to criteria based on multiple editions of the AJCC's Cancer Staging
+      Manual.
+    termDef:
+      term: >-
+        Neoplasm Disease Lymph Node Stage American Joint Committee on Cancer Code
+      source: caDSR
+      cde_id: 3203106
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3203106&version=1.0"
+
+ajcc_pathologic_stage:
+  common:
+    description: >-
+      The extent of a cancer, especially whether the disease has spread from the original
+      site to other parts of the body based on AJCC staging criteria.
+    termDef:
+      term: >-
+        Neoplasm Disease Stage American Joint Committee on Cancer Code
+      source: caDSR
+      cde_id: 3203222
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3203222&version=1.0"
+
+ajcc_pathologic_t:
+  common:
+    description: >-
+      Code of pathological T (primary tumor) to define the size or contiguous extension
+      of the primary tumor (T), using staging criteria from the American Joint Committee
+      on Cancer (AJCC).
+    termDef:
+      term: >-
+        American Joint Committee on Cancer Tumor Stage Code
+      source: caDSR
+      cde_id: 3045435
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3045435&version=1.0"
+
+ajcc_staging_system_edition:
+  common:
+    description: >-
+      The text term used to describe the version or edition of the American Joint
+      Committee on Cancer Staging Handbooks, a publication by the group formed for
+      the purpose of developing a system of staging for cancer that is acceptable
+      to the American medical profession and is compatible with other accepted classifications.
+    termDef:
+      term: >-
+        American Joint Committee on Cancer Publication Version Type
+      source: caDSR
+      cde_id: 2722309
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2722309&version=1.0"
+
+alcohol_days_per_week:
+  common:
+    description: >-
+      Numeric value used to describe the average number of days each week that a person
+      consumes an alcoholic beverage.
+    termDef:
+      term: >-
+        Alcohol Consumption Weekly Days Usage Number
+      source: caDSR
+      cde_id: 3114013
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3114013&version=1.0"
+
+alcohol_drinks_per_day:
+  common:
+    description: >-
+      Numeric value used to describe the average number of alcoholic beverages  a
+      person consumes per day.
+    termDef:
+      term: >-
+        Person Daily Alcohol Consumption Count
+      source: caDSR
+      cde_id: 3124961
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3124961&version=1.0"
+
+alcohol_history:
+  common:
+    description: >-
+      A response to a question that asks whether the participant has consumed at least
+      12 drinks of any kind of alcoholic beverage in their lifetime.
+    termDef:
+      term: >-
+        Alcohol Lifetime History Indicator
+      source: caDSR
+      cde_id: 2201918
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2201918&version=1.0"
+
+alcohol_intensity:
+  common:
+    description: >-
+      Category to describe the patient's current level of alcohol use as self-reported
+      by the patient.
+    termDef:
+      term: >-
+        Person Self-Report Alcoholic Beverage Exposure Category
+      source: caDSR
+      cde_id: 3457767
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3457767&version=1.0"
+
+aliquot_quantity:
+  common:
+    description: >-
+      The quantity in micrograms (ug) of the aliquot(s) derived from the analyte(s)
+      shipped for sequencing and characterization.
+    termDef:
+      term: >-
+        Biospecimen Aliquot Quantity
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+aliquot_volume:
+  common:
+    description: >-
+      The volume in microliters (ul) of the aliquot(s) derived from the analyte(s)
+      shipped for sequencing and characterization.
+    termDef:
+      term: >-
+        Biospecimen Aliquot Volume
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+amount:
+  common:
+    description: >-
+      Weight in grams or volume in mL.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+analyte_quantity:
+  common:
+    description: >-
+      The quantity in micrograms (ug) of the analyte(s) derived from the analyte(s)
+      shipped for sequencing and characterization.
+    termDef:
+      term: >-
+        Biospecimen Analyte Quantity
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+analyte_type:
+  common:
+    description: >-
+      Text term that represents the kind of molecular specimen analyte.
+    termDef:
+      term: >-
+        Molecular Specimen Type Text Name
+      source: caDSR
+      cde_id: 2513915
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2513915&version=2.0"
+
+analyte_type_id:
+  common:
+    description: >-
+      A single letter code used to identify a type of molecular analyte.
+    termDef:
+      term: >-
+        Molecular Analyte Identification Code
+      source: caDSR
+      cde_id: 5432508
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432508&version=1.0"
+
+analyte_volume:
+  common:
+    description: >-
+      The volume in microliters (ul) of the aliquot(s) derived from the analyte(s)
+      shipped for sequencing and characterization.
+    termDef:
+      term: >-
+        Biospecimen Analyte Volume
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+anaplasia_present:
+  common:
+    description: >-
+      Yes/no/unknown/not reported indicator used to describe whether anaplasia was
+      present at the time of diagnosis.
+    termDef:
+      term: >-
+        Anaplastic Lesion Present Indicator
+      source: caDSR
+      cde_id: 6059599
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6059599&version=1.0"
+
+anaplasia_present_type:
+  common:
+    description: >-
+      The text term used to describe the morphologic findings indicating the presence
+      of a malignant cellular infiltrate characterized by the presence of large pleomorphic
+      cells, necrosis, and high mitotic activity in a tissue sample.
+    termDef:
+      term: >-
+        Anaplastic Lesion Classification Category
+      source: caDSR
+      cde_id: 4925534
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4925534&version=1.0"
+
+ann_arbor_b_symptoms:
+  common:
+    description: >-
+      Text term to signify whether lymphoma B-symptoms are present as noted in the
+      patient's medical record.
+    termDef:
+      term: >-
+        Lymphoma B-Symptoms Medical Record Documented Indicator
+      source: caDSR
+      cde_id: 2902402
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2902402&version=1.0"
+
+ann_arbor_clinical_stage:
+  common:
+    description: >-
+      The text term used to describe the clinical classification of lymphoma, as defined
+      by the Ann Arbor Lymphoma Staging System.
+    termDef:
+      term: >-
+        Ann Arbor Clinical Stage
+      source: caDSR
+      cde_id: 5615604
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5615604&version=1.0"
+
+ann_arbor_extranodal_involvement:
+  common:
+    description: >-
+      Indicator that identifies whether a patient with malignant lymphoma has lymphomatous
+      involvement of an extranodal site.
+    termDef:
+      term: >-
+        Lymphomatous Extranodal Site Involvement Indicator
+      source: caDSR
+      cde_id: 3364582
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3364582&version=1.0"
+
+ann_arbor_pathologic_stage:
+  common:
+    description: >-
+      The text term used to describe the pathologic classification of lymphoma, as
+      defined by the Ann Arbor Lymphoma Staging System.
+    termDef:
+      term: >-
+        Ann Arbor Pathologic Stage
+      source: caDSR
+      cde_id: 5615605
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5615605&version=1.0"
+
+antigen:
+  common:
+    description: >-
+      The text term used to describe an antigen included in molecular testing.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Antigen Name
+      source: caDSR
+      cde_id: 6142523
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142523&version=1.0"
+
+asbestos_exposure:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the patient was exposed
+      to asbestos.
+    termDef:
+      term: >-
+        Asbestos Exposure Ind-3
+      source: caDSR
+      cde_id: 1253
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=1253&version=3.0"
+
+average_base_quality:
+  common:
+    description: >-
+      Average base quality collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+average_insert_size:
+  common:
+    description: >-
+      Average insert size collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+average_read_length:
+  common:
+    description: >-
+      Average read length collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+barretts_esophagus_goblet_cells_present:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether goblet cells were determined
+      to be present in a patient diagnosed with Barrett's esophagus.
+    termDef:
+      term: >-
+        Barrett's Esophagus Diagnosis Goblet Cell Present Indicator
+      source: caDSR
+      cde_id: 3440216
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440216&version=1.0"
+
+base_caller_name:
+  common:
+    description: >-
+      Name of the base caller.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+base_caller_version:
+  common:
+    description: >-
+      Version of the base caller.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+best_overall_response:
+  common:
+    description: >-
+      The best improvement achieved throughout the entire course of protocol treatment.
+    termDef:
+      term: >-
+        Best Response Assessment Type
+      source: caDSR
+      cde_id: 2003324
+      cde_version: 4.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2003324&version=4.0"
+
+biospecimen_anatomic_site:
+  common:
+    description: >-
+      Text term that represents the name of the primary disease site of the submitted
+      tumor sample.
+    termDef:
+      term: >-
+        Submitted Tumor Sample Primary Anatomic Site
+      source: caDSR
+      cde_id: 4742851
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4742851&version=1.0"
+
+biospecimen_laterality:
+  common:
+    description: >-
+      For tumors in paired organs, designates the side on which the specimen was obtained.
+    termDef:
+      term: >-
+        Specimen Laterality
+      source: caDSR
+      cde_id: 2007875
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2007875&version=1.0"
+
+biospecimen_type:
+  common:
+    description: >-
+      The text term used to describe the biological material used for testing, diagnostic,
+      treatment or research purposes.
+    termDef:
+      term: >-
+        Biospecimen Type
+      source: caBIG
+      cde_id:
+      cde_version:
+      term_url:
+
+blood_test_normal_range_lower:
+  common:
+    description: >-
+      Numeric value used to describe the lower limit of the normal range used to describe
+      a healthy individual at the institution where the test was completed.
+    termDef:
+      term: >-
+        Laboratory Procedure Lower Limit of Normal Value
+      source: caDSR
+      cde_id: 6142571
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142571&version=1.0"
+
+blood_test_normal_range_upper:
+  common:
+    description: >-
+      Numeric value used to describe the upper limit of the normal range used to describe
+      a healthy individual at the institution where the test was completed.
+    termDef:
+      term: >-
+        Laboratory Procedure Upper Limit of Normal Value
+      source: caDSR
+      cde_id: 6142535
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142535&version=1.0"
+
+bmi:
+  common:
+    description: >-
+      A calculated numerical quantity that represents an individual's weight to height
+      ratio.
+    termDef:
+      term: >-
+        Body Mass Index Value
+      source: caDSR
+      cde_id: 2006410
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2006410&version=3.0"
+
+breslow_thickness:
+  common:
+    description: >-
+      The number that describes the distance, in millimeters, between the upper layer
+      of the epidermis and the deepest point of tumor penetration.
+    termDef:
+      term: >-
+        Breslow Depth Measurement
+      source: caDSR
+      cde_id: 64809
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=64809&version=3.0"
+
+burkitt_lymphoma_clinical_variant:
+  common:
+    description: >-
+      Burkitt's lymphoma categorization based on clinical features that differ from
+      other forms of the same disease.
+    termDef:
+      term: >-
+        Burkitt Lymphoma Clinical Variant Type
+      source: caDSR
+      cde_id: 3770421
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3770421&version=1.0"
+
+catalog_reference:
+  common:
+    description: >-
+      HCMI catalog reference number for cancer model.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+cause_of_death:
+  common:
+    description: >-
+      Text term to identify the cause of death for a patient.
+    termDef:
+      term: >-
+        Patient Death Reason
+      source: caDSR
+      cde_id: 2554674
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2554674&version=3.0"
+
+cause_of_death_source:
+  common:
+    description: >-
+      The text term used to describe the source used to determine the patient's cause
+      of death.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+cause_of_response:
+  common:
+    description: >-
+      The text term used to describe the suspected cause or reason for the patient
+      disease response.
+    termDef:
+      term: >-
+        Disease Response Reason Text
+      source: caDSR
+      cde_id: 6161025
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161025&version=1.0"
+
+cell_count:
+  common:
+    description: >-
+      Numeric value used to describe the number of cells used for molecular testing.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Cell Count
+      source: caDSR
+      cde_id: 6142528
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142528&version=1.0"
+
+channel:
+  common:
+    description: >-
+      The corresponding color channel used to generate this data file.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+chemo_concurrent_to_radiation:
+  common:
+    description: >-
+      The text term used to describe whether the patient was receiving chemotherapy
+      concurrent to radiation.
+    termDef:
+      term: >-
+        Chemotherapy Given Concurrent to Radiation
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+child_pugh_classification:
+  common:
+    description: >-
+      The text term used to describe the classification used in the prognosis of chronic
+      liver disease, mainly cirrhosis.
+    termDef:
+      term: >-
+        Child-Pugh Classification Grade
+      source: caDSR
+      cde_id: 2931791
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2931791&version=1.0"
+
+chip_id:
+  common:
+    description: >-
+      User specified identifier for the chip used to perform the methylation microarray.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+chip_position:
+  common:
+    description: >-
+      User specified identifier for the specific position on the chip that the sample
+      was loaded into to perform the methylation microarray.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+chromosome:
+  common:
+    description: >-
+      The text term used to describe a chromosome targeted or included in molecular
+      testing. If a specific genetic variant is being reported, this property can
+      be used to capture the chromosome where that variant is located.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Chromosome Name
+      source: caDSR
+      cde_id: 6142404
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142404&version=1.0"
+
+cigarettes_per_day:
+  common:
+    description: >-
+      The average number of cigarettes smoked per day.
+    termDef:
+      term: >-
+        Smoking Use Average Number
+      source: caDSR
+      cde_id: 2001716
+      cde_version: 4.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2001716&version=4.0"
+
+circumferential_resection_margin:
+  common:
+    description: >-
+      Numeric value used to describe the non-peritonealised bare area of rectum, comprising
+      anterior and posterior segments, when submitted as a surgical specimen resulting
+      from excision of cancer of the rectum.
+    termDef:
+      term: >-
+        Circumferential Resection Margin Measurement
+      source: caDSR
+      cde_id: 6161030
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161030&version=1.0"
+
+classification_of_tumor:
+  common:
+    description: >-
+      Text that describes the kind of disease present in the tumor specimen as related
+      to a specific timepoint.
+    termDef:
+      term: >-
+        Tumor Tissue Disease Description Type
+      source: caDSR
+      cde_id: 3288124
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3288124&version=1.0"
+
+coal_dust_exposure:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether a patient was exposed
+      to fine powder derived by the crushing of coal.
+    termDef:
+      term: >-
+        Person Coal Dust Exposure Indicator
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+cog_neuroblastoma_risk_group:
+  common:
+    description: >-
+      Text term that represents the categorization of patients on the basis of prognostic
+      factors per a system developed by Children's Oncology Group (COG). Risk level
+      is used to assign treatment intensity.
+    termDef:
+      term: >-
+        Children's Oncology Group Neuroblastoma Risk Group Assignment Category
+      source: caDSR
+      cde_id: 4616452
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4616452&version=1.0"
+
+cog_rhabdomyosarcoma_risk_group:
+  common:
+    description: >-
+      Text term used to describe the classification of rhabdomyosarcoma, as defined
+      by the Children's Oncology Group (COG).
+    termDef:
+      term: >-
+        Rhabdomyosarcoma Children's Oncology Group Risk Assessment Category
+      source: caDSR
+      cde_id: 6133604
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6133604&version=1.0"
+
+cog_renal_stage:
+  common:
+    description: >-
+      The text term used to describe the staging classification of renal tumors, as
+      defined by the Children's Oncology Group (COG).
+    termDef:
+      term: >-
+        SIOP/COG/NWTSG Staging System Wilms Tumor Stage
+      source: caDSR
+      cde_id: 6013641
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6013641&version=1.0"
+
+cog_liver_stage:
+  common:
+    description: >-
+      The text term used to describe the staging classification of liver tumors, as
+      defined by the Children's Oncology Group (COG). This staging system specifically
+      describes the extent of the primary tumor prior to treatment.
+    termDef:
+      term: >-
+        PRETEXT Staging System Primary Childhood Malignant Liver Tumor Stage
+      source: caDSR
+      cde_id: 6013618
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6013618&version=1.0"
+
+comorbidity:
+  common:
+    description: >-
+      The text term used to describe a comorbidity disease, which coexists with the
+      patient's malignant disease.
+    termDef:
+      term: >-
+        Index Date To Comorbidity Day Count
+      source: caDSR
+      cde_id: 2970715
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2970715&version=1.0"
+
+comorbidity_method_of_diagnosis:
+  common:
+    description: >-
+      The text term used to describe the method used to diagnose the patient's comorbidity
+      disease.
+    termDef:
+      term: >-
+        Comorbidity Disease Diagnosis Method Type
+      source: caDSR
+      cde_id: 6142386
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142386&version=1.0"
+
+composition:
+  common:
+    description: >-
+      Text term that represents the cellular composition of the sample.
+    termDef:
+      term: >-
+        Biospecimen Cellular Composition Type
+      source: caDSR
+      cde_id: 5432591
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432591&version=1.0"
+
+concentration:
+  common:
+    description: >-
+      Numeric value that represents the concentration of an analyte or aliquot extracted
+      from the sample or sample portion, measured in milligrams per milliliter.
+    termDef:
+      term: >-
+        Biospecimen Analyte or Aliquot Extracted Concentration Milligram per Milliliter
+        Value
+      source: caDSR
+      cde_id: 5432594
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432594&version=1.0"
+
+contamination:
+  common:
+    description: >-
+      Fraction of reads coming from cross-sample contamination collected from GATK4.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+contamination_error:
+  common:
+    description: >-
+      Estimation error of cross-sample contamination collected from GATK4.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+copy_number:
+  common:
+    description: >-
+      Numeric value used to describe the number of times a section of the genome is
+      repeated or copied within an insertion, duplication or deletion variant.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Copy Number Count
+      source: caDSR
+      cde_id: 6142519
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142519&version=1.0"
+
+creation_datetime:
+  common:
+    description: >-
+      The datetime of portion creation encoded as seconds from epoch.
+    termDef:
+      term: >-
+        Biospecimen Portion Creation Seconds Date/Time
+      source: caDSR
+      cde_id: 5432592
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432592&version=1.0"
+
+current_weight:
+  common:
+    description: >-
+      Numeric value that represents the current weight of the sample, measured  in
+      milligrams.
+    termDef:
+      term: >-
+        Tissue Sample Current Weight Milligram Value
+      source: caDSR
+      cde_id: 5432606
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432606&version=1.0"
+
+cytoband:
+  common:
+    description: >-
+      Alphanumeric value used to describe the cytoband or chromosomal location targeted
+      or included in molecular analysis. If a specific genetic variant is being reported,
+      this property can be used to capture the cytoband where the variant is located.
+      Format: [chromosome][chromosome arm].[band+sub-bands]. Example: 17p13.1.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Cytoband Text
+      source: caDSR
+      cde_id: 6142405
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142405&version=1.0"
+
+data_category:
+  common:
+    description: >-
+      Broad categorization of the contents of the data file.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+data_file_error_type:
+  common:
+    description: >-
+      Type of error for the data file object.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+data_format:
+  common:
+    description: >-
+      Format of the data files.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+data_type:
+  common:
+    description: >-
+      Specific content type of the data file.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+datetime:
+  common:
+    description: >-
+      A combination of date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+days_to_adverse_event:
+  common:
+    description: >-
+      Number of days between the date used for index and the date of the patient's
+      adverse event.
+    termDef:
+      term: >-
+        Index Date To Adverse Event Day Count
+      source: caDSR
+      cde_id: 6154728
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154728&version=1.0"
+
+days_to_best_overall_response:
+  common:
+    description: >-
+      Number of days between the date used for index and the date of the patient was
+      thought to have the best overall response to their disease.
+    termDef:
+      term: >-
+        Index Date To Overall Best Response Day Count
+      source: caDSR
+      cde_id: 6154732
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154732&version=1.0"
+
+days_to_birth:
+  common:
+    description: >-
+      Number of days between the date used for index and the date from a person's
+      date of birth represented as a calculated negative number of days.
+    termDef:
+      term: >-
+        Index Date To Birth Day Count
+      source: caDSR
+      cde_id: 6154723
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154723&version=1.0"
+
+days_to_collection:
+  common:
+    description: >-
+      The number of days from the index date to the date a sample was collected for
+      a specific study or project.
+    termDef:
+      term: >-
+        Biospecimen Collection Date Less Initial Pathologic Diagnosis Date Calculated
+        Day Value
+      source: caDSR
+      cde_id: 3008340
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3008340&version=1.0"
+
+days_to_comorbidity:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the patient was
+      diagnosed with a comorbidity.
+    termDef:
+      term: >-
+        Index Date To Comorbidity Day Count
+      source: caDSR
+      cde_id: 6154729
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154729&version=1.0"
+
+days_to_death:
+  common:
+    description: >-
+      Number of days between the date used for index and the date from a person's
+      date of death represented as a calculated number of days.
+    termDef:
+      term: >-
+        Index Date to Death Day Count
+      source: caDSR
+      cde_id: 6154724
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154724&version=1.0"
+
+days_to_diagnosis:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the patient was
+      diagnosed with the malignant disease.
+    termDef:
+      term: >-
+        Index Date To Disease Diagnosis Day Count
+      source: caDSR
+      cde_id: 6154733
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154733&version=1.0"
+
+days_to_follow_up:
+  common:
+    description: >-
+      Number of days between the date used for index and the date of the patient's
+      last follow-up appointment or contact.
+    termDef:
+      term: >-
+        Index Date To Follow-up Day Count
+      source: caDSR
+      cde_id: 6154727
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154727&version=1.0"
+
+days_to_last_follow_up:
+  common:
+    description: >-
+      Time interval from the date of last follow up to the date of initial pathologic
+      diagnosis, represented as a calculated number of days.
+    termDef:
+      term: >-
+        Last Communication Contact Less Initial Pathologic Diagnosis Date Calculated
+        Day Value
+      source: caDSR
+      cde_id: 3008273
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3008273&version=1.0"
+
+days_to_last_known_disease_status:
+  common:
+    description: >-
+      Time interval from the date of last follow up to the date of initial pathologic
+      diagnosis, represented as a calculated number of days.
+    termDef:
+      term: >-
+        Last Communication Contact Less Initial Pathologic Diagnosis Date Calculated
+        Day Value
+      source: caDSR
+      cde_id: 3008273
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3008273&version=1.0"
+
+days_to_lost_to_followup:
+  common:
+    description: >-
+      The number of days between the date used for index and to the date the patient
+      was lost to follow-up.
+    termDef:
+      term: >-
+        Index Date To Lost To Follow-up Day Count
+      source: caDSR
+      cde_id: 6154721
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154721&version=1.0"
+
+days_to_progression:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the patient's disease
+      progressed.
+    termDef:
+      term: >-
+        Index Date To Progression Day Count
+      source: caDSR
+      cde_id: 6154730
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154730&version=1.0"
+
+days_to_progression_free:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the patient's disease
+      was formally confirmed as progression-free.
+    termDef:
+      term: >-
+        Index Date To Progression Free Day Count
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+days_to_recurrence:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the patient's disease
+      recurred.
+    termDef:
+      term: >-
+        Index Date To Recurrence Day Count
+      source: caDSR
+      cde_id: 6154731
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154731&version=1.0"
+
+days_to_sample_procurement:
+  common:
+    description: >-
+      The number of days from the index date to the date a patient underwent a procedure
+      (e.g. surgical resection) yielding a sample that was eventually used for research.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+days_to_sequencing:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the read group was
+      sequenced.
+    termDef:
+      term: >-
+        Days to Sequencing
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+days_to_treatment_end:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the treatment ended.
+    termDef:
+      term: >-
+        Index Date To Treatment End Day Count
+      source: caDSR
+      cde_id: 6154725
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154725&version=1.0"
+
+days_to_treatment_start:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the treatment started.
+    termDef:
+      term: >-
+        Index Date To Treatment Start Day Count
+      source: caDSR
+      cde_id: 6154726
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154726&version=1.0"
+
+diabetes_treatment_type:
+  common:
+    description: >-
+      Text term used to describe the types of treatment used to manage diabetes.
+    termDef:
+      term: >-
+        Diabetes Mellitus Treatment Type
+      source: caDSR
+      cde_id: 3587247
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3587247&version=1.0"
+
+diagnosis_pathologically_confirmed:
+  common:
+    description: >-
+      The histologic description of tissue or cells confirmed by a pathology review
+      of frozen or formalin fixed slide(s) completed after the diagnostic pathology
+      review of the tumor sample used to extract analyte(s).
+    termDef:
+      term: >-
+        Post-Diagnostic Pathology Review Confirmation
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+disease_response:
+  common:
+    description: >-
+      Code assigned to describe the patient's response or outcome to the disease.
+    termDef:
+      term: >-
+        Disease Response Code
+      source: caDSR
+      cde_id: 5750671
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5750671&version=1.0"
+
+disease_type:
+  common:
+    description: >-
+      The text term used to describe the type of malignant disease, as categorized
+      by the World Health Organization's (WHO) International Classification of Diseases
+      for Oncology (ICD-O).
+    termDef:
+      term: >-
+        ICD-O Disease Diagnosis Category
+      source: caDSR
+      cde_id: 6161017
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161017&version=1.0"
+
+distance_normal_to_tumor:
+  common:
+    description: >-
+      Text term to signify the distance between the tumor tissue and the normal control
+      tissue that was procured for matching normal DNA.
+    termDef:
+      term: >-
+        Tumor To Normal Control Tissue DNA Distance Category
+      source: caDSR
+      cde_id: 3088708
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3088708&version=1.0"
+
+distributor_reference:
+  common:
+    description: >-
+      Distributor reference number for cancer model.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+dlco_ref_predictive_percent:
+  common:
+    description: >-
+      The value, as a percentage of predicted lung volume, measuring the amount of
+      carbon monoxide detected in a patient's lungs.
+    termDef:
+      term: >-
+        Lung Carbon Monoxide Diffusing Capability Test Assessment Predictive Value
+        Percentage Value
+      source: caDSR
+      cde_id: 2180255
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2180255&version=1.0"
+
+ecog_performance_status:
+  common:
+    description: >-
+      The ECOG functional performance status of the patient/participant.
+    termDef:
+      term: >-
+        Performance Status Assessment Eastern Cooperative Oncology Group Scale
+      source: caDSR
+      cde_id: 88
+      cde_version: 5.1
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=88&version=5.1"
+
+encoding:
+  common:
+    description: >-
+      Version of ASCII encoding of quality values found in the file.
+    termDef:
+      term: >-
+        Encoding
+      source: FastQC
+      cde_id:
+      cde_version:
+      term_url: "http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/1%20Basic%20Statistics.html"
+
+enneking_msts_grade:
+  common:
+    description: >-
+      The text term used to describe the surgical grade of the musculoskeletal sarcoma,
+      using the Enneking staging system approved by the Musculoskeletal Tumor Society
+      (MSTS).
+    termDef:
+      term: >-
+        Enneking Musculoskeletal Tumor Society System Surgical Grade
+      source: caDSR
+      cde_id: 6003955
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6003955&version=2.0"
+
+enneking_msts_metastasis:
+  common:
+    description: >-
+      Text term and code that represents the metastatic stage of the musculoskeletal
+      sarcoma, using the Enneking staging system approved by the Musculoskeletal Tumor
+      Society (MSTS).
+    termDef:
+      term: >-
+        Enneking Musculoskeletal Tumor Society Staging System Metastasis Stage
+      source: caDSR
+      cde_id: 6003958
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6003958&version=1.0"
+
+enneking_msts_stage:
+  common:
+    description: >-
+      Text term used to describe the stage of the musculoskeletal sarcoma, using the
+      Enneking staging system approved by the Musculoskeletal Tumor Society (MSTS).
+    termDef:
+      term: >-
+        Enneking Musculoskeletal Tumor Society Staging System Stage
+      source: caDSR
+      cde_id: 6060045
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6060045&version=1.0"
+
+enneking_msts_tumor_site:
+  common:
+    description: >-
+      Text term and code that represents the tumor site of the musculoskeletal sarcoma,
+      using the Enneking staging system approved by the Musculoskeletal Tumor Society
+      (MSTS).
+    termDef:
+      term: >-
+        Enneking Musculoskeletal Tumor Society Staging System Tumor Stage
+      source: caDSR
+      cde_id: 6003957
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6003957&version=1.0"
+
+environmental_tobacco_smoke_exposure:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether a patient was exposed
+      to smoke that is emitted from burning tobacco, including cigarettes, pipes,
+      and cigars. This includes tobacco smoke exhaled by smokers.
+    termDef:
+      term: >-
+        Person Environmental Tobacco Smoke Exposure Indicator
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+esophageal_columnar_dysplasia_degree:
+  common:
+    description: >-
+      Text term to describe the amount of dysplasia found within the benign esophageal
+      columnar mucosa.
+    termDef:
+      term: >-
+        Non-cancerous Esophageal Columnar Mucosa Dysplasia Grade Result
+      source: caDSR
+      cde_id: 3440917
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440917&version=1.0"
+
+esophageal_columnar_metaplasia_present:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether esophageal columnar metaplasia
+      was determined to be present.
+    termDef:
+      term: >-
+        Esophageal Columnar Metaplasia Present Indicator
+      source: caDSR
+      cde_id: 3440218
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440218&version=1.0"
+
+ethnicity:
+  common:
+    description: >-
+      An individual's self-described social and cultural grouping, specifically whether
+      an individual describes themselves as Hispanic or Latino. The provided values
+      are based on the categories defined by the U.S. Office of Management and Business
+      and used by the U.S. Census Bureau.
+    termDef:
+      term: >-
+        Ethnic Group Category Text
+      source: caDSR
+      cde_id: 2192217
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2192217&version=2.0"
+
+exon:
+  common:
+    description: >-
+      Exon number targeted or included in a molecular analysis. If a specific genetic
+      variant is being reported, this property can be used to capture the exon where
+      that variant is located.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Exon Identification Number
+      source: caDSR
+      cde_id: 6142411
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142411&version=1.0"
+
+experiment_name:
+  common:
+    description: >-
+      Submitter-defined name for the experiment.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+experimental_strategy:
+  common:
+    description: >-
+      The sequencing strategy used to generate the data file.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fastq_name:
+  common:
+    description: >-
+      Names of FASTQs.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fev1_ref_post_bronch_percent:
+  common:
+    description: >-
+      The percentage comparison to a normal value reference range of the volume of
+      air that a patient can forcibly exhale from the lungs in one second post-bronchodilator.
+    termDef:
+      term: >-
+        Post Bronchodilator Lung Forced Expiratory Volume 1 Test Lab Percentage Value
+      source: caDSR
+      cde_id: 3302948
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3302948&version=1.0"
+
+fev1_ref_pre_bronch_percent:
+  common:
+    description: >-
+      The percentage comparison to a normal value reference range of the volume of
+      air that a patient can forcibly exhale from the lungs in one second pre-bronchodilator.
+    termDef:
+      term: >-
+        Pre Bronchodilator Lung Forced Expiratory Volume 1 Test Lab Percentage Value
+      source: caDSR
+      cde_id: 3302947
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3302947&version=1.0"
+
+fev1_fvc_post_bronch_percent:
+  common:
+    description: >-
+      Percentage value to represent result of Forced Expiratory Volume in 1 second
+      (FEV1) divided by the Forced Vital Capacity (FVC) post-bronchodilator.
+    termDef:
+      term: >-
+        Post Bronchodilator FEV1/FVC Percent Value
+      source: caDSR
+      cde_id: 3302956
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3302956&version=1.0"
+
+fev1_fvc_pre_bronch_percent:
+  common:
+    description: >-
+      Percentage value to represent result of Forced Expiratory Volume in 1 second
+      (FEV1) divided by the Forced Vital Capacity (FVC) pre-bronchodilator.
+    termDef:
+      term: >-
+        Pre Bronchodilator FEV1/FVC Percent Value
+      source: caDSR
+      cde_id: 3302955
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3302955&version=1.0"
+
+figo_stage:
+  common:
+    description: >-
+      The extent of a cervical or endometrial cancer within the body, especially whether
+      the disease has spread from the original site to other parts of the body, as
+      described by the International Federation of Gynecology and Obstetrics (FIGO)
+      stages.
+    termDef:
+      term: >-
+        Gynecologic Tumor Grouping Cervical Endometrial FIGO 2009 Stage
+      source: caDSR
+      cde_id: 3225684
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3225684&version=1.0"
+
+file_name:
+  common:
+    description: >-
+      The name (or part of a name) of a file (of any type).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+file_size:
+  common:
+    description: >-
+      The size of the data file (object) in bytes.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+file_state:
+  common:
+    description: >-
+      The current state of the data file object.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+first_symptom_prior_to_diagnosis:
+  common:
+    description: >-
+      Text term used to describe the patient's first symptom experienced prior to
+      diagnosis and thought to be related to the disease.
+    termDef:
+      term: >-
+        DiseaseFirst Symptom Type
+      source: caDSR
+      cde_id: 6133605
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6133605&version=1.0"
+
+flow_cell_barcode:
+  common:
+    description: >-
+      Flow cell barcode. Wrong or missing information may affect analysis results.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fragment_maximum_length:
+  common:
+    description: >-
+      Maximum length of the sequenced fragments (e.g., as predicted by Agilent Bioanalyzer).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fragment_mean_length:
+  common:
+    description: >-
+      Mean length of the sequenced fragments (e.g., as predicted by Agilent Bioanalyzer).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fragment_minimum_length:
+  common:
+    description: >-
+      Minimum length of the sequenced fragments (e.g., as predicted by Agilent Bioanalyzer).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fragment_standard_deviation_length:
+  common:
+    description: >-
+      Standard deviation of the sequenced fragments length (e.g., as predicted by
+      Agilent Bioanalyzer).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+freezing_method:
+  common:
+    description: >-
+      Text term that represents the method used for freezing the sample.
+    termDef:
+      term: >-
+        Tissue Sample Freezing Method Type
+      source: caDSR
+      cde_id: 5432607
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432607&version=1.0"
+
+gastric_esophageal_junction_involvement:
+  common:
+    description: >-
+      The yes/no/unknown/not reported indicator used to describe whether the tumor
+      is located across the gastroesophageal junction.
+    termDef:
+      term: >-
+        Esophageal Tumor Across Gastroesophageal Junction Indicator
+      source: caDSR
+      cde_id: 6059632
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6059632&version=1.0"
+
+gender:
+  common:
+    description: >-
+      Text designations that identify gender. Gender is described as the assemblage
+      of properties that distinguish people on the basis of their societal roles.
+      [Explanatory Comment 1: Identification of gender is based upon self-report and
+      may come from a form, questionnaire, interview, etc.]
+    termDef:
+      term: >-
+        Person Gender Text Type
+      source: caDSR
+      cde_id: 2200604
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2200604&version=3.0"
+
+gene_symbol:
+  common:
+    description: >-
+      The text term used to describe a gene targeted or included in molecular analysis.
+      For rearrangements, this is shold be used to represent the reference gene.
+    termDef:
+      term: >-
+        Molecular Analysis Gene Symbol Code
+      source: caDSR
+      cde_id: 6142392
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142392&version=1.0"
+
+gleason_grade_group:
+  common:
+    description: >-
+      The text term used to describe the overall grouping of grades defined by the
+      Gleason grading classification, which is used to determine the aggressiveness
+      of prostate cancer. Note that this grade describes the entire prostatectomy
+      specimen and is not specific to the sample used for sequencing.
+    termDef:
+      term: >-
+        Gleason Score Grading System Group Category
+      source: caDSR
+      cde_id: 5918370
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5918370&version=1.0"
+
+goblet_cells_columnar_mucosa_present:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether goblet cells were determined
+      to be present in the esophageal columnar mucosa.
+    termDef:
+      term: >-
+        Esophageal Columnar Mucosa Goblet Cell Present Indicator
+      source: caDSR
+      cde_id: 3440219
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440219&version=1.0"
+
+gross_tumor_weight:
+  common:
+    description: >-
+      Numeric value used to describe the gross pathologic tumor weight, measured in
+      grams.
+    termDef:
+      term: >-
+        Tumor Tissue Weight Number
+      source: caDSR
+      cde_id: 6133606
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6133606&version=1.0"
+
+growth_rate:
+  common:
+    description: >-
+      Rate at which the model grows, measured as hours to time to split.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+height:
+  common:
+    description: >-
+      The height of the patient in centimeters.
+    termDef:
+      term: >-
+        Patient Height Measurement
+      source: caDSR
+      cde_id: 649
+      cde_version: 4.1
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=649&version=4.1"
+
+hepatitis_sustained_virological_response:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the patient received treatment
+      for a risk factor the patient had at the time of or prior to their diagnosis.
+    termDef:
+      term: >-
+        Viral Hepatitis Sustained Virologic Response Post Treatment Indicator
+      source: caDSR
+      cde_id: 6423783
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6423783&version=1.0"
+
+histone_family:
+  common:
+    description: >-
+      The text term used to describe the family, or classification of a group of basic
+      proteins found in chromatin, called histones.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Histone Family Category
+      source: caDSR
+      cde_id: 6142511
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142511&version=1.0"
+
+histone_variant:
+  common:
+    description: >-
+      The text term used to describe a specific histone variants, which are proteins
+      that substitute for the core canonical histones.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Histone Family Variant Type
+      source: caDSR
+      cde_id: 6142515
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142515&version=1.0"
+
+hpv_positive_type:
+  common:
+    description: >-
+      Text classification to represent the strain or type of human papillomavirus
+      identified in an individual.
+    termDef:
+      term: >-
+        Human Papillomavirus Type
+      source: caDSR
+      cde_id: 2922649
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2922649&version=1.0"
+
+icd_10_code:
+  common:
+    description: >-
+      Alphanumeric value used to describe the  disease code from the tenth version
+      of the International Classification of Disease (ICD-10).
+    termDef:
+      term: >-
+        International Classification of Disease, Tenth Revision Code
+      source: caDSR
+      cde_id: 3226287
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3226287&version=2.0"
+
+igcccg_stage:
+  common:
+    description: >-
+      The text term used to describe the International Germ Cell Cancer Collaborative
+      Group (IGCCCG), a grouping used to further classify metastatic testicular tumors.
+    termDef:
+      term: >-
+        IGCCCG Stage Group
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+includes_spike_ins:
+  common:
+    description: >-
+      Spike-in included?
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+index_date:
+  common:
+    description: >-
+      The text term used to describe the reference or anchor date used when for date
+      obfuscation, where a single date is obscurred by creating one or more date ranges
+      in relation to this date.
+    termDef:
+      term: >-
+        Index Date Type
+      source: caDSR
+      cde_id: 6154722
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6154722&version=1.0"
+
+initial_disease_status:
+  common:
+    description: >-
+      The text term used to describe the status of the patient's malignancy when the
+      treatment began.
+    termDef:
+      term: >-
+        Initial Disease Status Type
+      source: caBIG
+      cde_id:
+      cde_version:
+      term_url:
+
+initial_weight:
+  common:
+    description: >-
+      Numeric value that represents the initial weight of the sample, measured in
+      milligrams.
+    termDef:
+      term: >-
+        Tissue Sample Initial Weight Milligram Value
+      source: caDSR
+      cde_id: 5432605
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432605&version=1.0"
+
+inpc_grade:
+  common:
+    description: >-
+      Text term used to describe the classification of neuroblastic differentiation
+      within neuroblastoma tumors, as defined by the International Neuroblastoma Pathology
+      Classification (INPC).
+    termDef:
+      term: >-
+        International Neuroblastoma Pathology Classification Grade Category
+      source: caDSR
+      cde_id: 6133602
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6133602&version=1.0"
+
+inpc_histologic_group:
+  common:
+    description: >-
+      The text term used to describe the classification of neuroblastomas distinguishing
+      between favorable and unfavorable histologic groups. The histologic score, defined
+      by the International Neuroblastoma Pathology Classification (INPC), is based
+      on age, mitosis-karyorrhexis index (MKI), stromal content and degree of tumor
+      cell differentiation.
+    termDef:
+      term: >-
+        International Neuroblastoma Pathology Classification Histology Score Category
+      source: caDSR
+      cde_id: 4616372
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4616372&version=1.0"
+
+inrg_stage:
+  common:
+    description: >-
+      The text term used to describe the staging classification of neuroblastic tumors,
+      as defined by the International Neuroblastoma Risk Group (INRG).
+    termDef:
+      term: >-
+        Patient International Neuroblastoma Risk Group Classification System Stage
+      source: caDSR
+      cde_id: 5777238
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5777238&version=1.0"
+
+inss_stage:
+  common:
+    description: >-
+      Text term used to describe the staging classification of neuroblastic tumors,
+      as defined by the International Neuroblastoma Staging System (INSS).
+    termDef:
+      term: >-
+        International Neuroblastoma Staging System Stage
+      source: caDSR
+      cde_id: 6133603
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6133603&version=1.0"
+
+instrument_model:
+  common:
+    description: >-
+      Specific model of sequencing instrument used.
+    termDef:
+      term: >-
+        Tissue Sample Intermediate Dimension Millimeter Measurement
+      source: caDSR
+      cde_id: 5432604
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432604&version=1.0"
+
+intermediate_dimension:
+  common:
+    description: >-
+      Intermediate dimension of the sample, in millimeters.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+international_prognostic_index:
+  common:
+    description: >-
+      The text term used to describe the International Prognostic Index, which classifies
+      the prognosis of patients with aggressive non-Hodgkin's lymphoma.
+    termDef:
+      term: >-
+        Patient International Prognostic Index Risk Category
+      source: caDSR
+      cde_id: 2500234
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2500234&version=1.0"
+
+intron:
+  common:
+    description: >-
+      Intron number targeted or included in molecular analysis. If a specific genetic
+      variant is being reported, this property can be used to capture the intron where
+      that variant is located.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Intron Identifier
+      source: caDSR
+      cde_id: 6514355
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6514355&version=1.0"
+
+irs_group:
+  common:
+    description: >-
+      Text term used to describe the classification of rhabdomyosarcoma tumors, as
+      defined by the Intergroup Rhabdomyosarcoma Study (IRS).
+    termDef:
+      term: >-
+        Intergroup Rhabdomyosarcoma Study Group Stage
+      source: caDSR
+      cde_id: 6141658
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6141658&version=1.0"
+
+irs_stage:
+  common:
+    description: >-
+      The text term used to describe the classification of rhabdomyosarcoma tumors,
+      as defined by the Intergroup Rhabdomyosarcoma Study (IRS).
+    termDef:
+      term: >-
+        Rhabdomyosarcoma Diagnosis Assessment Stage
+      source: caDSR
+      cde_id: 5162089
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5162089&version=1.0"
+
+is_ffpe:
+  common:
+    description: >-
+      Indicator to signify whether or not the tissue sample was fixed in formalin
+      and embedded in paraffin (FFPE).
+    termDef:
+      term: >-
+        Specimen Processing Formalin Fixed Paraffin Embedded Tissue Indicator
+      source: caDSR
+      cde_id: 4170557
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4170557&version=1.0"
+
+is_paired_end:
+  common:
+    description: >-
+      Are the reads paired end?
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+ishak_fibrosis_score:
+  common:
+    description: >-
+      The text term used to describe the classification of the histopathologic degree
+      of liver damage.
+    termDef:
+      term: >-
+        Liver Fibrosis Ishak Score Category
+      source: caDSR
+      cde_id: 3182621
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3182621&version=1.0"
+
+iss_stage:
+  common:
+    description: >-
+      The multiple myeloma disease stage at diagnosis.
+    termDef:
+      term: >-
+        Multiple Myeloma Disease Stage Diagnosis Status
+      source: caDSR
+      cde_id: 2465385
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2465385&version=1.0"
+
+karnofsky_performance_status:
+  common:
+    description: >-
+      Text term used to describe the classification used of the functional capabilities
+      of a person.
+    termDef:
+      term: >-
+        Karnofsky Performance Status Score
+      source: caDSR
+      cde_id: 2003853
+      cde_version: 4.2
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2003853&version=4.2"
+
+laboratory_test:
+  common:
+    description: >-
+      The text term used to describe the medical testing used to diagnose, treat or
+      further understand a patient's disease.
+    termDef:
+      term: >-
+        Laboratory Test Type
+      source: caBIG
+      cde_id:
+      cde_version:
+      term_url:
+
+lane_number:
+  common:
+    description: >-
+      The basic machine unit for sequencing. For Illumina machines, this reflects
+      the physical lane number. Wrong or missing information may affect analysis results.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+largest_extrapelvic_peritoneal_focus:
+  common:
+    description: >-
+      The text term used to describe the diameter of the largest focus originating
+      outside of the pelvic peritoneal region.
+    termDef:
+      term: >-
+        Neoplasm Largest External Pelvic Peritoneal Focus Diameter Measurement
+      source: caDSR
+      cde_id: 6690680
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6690680&version=1.0"
+
+last_known_disease_status:
+  common:
+    description: >-
+      Text term that describes the last known state or condition of an individual's
+      neoplasm.
+    termDef:
+      term: >-
+        Person Last Known Neoplasm Status
+      source: caDSR
+      cde_id: 5424231
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2759550&version=1.0"
+
+laterality:
+  common:
+    description: >-
+      For tumors in paired organs, designates the side on which the cancer originates.
+    termDef:
+      term: >-
+        Primary Tumor Laterality
+      source: caDSR
+      cde_id: 827
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=827&version=3.0"
+
+library_strategy:
+  common:
+    description: >-
+      Library strategy.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_selection:
+  common:
+    description: >-
+      Library Selection Method
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_name:
+  common:
+    description: >-
+      Name of the library.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_preparation_kit_name:
+  common:
+    description: >-
+      Name of Library Preparation Kit
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_preparation_kit_vendor:
+  common:
+    description: >-
+      Vendor of Library Preparation Kit
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_preparation_kit_catalog_number:
+  common:
+    description: >-
+      Catalog of Library Preparation Kit
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_preparation_kit_version:
+  common:
+    description: >-
+      Version of Library Preparation Kit
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+library_strand:
+  common:
+    description: >-
+      Library stranded-ness.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+loci_abnormal_count:
+  common:
+    description: >-
+      Numeric value used to describe the number of loci determined to be abnormal.
+    termDef:
+      term: >-
+        Abnormal Locus Testing Count
+      source: caDSR
+      cde_id: 6074182
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6074182&version=1.0"
+
+loci_count:
+  common:
+    description: >-
+      Numeric value used to describe the number of loci tested.
+    termDef:
+      term: >-
+        Locus Testing Count
+      source: caDSR
+      cde_id: 6074183
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6074183&version=1.0"
+
+locus:
+  common:
+    description: >-
+      Alphanumeric value used to describe the locus of a specific genetic variant.
+      Example: NM_001126114.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Locus Location Text
+      source: caDSR
+      cde_id: 6142506
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142506&version=1.0"
+
+longest_dimension:
+  common:
+    description: >-
+      Numeric value that represents the longest dimension of the sample, measured
+      in millimeters.
+    termDef:
+      term: >-
+        Tissue Sample Longest Dimension Millimeter Measurement
+      source: caDSR
+      cde_id: 5432602
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432602&version=1.0"
+
+lost_to_followup:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether a patient was unable to
+      be contacted or seen for follow-up information.
+    termDef:
+      term: >-
+        Patient Lost Follow-up Indicator
+      source: caDSR
+      cde_id: 6161018
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161018&version=1.0"
+
+lymph_nodes_positive:
+  common:
+    description: >-
+      The number of lymph nodes involved with disease as determined by pathologic
+      examination.
+    termDef:
+      term: >-
+        Lymph Node(s) Positive Number
+      source: caDSR
+      cde_id: 89
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=89&version=3.0"
+
+lymph_nodes_tested:
+  common:
+    description: >-
+      The number of lymph nodes tested to determine whether lymph nodes were  involved
+      with disease as determined by a pathologic examination.
+    termDef:
+      term: >-
+        Lymph Node Examined Count
+      source: caDSR
+      cde_id: 3
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3&version=3.0"
+
+lymphatic_invasion_present:
+  common:
+    description: >-
+      A yes/no indicator to ask if small or thin-walled vessel invasion is present,
+      indicating lymphatic involvement
+    termDef:
+      term: >-
+        Lymphatic/Small vessel Invasion Ind
+      source: caDSR
+      cde_id: 64171
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=64171&version=3.0"
+
+masaoka_stage:
+  common:
+    description: >-
+      The text term used to describe the Masaoka staging system, a classification
+      that defines prognostic indicators for thymic malignancies and predicts tumor
+      recurrence.
+    termDef:
+      term: >-
+        Thymoma Masaoka Stage
+      source: caDSR
+      cde_id: 3952848
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3952848&version=1.0"
+
+md5sum:
+  common:
+    description: >-
+      The 128-bit hash value expressed as a 32 digit hexadecimal number (in lower
+      case) used as a file's digital fingerprint.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+mean_coverage:
+  common:
+    description: >-
+      Mean coverage for whole genome sequencing, or mean target coverage for whole
+      exome and targeted sequencing, collected from Picard Tools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+medulloblastoma_molecular_classification:
+  common:
+    description: >-
+      The text term used to describe the classification of medulloblastoma tumors
+      based on molecular features.
+    termDef:
+      term: >-
+        Medulloblastoma Genetic Finding Subclass Category
+      source: caDSR
+      cde_id: 6002209
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6002209&version=1.0"
+
+menopause_status:
+  common:
+    description: >-
+      Text term used to describe the patient's menopause status.
+    termDef:
+      term: >-
+        Patient Menopause Status
+      source: caDSR
+      cde_id: 2434914
+      cde_version: 1.1
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2434914&version=1.1"
+
+metastasis_at_diagnosis:
+  common:
+    description: >-
+      The text term used to describe the extent of metastatic disease present at diagnosis.
+    termDef:
+      term: >-
+        Metastatic Disease at Diagnosis Indicator
+      source: caDSR
+      cde_id: 6133614
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6133614&version=1.0"
+
+metastasis_at_diagnosis_site:
+  common:
+    description: >-
+      Text term to identify an anatomic site in which metastatic disease involvement
+      is found.
+    termDef:
+      term: >-
+        Metastatic Disease Anatomic Site Name
+      source: caDSR
+      cde_id: 3029815
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3029815&version=1.0"
+
+method_of_diagnosis:
+  common:
+    description: >-
+      Text term used to describe the method used to confirm the patients malignant
+      diagnosis.
+    termDef:
+      term: >-
+        Disease Method of Diagnosis Type
+      source: caDSR
+      cde_id: 6161031
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161031&version=1.0"
+
+method_of_sample_procurement:
+  common:
+    description: >-
+      The method used to procure the sample used to extract analyte(s).
+    termDef:
+      term: >-
+        Method of Sample Procurement
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+micropapillary_features:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether micropapillary features
+      were determined to be present.
+    termDef:
+      term: >-
+        Tumor Micropapillary Features Present Status
+      source: caDSR
+      cde_id: 6068784
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6068784&version=1.0"
+
+mismatch_repair_mutation:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the mutation included
+      in molecular testing was known to have an affect on the mismatch repair process.
+    termDef:
+      term: >-
+        Gene Mutation Mismatch Repair Indicator
+      source: caDSR
+      cde_id: 6142534
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142534&version=1.0"
+
+mitotic_count:
+  common:
+    description: >-
+      The number of mitoses identified under the microscope in tumors. The method
+      of counting varies, according to the specific tumor examined. Usually, the mitotic
+      count is determined based on the number of mitoses per high power field (40X)
+      or 10 high power fields.
+    termDef:
+      term: >-
+        Mitotic Count
+      source: NCIt
+      cde_id: C47864
+      cde_version: 20.05a
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C47864"
+
+mitosis_karyorrhexis_index:
+  common:
+    description: >-
+      Text term that represents the component of the International Neuroblastoma Pathology
+      Classification (INPC) for mitosis-karyorrhexis index (MKI).
+    termDef:
+      term: >-
+        International Neuroblastoma Pathology Classification Mitosis Karyorrhexis
+        Index Category
+      source: caDSR
+      cde_id: 4616412
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4616412&version=1.0"
+
+molecular_analysis_method:
+  common:
+    description: >-
+      The text term used to describe the method used for molecular analysis.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Method Name
+      source: caDSR
+      cde_id: 6142401
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142401&version=1.0"
+
+molecular_consequence:
+  common:
+    description: >-
+      The text term used to describe the molecular consequence of genetic variation.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Outcome Consequence Type
+      source: caDSR
+      cde_id: 6142403
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142403&version=1.0"
+
+morphology:
+  common:
+    description: >-
+      The third edition of the International Classification of Diseases for Oncology,
+      published in 2000 used principally in tumor and cancer registries for coding
+      the site (topography) and the histology (morphology) of neoplasms. The study
+      of the structure of the cells and their arrangement to constitute tissues and,
+      finally, the association among these to form organs. In pathology, the microscopic
+      process of identifying normal and abnormal morphologic characteristics in tissues,
+      by employing various cytochemical and immunocytochemical stains. A system of
+      numbered categories for representation of data.
+    termDef:
+      term: >-
+        International Classification of Diseases for Oncology, Third Edition ICD-O-3
+        Histology Code
+      source: caDSR
+      cde_id: 3226275
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3226275&version=1.0"
+
+multiplex_barcode:
+  common:
+    description: >-
+      The barcode/index sequence used. Wrong or missing information may affect analysis
+      results.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+non_nodal_regional_disease:
+  common:
+    description: >-
+      The text term used to describe whether the patient had non-nodal regional disease.
+    termDef:
+      term:
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+non_nodal_tumor_deposits:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe the presence of tumor deposits
+      in the pericolic or perirectal fat or in adjacent mesentery away from the leading
+      edge of the tumor.
+    termDef:
+      term: >-
+        Resected Biospecimen NonNodal Tumor Deposits Indicator
+      source: caDSR
+      cde_id: 3107051
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3107051&version=1.0"
+
+normal_tumor_genotype_snp_match:
+  common:
+    description: >-
+      Text term that represents whether or not the genotype of the normal tumor matches
+      or if the data is not available.
+    termDef:
+      term: >-
+        Normal Tumor Genotype Match Indicator
+      source: caDSR
+      cde_id: 4588156
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4588156&version=1.0"
+
+no_matched_normal_low_pass_wgs:
+  common:
+    description: >-
+      There will be no matched normal low pass WGS aliquots for this case that can
+      be used for variant calling purposes. The GDC may elect to use a single tumor
+      calling pipeline to process this data.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+no_matched_normal_targeted_sequencing:
+  common:
+    description: >-
+      There will be no matched normal Targeted Sequencing aliquots for this case that
+      can be used for variant calling purposes. The GDC may elect to use a single
+      tumor calling pipeline to process this data.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+no_matched_normal_wgs:
+  common:
+    description: >-
+      There will be no matched normal WGS aliquots for this case that can be used
+      for variant calling purposes. The GDC may elect to use a single tumor calling
+      pipeline to process this data.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+no_matched_normal_wxs:
+  common:
+    description: >-
+      There will be no matched normal WXS aliquots for this case that can be used
+      for variant calling purposes. The GDC may elect to use a single tumor calling
+      pipeline to process this data.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+number_of_cycles:
+  common:
+    description: >-
+      The numeric value used to describe the number of cycles of a specific treatment
+      or regimen the patient received.
+    termDef:
+      term: >-
+        Treatment Number of Cycles Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+number_proliferating_cells:
+  common:
+    description: >-
+      Numeric value that represents the count of proliferating cells determined during
+      pathologic review of the sample slide(s).
+    termDef:
+      term: >-
+        Pathology Review Slide Proliferating Cell Count
+      source: caDSR
+      cde_id: 5432636
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432636&version=1.0"
+
+occupation_duration_years:
+  common:
+    description: >-
+      The number of years a patient worked in a specific occupation.
+    termDef:
+      term: >-
+        Person Occupation Years Number
+      source: caDSR
+      cde_id: 2435424
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2435424&version=1.0"
+
+oct_embedded:
+  common:
+    description: >-
+      Indicator of whether or not the sample was embedded in Optimal Cutting Temperature
+      (OCT) compound.
+    termDef:
+      term: >-
+        Tissue Sample Optimal Cutting Temperature Compound Embedding Indicator
+      source: caDSR
+      cde_id: 5432538
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432538&version=1.0"
+
+ovarian_specimen_status:
+  common:
+    description: >-
+      The text term used to describe the physical condition of the involved ovary.
+    termDef:
+      term: >-
+        Ovarian Specimen Integrity Status
+      source: caDSR
+      cde_id: 6690671
+      cde_version:
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6690671&version=1.0"
+
+ovarian_surface_involvement:
+  common:
+    description: >-
+      The text term that describes whether the surface tissue (outer boundary) of
+      the ovary shows evidence of involvement or presence of cancer.
+    termDef:
+      term: >-
+        Ovary Surface Involvement Indicator
+      source: caDSR
+      cde_id: 6690674
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6690674&version=1.0"
+
+pack_years_smoked:
+  common:
+    description: >-
+      Numeric computed value to represent lifetime tobacco exposure defined as number
+      of cigarettes smoked per day x number of years smoked divided by 20.
+    termDef:
+      term: >-
+        Person Cigarette Smoking History Pack Year Value
+      source: caDSR
+      cde_id: 2955385
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2955385&version=1.0"
+
+pairs_on_diff_chr:
+  common:
+    description: >-
+      Pairs on different chromosomes collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+pancreatitis_onset_year:
+  common:
+    description: >-
+      Numeric value to represent the year that the patient was diagnosed with clinical
+      chronic pancreatitis.
+    termDef:
+      term: >-
+        Chronic Pancreatitis Diagnosis Year Number
+      source: caDSR
+      cde_id: 3457763
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3457763&version=1.0"
+
+passage_count:
+  common:
+    description: >-
+      Number of passages (splits) between the original tissue and this model.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+pathogenicity:
+  common:
+    description: >-
+      The text used to describe a variant's level of involvement in the cause of the
+      patient's disease according to the standards outlined by the American College
+      of Medical Genetics and Genomics (ACMG).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+percent_eosinophil_infiltration:
+  common:
+    description: >-
+      Numeric value to represent the percentage of infiltration by eosinophils in
+      a tumor sample or specimen.
+    termDef:
+      term: >-
+        Specimen Eosinophilia Percentage Value
+      source: caDSR
+      cde_id: 2897700
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2897700&version=2.0"
+
+percent_gc_content:
+  common:
+    description: >-
+      The overall %GC of all bases in all sequences.
+    termDef:
+      term: >-
+        %GC
+      source: FastQC
+      cde_id:
+      cde_version:
+      term_url: "http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/1%20Basic%20Statistics.html"
+
+percent_granulocyte_infiltration:
+  common:
+    description: >-
+      Numeric value to represent the percentage of infiltration by granulocytes in
+      a tumor sample or specimen.
+    termDef:
+      term: >-
+        Specimen Granulocyte Infiltration Percentage Value
+      source: caDSR
+      cde_id: 2897705
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2897705&version=2.0"
+
+percent_inflam_infiltration:
+  common:
+    description: >-
+      Numeric value to represent local response to cellular injury, marked by capillary
+      dilatation, edema and leukocyte infiltration; clinically, inflammation is manifest
+      by reddness, heat, pain, swelling and loss of function, with the need to heal
+      damaged tissue.
+    termDef:
+      term: >-
+        Specimen Inflammation Change Percentage Value
+      source: caDSR
+      cde_id: 2897695
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2897695&version=1.0"
+
+percent_lymphocyte_infiltration:
+  common:
+    description: >-
+      Numeric value to represent the percentage of infiltration by lymphocytes in
+      a solid tissue sample or specimen.
+    termDef:
+      term: >-
+        Specimen Lymphocyte Infiltration Percentage Value
+      source: caDSR
+      cde_id: 2897710
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2897710&version=2.0"
+
+percent_monocyte_infiltration:
+  common:
+    description: >-
+      Numeric value to represent the percentage of monocyte infiltration in a sample
+      or specimen.
+    termDef:
+      term: >-
+        Specimen Monocyte Infiltration Percentage Value
+      source: caDSR
+      cde_id: 5455535
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5455535&version=1.0"
+
+percent_necrosis:
+  common:
+    description: >-
+      Numeric value to represent the percentage of cell death in a malignant tumor
+      sample or specimen.
+    termDef:
+      term: >-
+        Malignant Neoplasm Necrosis Percentage Value
+      source: caDSR
+      cde_id: 2841237
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2841237&version=1.0"
+
+percent_neutrophil_infiltration:
+  common:
+    description: >-
+      Numeric value to represent the percentage of infiltration by neutrophils in
+      a tumor sample or specimen.
+    termDef:
+      term: >-
+        Malignant Neoplasm Neutrophil Infiltration Percentage Cell Value
+      source: caDSR
+      cde_id: 2841267
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2841267&version=1.0"
+
+percent_normal_cells:
+  common:
+    description: >-
+      Numeric value to represent the percentage of normal cell content in a malignant
+      tumor sample or specimen.
+    termDef:
+      term: >-
+        Malignant Neoplasm Normal Cell Percentage Value
+      source: caDSR
+      cde_id: 2841233
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2841233&version=1.0"
+
+percent_stromal_cells:
+  common:
+    description: >-
+      Numeric value to represent the percentage of reactive cells that are present
+      in a malignant tumor sample or specimen but are not malignant such as fibroblasts,
+      vascular structures, etc.
+    termDef:
+      term: >-
+        Malignant Neoplasm Stromal Cell Percentage Value
+      source: caDSR
+      cde_id: 2841241
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2841241&version=1.0"
+
+percent_tumor_cells:
+  common:
+    description: >-
+      Numeric value that represents the percentage of infiltration by tumor cells
+      in a sample.
+    termDef:
+      term: >-
+        Specimen Tumor Cell Percentage Value
+      source: caDSR
+      cde_id: 5432686
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432686&version=1.0"
+
+percent_tumor_invasion:
+  common:
+    description: >-
+      The percentage of tumor cells spread locally in a malignant neoplasm through
+      infiltration or destruction of adjacent tissue.
+    termDef:
+      term:
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+percent_tumor_nuclei:
+  common:
+    description: >-
+      Numeric value to represent the percentage of tumor nuclei in a malignant neoplasm
+      sample or specimen.
+    termDef:
+      term: >-
+        Malignant Neoplasm Neoplasm Nucleus Percentage Cell Value
+      source: caDSR
+      cde_id: 2841225
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2841225&version=1.0"
+
+perineural_invasion_present:
+  common:
+    description: >-
+      a yes/no indicator to ask if perineural invasion or infiltration of tumor or
+      cancer is present.
+    termDef:
+      term: >-
+        Tumor Perineural Invasion Ind
+      source: caDSR
+      cde_id: 64181
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=64181&version=3.0"
+
+peripancreatic_lymph_nodes_positive:
+  common:
+    description: >-
+      Enumerated numeric value or range of values used to describe the number of peripancreatic
+      lymph nodes determined to be positive.
+    termDef:
+      term: >-
+        Peripancreatic Lymph Node Positive Finding Range
+      source: caDSR
+      cde_id: 5983082
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5983082&version=2.0"
+
+peripancreatic_lymph_nodes_tested:
+  common:
+    description: >-
+      The total number of peripancreatic lymph nodes tested for the presence of pancreatic
+      cancer cells.
+    termDef:
+      term: >-
+        Peripancreatic Lymph Node Examined Count
+      source: caDSR
+      cde_id: 6050944
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6050944&version=1.0"
+
+peritoneal_fluid_cytological_status:
+  common:
+    description: >-
+      The text term used to describe the malignant status of the peritoneal fluid
+      determined by cytologic testing.
+    termDef:
+      term: >-
+        Peritoneal Ascites Cytological Procedure Status
+      source: caDSR
+      cde_id: 6690681
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6690681&version=1.0"
+
+plate_name:
+  common:
+    description: >-
+      User specified identifier of the plate used to prepare the sample for analysis.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+plate_well:
+  common:
+    description: >-
+      User specified identifier for the specific well of the plate used to prepare
+      the sample for analysis.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+platform:
+  common:
+    description: >-
+      Name of the platform used to obtain data.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+ploidy:
+  common:
+    description: >-
+      Text term used to describe the number of sets of homologous chromosomes.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Ploidy Result Type
+      source: caDSR
+      cde_id: 6142527
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142527&version=1.0"
+
+portion_number:
+  common:
+    description: >-
+      Numeric value that represents the sequential number assigned to a portion of
+      the sample.
+    termDef:
+      term: >-
+        Biospecimen Portion Sequence Number
+      source: caDSR
+      cde_id: 5432711
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432711&version=1.0"
+
+portion_weight:
+  common:
+    description: >-
+      Numeric value that represents the sample portion weight, measured in milligrams.
+    termDef:
+      term: >-
+        Biospecimen Portion Weight Milligram Value
+      source: caDSR
+      cde_id: 5432593
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432593&version=1.0"
+
+premature_at_birth:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the patient was premature
+      (less than 37 weeks gestation) at birth.
+    termDef:
+      term: >-
+        Premature Infant Birth Status Indicator
+      source: caDSR
+      cde_id: 6010765
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6010765&version=1.0"
+
+preservation_method:
+  common:
+    description: >-
+      Text term that represents the method used to preserve the sample.
+    termDef:
+      term: >-
+        Tissue Sample Preservation Method Type
+      source: caDSR
+      cde_id: 5432521
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432521&version=1.0"
+
+primary_diagnosis:
+  common:
+    description: >-
+      Text term used to describe the patient's histologic diagnosis, as described
+      by the World Health Organization's (WHO) International Classification of Diseases
+      for Oncology (ICD-O).
+    termDef:
+      term: >-
+        ICD-O Primary Disease Diagnosis Type
+      source: caDSR
+      cde_id: 6161032
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161032&version=1.0"
+
+primary_gleason_grade:
+  common:
+    description: >-
+      The text term used to describe the primary Gleason score, which describes the
+      pattern of cells making up the largest area of the tumor. The primary and secondary
+      Gleason pattern grades are combined to determine the patient's Gleason grade
+      group, which is used to determine the aggresiveness of prostate cancer. Note
+      that this grade describes the entire prostatectomy specimen and is not specific
+      to the sample used for sequencing.
+    termDef:
+      term: >-
+        Gleason Primary Score For Prostate Cancer Category
+      source: caDSR
+      cde_id: 5936800
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5936800&version=1.0"
+
+primary_site:
+  common:
+    description: >-
+      The text term used to describe the primary site of disease, as categorized by
+      the World Health Organization's (WHO) International Classification of Diseases
+      for Oncology (ICD-O). This categorization groups cases into general categories.
+      Reference tissue_or_organ_of_origin on the diagnosis node for more specific
+      primary sites of disease.
+    termDef:
+      term: >-
+        ICD-O Primary Anatomic Site Category
+      source: caDSR
+      cde_id: 6161019
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161019&version=1.0"
+
+prior_malignancy:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe the patient's history of prior
+      cancer diagnosis.
+    termDef:
+      term: >-
+        Prior Cancer Diagnosis Occurrence Description Text
+      source: caDSR
+      cde_id: 3382736
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3382736&version=2.0"
+
+prior_treatment:
+  common:
+    description: >-
+      A yes/no/unknown/not applicable indicator related to the administration of therapeutic
+      agents received before the body specimen was collected.
+    termDef:
+      term: >-
+        Therapeutic Procedure Prior Specimen Collection Administered Yes No Unknown
+        Not Applicable Indicator
+      source: caDSR
+      cde_id: 4231463
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4231463&version=1.0"
+
+progression_or_recurrence:
+  common:
+    description: >-
+      Yes/No/Unknown indicator to identify whether a patient has had a new tumor event
+      after initial treatment.
+    termDef:
+      term: >-
+        New Neoplasm Event Post Initial Therapy Indicator
+      source: caDSR
+      cde_id: 3121376
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3121376&version=1.0"
+
+progression_or_recurrence_anatomic_site:
+  common:
+    description: >-
+      The text term used to describe the anatomic site of the progressive or recurrent
+      disease.
+    termDef:
+      term: >-
+        Progression or Recurrence Anatomic Site Category
+      source: caDSR
+      cde_id: 6161026
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161026&version=1.0"
+
+progression_or_recurrence_type:
+  common:
+    description: >-
+      The text term used to describe the type of progressive or recurrent disease
+      or relapsed disease.
+    termDef:
+      term: >-
+        Progression or Recurrence Description Type
+      source: caDSR
+      cde_id: 6142385
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142385&version=1.0"
+
+project_id:
+  common:
+    description: >-
+      Unique ID for any specific defined piece of work that is undertaken or attempted
+      to meet a single requirement.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proportion_base_mismatch:
+  common:
+    description: >-
+      Proportion of mismatched bases collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proportion_coverage_10x:
+  common:
+    description: >-
+      Proportion of all reference bases for whole genome sequencing, or targeted bases
+      for whole exome and targeted sequencing, that achieves 10X or greater coverage
+      from Picard Tools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proportion_coverage_30x:
+  common:
+    description: >-
+      Proportion of all reference bases for whole genome sequencing, or targeted bases
+      for whole exome and targeted sequencing, that achieves 30X or greater coverage
+      from Picard Tools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proportion_reads_duplicated:
+  common:
+    description: >-
+      Proportion of duplicated reads collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proportion_reads_mapped:
+  common:
+    description: >-
+      Proportion of mapped reads collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proportion_targets_no_coverage:
+  common:
+    description: >-
+      Proportion of targets that did not reach 1X coverage over any base from Picard
+      Tools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+qc_metric_state:
+  common:
+    description: >-
+      State classification given by FASTQC for the metric. Metric specific details
+      about the states are available on their website.
+    termDef:
+      term: >-
+        QC Metric State
+      source: FastQC
+      cde_id:
+      cde_version:
+      term_url: "http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/"
+
+race:
+  common:
+    description: >-
+      An arbitrary classification of a taxonomic group that is a division of a species.
+      It usually arises as a consequence of geographical isolation within a species
+      and is characterized by shared heredity, physical attributes and behavior, and
+      in the case of humans, by common history, nationality, or geographic distribution.
+      The provided values are based on the categories defined by the U.S. Office of
+      Management and Business and used by the U.S. Census Bureau.
+    termDef:
+      term: >-
+        Race Category Text
+      source: caDSR
+      cde_id: 2192199
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2192199&version=1.0"
+
+radon_exposure:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the patient was exposed
+      to radon.
+    termDef:
+      term: >-
+        Person Lifetime Risk Radon Exposure Indicator
+      source: caDSR
+      cde_id: 2816352
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2816352&version=1.0"
+
+read_length:
+  common:
+    description: >-
+      The length of the reads.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+read_group_name:
+  common:
+    description: >-
+      The name of the read group.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+read_pair_number:
+  common:
+    description: >-
+      Denotes whether a submitted FASTQ file contains forward (R1) or reverse (R2)
+      reads for paired-end sequencing.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+reason_treatment_ended:
+  common:
+    description: >-
+      The text term used to describe the reason a specific treatment or regimen ended.
+    termDef:
+      term: >-
+        Treatment Ended Reason
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+reflux_treatment_type:
+  common:
+    description: >-
+      Text term used to describe the types of treatment used to manage gastroesophageal
+      reflux disease (GERD).
+    termDef:
+      term: >-
+        Gastroesophageal Reflux Disease Treatment Type
+      source: caDSR
+      cde_id: 3440206
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3440206&version=1.0"
+
+regimen_or_line_of_therapy:
+  common:
+    description: >-
+      The text term used to describe the regimen or line of therapy.
+    termDef:
+      term: >-
+        Regimen or Line of Therapy Text
+      source: caDSR
+      cde_id: 6161024
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161024&version=1.0"
+
+relationship_age_at_diagnosis:
+  common:
+    description: >-
+      The age (in years) when the patient's relative was first diagnosed.
+    termDef:
+      term: >-
+        Relative Diagnosis Age Value
+      source: caDSR
+      cde_id: 5300571
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5300571&version=1.0"
+
+relationship_gender:
+  common:
+    description: >-
+      The text term used to describe the gender of the patient's relative with a history
+      of cancer.
+    termDef:
+      term: >-
+        Relative Gender Type
+      source: caDSR
+      cde_id: 6161021
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161021&version=1.0"
+
+relationship_primary_diagnosis:
+  common:
+    description: >-
+      The text term used to describe the malignant diagnosis of the patient's relative
+      with a history of cancer.
+    termDef:
+      term: >-
+        Relative Malignant Diagnosis Name
+      source: caDSR
+      cde_id: 6161022
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161022&version=1.0"
+
+relationship_type:
+  common:
+    description: >-
+      The subgroup that describes the state of connectedness between members of the
+      unit of society organized around kinship ties.
+    termDef:
+      term: >-
+        Family Member Relationship Type
+      source: caDSR
+      cde_id: 2690165
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2690165&version=2.0"
+
+relative_with_cancer_history:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether any of the patient's relatives
+      have a history of cancer.
+    termDef:
+      term: >-
+        Relative Malignant Diagnosis Indicator
+      source: caDSR
+      cde_id: 6161023
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161023&version=1.0"
+
+relatives_with_cancer_history_count:
+  common:
+    description: >-
+      The number of relatives the patient has with a known history of cancer.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+residual_disease:
+  common:
+    description: >-
+      Text terms to describe the status of a tissue margin following surgical resection.
+    termDef:
+      term: >-
+        Surgical Margin Resection Status
+      source: caDSR
+      cde_id: 2608702
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2608702&version=1.0"
+
+respirable_crystalline_silica_exposure:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether a patient was exposured
+      to respirable crystalline silica, a widespread, naturally occurring, crystalline
+      metal oxide that consists of different forms including quartz, cristobalite,
+      tridymite, tripoli, ganister, chert and novaculite.
+    termDef:
+      term: >-
+        Person Respirable Cystalline Silica Exposure Indicator
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+ribosomal_rna_28s_16s_ratio:
+  common:
+    description: >-
+      The 28S/18S ribosomal RNA band ratio used to assess the quality of total RNA.
+    termDef:
+      term: >-
+        28s/18s Ribosomal RNA Ratio
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+rin:
+  common:
+    description: >-
+      A numerical assessment of the integrity of RNA based on the entire electrophoretic
+      trace of the RNA sample including the presence or absence of degradation products.
+    termDef:
+      term: >-
+        Biospecimen RNA Integrity Number Value
+      source: caDSR
+      cde_id: 5278775
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5278775&version=1.0"
+
+risk_factor:
+  common:
+    description: >-
+      The text term used to describe a risk factor the patient had at the time of
+      or prior to their diagnosis.
+    termDef:
+      term: >-
+        Risk Factor Description Type
+      source: caDSR
+      cde_id: 6142389
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142389&version=1.0"
+
+risk_factor_treatment:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the patient received treatment
+      for a risk factor the patient had at the time of or prior to their diagnosis.
+    termDef:
+      term: >-
+        Risk Factor Treatment Indicator
+      source: caDSR
+      cde_id: 6514356
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6514356&version=1.0"
+
+sample_ordinal:
+  common:
+    description: >-
+      A number describing the samples place in an ordered sequence.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+sample_type:
+  common:
+    description: >-
+      Text term to describe the source of a biospecimen used for a laboratory test.
+    termDef:
+      term: >-
+        Specimen Type Collection Biospecimen Type
+      source: caDSR
+      cde_id: 3111302
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3111302&version=2.0"
+
+sample_type_id:
+  common:
+    description: >-
+      The accompanying sample type id for the sample type.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+second_exon:
+  common:
+    description: >-
+      The second exon number involved in molecular variation. If a specific genetic
+      variant is being reported, this property can be used to capture the second exon
+      where that variant is located. This property is typically used for a translocation
+      where two different locations are involved in the variation.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Exon Identification Number
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+second_gene_symbol:
+  common:
+    description: >-
+      The text term used to describe a secondary gene targeted or included in molecular
+      analysis. For rearrangements, this is should represent the location of the variant.
+    termDef:
+      term: >-
+        Molecular Analysis Secondary Gene Symbol Code
+      source: caDSR
+      cde_id: 6142393
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142393&version=1.0"
+
+secondary_gleason_grade:
+  common:
+    description: >-
+      The text term used to describe the secondary Gleason score, which describes
+      the pattern of cells making up the second largest area of the tumor. The primary
+      and secondary Gleason pattern grades are combined to determine the patient's
+      Gleason grade group, which is used to determine the aggresiveness of prostate
+      cancer. Note that this grade describes the entire prostatectomy specimen and
+      is not specific to the sample used for sequencing.
+    termDef:
+      term: >-
+        Gleason Secondary Score For Prostate Cancer Category
+      source: caDSR
+      cde_id: 5936802
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5936802&version=1.0"
+
+section_location:
+  common:
+    description: >-
+      Tissue source of the slide.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+selected_normal_low_pass_wgs:
+  common:
+    description: >-
+      Denotes which low-pass WGS normal aliquot the submitter prefers to use for variant
+      calling. Only one normal per experimental strategy per case can be selected.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+selected_normal_targeted_sequencing:
+  common:
+    description: >-
+      Denotes which targeted_sequencing normal aliquot the submitter prefers to use
+      for variant calling. Only one normal per experimental strategy per case can
+      be selected.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+selected_normal_wgs:
+  common:
+    description: >-
+      Denotes which WGS normal aliquot the submitter prefers to use for variant calling.
+      Only one normal per experimental strategy per case can be selected.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+selected_normal_wxs:
+  common:
+    description: >-
+      Denotes which WXS normal aliquot the submitter prefers to use for variant calling.
+      Only one normal per experimental strategy per case can be selected.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+sequencing_center:
+  common:
+    description: >-
+      Name of the center that provided the sequence files.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+shortest_dimension:
+  common:
+    description: >-
+      Numeric value that represents the shortest dimension of the sample, measured
+      in millimeters.
+    termDef:
+      term: >-
+        Tissue Sample Short Dimension Millimeter Measurement
+      source: caDSR
+      cde_id: 5432603
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432603&version=1.0"
+
+site_of_resection_or_biopsy:
+  common:
+    description: >-
+      The text term used to describe the anatomic site of origin, of the patient's
+      malignant disease, as described by the World Health Organization's (WHO) International
+      Classification of Diseases for Oncology (ICD-O).
+    termDef:
+      term: >-
+        ICD-O Origin of Disease Anatomic Site
+      source: caDSR
+      cde_id: 6161034
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161034&version=1.0"
+
+size_selection_range:
+  common:
+    description: >-
+      Range of size selection.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+smoking_frequency:
+  common:
+    description: >-
+      The text term used to generally decribe how often the patient smokes.
+    termDef:
+      term: >-
+        Person Smoking Frequency
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+source_center:
+  common:
+    description: >-
+      Name of the center that provided the item.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+specialized_molecular_test:
+  common:
+    description: >-
+      Text term used to describe a specific test that is not covered in the list of
+      molecular analysis methods.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Specialized Text
+      source: caDSR
+      cde_id: 6142526
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142526&version=1.0"
+
+spectrophotometer_method:
+  common:
+    description: >-
+      Name of the method used to determine the concentration of purified nucleic acid
+      within a solution.
+    termDef:
+      term: >-
+        Purification Nucleic Acid Solution Concentration Determination Method Type
+      source: caDSR
+      cde_id: 3008378
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3008378&version=1.0"
+
+spike_ins_fasta:
+  common:
+    description: >-
+      Name of the FASTA file that contains the spike-in sequences.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+spike_ins_concentration:
+  common:
+    description: >-
+      Spike in concentration.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+state:
+  common:
+    description: >-
+      The current state of the object.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+supratentorial_localization:
+  common:
+    description: >-
+      Text term to specify the location of the supratentorial tumor.
+    termDef:
+      term: >-
+        Tumor Location Central Nervous System Tissue Type
+      source: caDSR
+      cde_id: 3133891
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3133891&version=1.0"
+
+synchronous_malignancy:
+  common:
+    description: >-
+      A yes/no/unknown indicator used to describe whether the patient had an additional
+      malignant diagnosis at the same time the tumor used for sequencing was diagnosed.
+      If both tumors were sequenced, both tumors would have synchronous malignancies.
+    termDef:
+      term: >-
+        Malignant Disease Diagnosis Synchronous Indicator
+      source: caDSR
+      cde_id: 6142390
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142390&version=1.0"
+
+target_capture_kit:
+  common:
+    description: >-
+      Description that can uniquely identify a target capture kit. Suggested value
+      is a combination of vendor, kit name, and kit version.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+target_capture_kit_name:
+  common:
+    description: >-
+      Name of Target Capture Kit.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+target_capture_kit_vendor:
+  common:
+    description: >-
+      Vendor of Target Capture Kit.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+target_capture_kit_catalog_number:
+  common:
+    description: >-
+      Catalog of Target Capture Kit.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+target_capture_kit_version:
+  common:
+    description: >-
+      Version of Target Capture Kit.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+target_capture_kit_target_region:
+  common:
+    description: >-
+      Target Capture Kit BED file.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+test_analyte_type:
+  common:
+    description: >-
+      The text term used to describe the type of analyte used for molecular testing.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Analyte Type
+      source: caDSR
+      cde_id: 6142394
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142394&version=1.0"
+
+test_result:
+  common:
+    description: >-
+      The text term used to describe the result of the molecular test. If the test
+      result was a numeric value see test_value.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Outcome
+      source: caDSR
+      cde_id: 6142397
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142397&version=1.0"
+
+test_units:
+  common:
+    description: >-
+      The text term used to describe the units of the test value for a molecular test.
+      This property is used in conjunction with test_value.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Outcome Unit of Measure
+      source: caDSR
+      cde_id: 6142525
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142525&version=1.0"
+
+test_value:
+  common:
+    description: >-
+      The text term or numeric value used to describe a sepcific result of a molecular
+      test.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Outcome Text
+      source: caDSR
+      cde_id: 6142524
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142524&version=1.0"
+
+therapeutic_agents:
+  common:
+    description: >-
+      Text identification of the individual agent(s) used as part of a treatment regimen.
+    termDef:
+      term: >-
+        Prior Therapy Regimen Text
+      source: caDSR
+      cde_id: 2975232
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2975232&version=1.0"
+
+time_between_clamping_and_freezing:
+  common:
+    description: >-
+      Numeric representation of the elapsed time between the surgical clamping of
+      blood supply and freezing of the sample, measured in minutes.
+    termDef:
+      term: >-
+        Tissue Sample Clamping and Freezing Elapsed Minute Time
+      source: caDSR
+      cde_id: 5432611
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432611&version=1.0"
+
+time_between_excision_and_freezing:
+  common:
+    description: >-
+      Numeric representation of the elapsed time between the excision and freezing
+      of the sample, measured in minutes.
+    termDef:
+      term: >-
+        Tissue Sample Excision and Freezing Elapsed Minute Time
+      source: caDSR
+      cde_id: 5432612
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432612&version=1.0"
+
+time_between_waking_and_first_smoke:
+  common:
+    description: >-
+      The text term used to describe the approximate amount of time elapsed between
+      the time the patient wakes up in the morning to the time they smoke their first
+      cigarette.
+    termDef:
+      term: >-
+        Person Smoking Frequency
+      source: caDSR
+      cde_id: 3279220
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3279220&version=1.0"
+
+tissue_or_organ_of_origin:
+  common:
+    description: >-
+      The text term used to describe the anatomic site of origin, of the patient's
+      malignant disease, as described by the World Health Organization's (WHO) International
+      Classification of Diseases for Oncology (ICD-O).
+    termDef:
+      term: >-
+        ICD-O Origin of Disease Anatomic Site
+      source: caDSR
+      cde_id: 6161035
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6161035&version=1.0"
+
+tissue_type:
+  common:
+    description: >-
+      Text term that represents a description of the kind of tissue collected with
+      respect to disease status or proximity to tumor tissue.
+    termDef:
+      term: >-
+        Tissue Sample Description Type
+      source: caDSR
+      cde_id: 5432687
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432687&version=1.0"
+
+to_trim_adapter_sequence:
+  common:
+    description: >-
+      Does the user suggest adapter trimming?
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tobacco_smoking_onset_year:
+  common:
+    description: >-
+      The year in which the participant began smoking.
+    termDef:
+      term: >-
+        Started Smoking Year
+      source: caDSR
+      cde_id: 2228604
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2228604&version=1.0"
+
+tobacco_smoking_quit_year:
+  common:
+    description: >-
+      The year in which the participant quit smoking.
+    termDef:
+      term: >-
+        Stopped Smoking Year
+      source: caDSR
+      cde_id: 2228610
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2228610&version=1.0"
+
+tobacco_smoking_status:
+  common:
+    description: >-
+      Category describing current smoking status and smoking history as self-reported
+      by a patient.
+    termDef:
+      term: >-
+        Patient Smoking History Category
+      source: caDSR
+      cde_id: 2181650
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2181650&version=1.0"
+
+total_reads:
+  common:
+    description: >-
+      Total number of reads collected from samtools.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+total_sequences:
+  common:
+    description: >-
+      A count of the total number of sequences processed.
+    termDef:
+      term: >-
+        Total Sequences
+      source: FastQC
+      cde_id:
+      cde_version:
+      term_url: "http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/1%20Basic%20Statistics.html"
+
+transcript:
+  common:
+    description: >-
+      Alphanumeric value used to describe the transcript of a specific genetic variant.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Transcript Location Text
+      source: caDSR
+      cde_id: 6142465
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142465&version=1.0"
+
+treatment_anatomic_site:
+  common:
+    description: >-
+      The anatomic site or field targeted by a treatment regimen or single agent therapy.
+    termDef:
+      term: >-
+        Treatment Anatomic Site
+      source: caDSR
+      cde_id: 5615611
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5615611&version=1.0"
+
+treatment_arm:
+  common:
+    description: >-
+      Text term used to describe the treatment arm assigned to a patient at the time
+      eligibility is determined.
+    termDef:
+      term: >-
+        Protocol Treatment Arm Text
+      source: caDSR
+      cde_id: 7068995
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=7068995&version=1.0"
+
+treatment_dose:
+  common:
+    description: >-
+      The numeric value used to describe the dose of an agent the patient received.
+    termDef:
+      term: >-
+        Agent Dose
+      source: caDSR
+      cde_id: 2182728
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2182728&version=3.0"
+
+treatment_dose_units:
+  common:
+    description: >-
+      The text term used to describe the dose units of an agent the patient received.
+    termDef:
+      term: >-
+        Agent Dose Units
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+treatment_effect:
+  common:
+    description: >-
+      The text term used to describe the pathologic effect a treatment(s) had on the
+      tumor.
+    termDef:
+      term: >-
+        Treatment Effect Type
+      source: caDSR
+      cde_id: 6514354
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6514354&version=1.0"
+
+treatment_effect_indicator:
+  common:
+    description: >-
+      The text term used to indicate whether the treatment had an effect on the patient.
+    termDef:
+      term: >-
+        Treatment Effect Indicator
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+treatment_frequency:
+  common:
+    description: >-
+      The text term used to describe the frequency the patient received an agent or
+      regimen.
+    termDef:
+      term: >-
+        Treatment Frequency
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+treatment_intent_type:
+  common:
+    description: >-
+      Text term to identify the reason for the administration of a treatment regimen.
+      [Manually-curated]
+    termDef:
+      term: >-
+        Treatment Regimen Intent Type
+      source: caDSR
+      cde_id: 2793511
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2793511&version=1.0"
+
+treatment_or_therapy:
+  common:
+    description: >-
+      A yes/no/unknown/not applicable indicator related to the administration of therapeutic
+      agents received.
+    termDef:
+      term: >-
+        Therapeutic Procedure Prior Specimen Collection Administered Yes No Unknown
+        Not Applicable Indicator
+      source: caDSR
+      cde_id: 4231463
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4231463&version=1.0"
+
+treatment_outcome:
+  common:
+    description: >-
+      Text term that describes the patient's final outcome after the treatment was
+      administered.
+    termDef:
+      term: >-
+        Treatment Outcome Type
+      source: caDSR
+      cde_id: 5102383
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5102383&version=1.0"
+
+treatment_type:
+  common:
+    description: >-
+      Text term that describes the kind of treatment administered.
+    termDef:
+      term: >-
+        Treatment Method Type
+      source: caDSR
+      cde_id: 5102381
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5102381&version=1.0"
+
+tumor_code:
+  common:
+    description: >-
+      Diagnostic tumor code of the tissue sample source.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tumor_code_id:
+  common:
+    description: >-
+      BCR-defined id code for the tumor sample.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tumor_confined_to_organ_of_origin:
+  common:
+    description: >-
+      The yes/no/unknown indicator used to describe whether the tumor is confined
+      to the organ where it originated and did not spread to a proximal or distant
+      location within the body.
+    termDef:
+      term: >-
+        Tumor Mass Organ Origin Yes No Unknown Not Applicable Indicator
+      source: caDSR
+      cde_id: 4925494
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4925494&version=1.0"
+
+tumor_descriptor:
+  common:
+    description: >-
+      Text that describes the kind of disease present in the tumor specimen as related
+      to a specific timepoint.
+    termDef:
+      term: >-
+        Tumor Tissue Disease Description Type
+      source: caDSR
+      cde_id: 3288124
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3288124&version=1.0"
+
+tumor_focality:
+  common:
+    description: >-
+      The text term used to describe whether the patient's disease originated in a
+      single location or multiple locations.
+    termDef:
+      term: >-
+        Primary Neoplasm Focus Type
+      source: caDSR
+      cde_id: 3174022
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3174022&version=1.0"
+
+tumor_grade:
+  common:
+    description: >-
+      Numeric value to express the degree of abnormality of cancer cells, a measure
+      of differentiation and aggressiveness.
+    termDef:
+      term: >-
+        Neoplasm Histologic Grade
+      source: caDSR
+      cde_id: 2785839
+      cde_version: 2.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2785839&version=2.0"
+
+tumor_largest_dimension_diameter:
+  common:
+    description: >-
+      Numeric value used to describe the maximum diameter or dimension of the primary
+      tumor, measured in centimeters.
+    termDef:
+      term: >-
+        Tumor Largest Dimension Measurement
+      source: caDSR
+      cde_id: 64215
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=64215&version=3.0"
+
+tumor_regression_grade:
+  common:
+    description: >-
+      A numeric value used to measure therapeutic response of the primary tumor and
+      predict patient outcomes based on a three-point tumor regression grading system.
+    termDef:
+      term: >-
+        Modified Ryan Scheme for Tumor Regression Score 3 Point Scale
+      source: caDSR
+      cde_id: 6471217
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6471217&version=1.0"
+
+type_of_smoke_exposure:
+  common:
+    description: >-
+      The text term used to describe the patient's specific type of smoke exposure.
+    termDef:
+      term: >-
+        Person Smoke Exposure Type
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+type_of_tobacco_used:
+  common:
+    description: >-
+      The text term used to describe the specific type of tobacco used by the patient.
+    termDef:
+      term: >-
+        Person Tobacco Use Type
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+uuid:
+  common:
+    description: >-
+      A 128-bit identifier. Depending on the mechanism used to generate it, it is
+      either guaranteed to be different from all other UUIDs/GUIDs generated until
+      3400 AD or extremely likely to be different. Its relatively small size lends
+      itself well to sorting, ordering, and hashing of all sorts, storing in databases,
+      simple allocation, and ease of programming in general.
+    termDef:
+      term: >-
+        Universally Unique Identifier
+      source: NCIt
+      cde_id: C54100
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&version=16.02d&ns=NCI_Thesaurus&code=C54100"
+
+variant_origin:
+  common:
+    description: >-
+      The text term used to describe the biological origin of a specific genetic variant.
+    termDef:
+      term: >-
+        Genetic Variation Origin Type
+      source: caDSR
+      cde_id:
+      cde_version:
+      term_url:
+
+variant_type:
+  common:
+    description: >-
+      The text term used to describe the type of genetic variation.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Genetic Variant Type
+      source: caDSR
+      cde_id: 6142402
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142402&version=1.0"
+
+vascular_invasion_present:
+  common:
+    description: >-
+      The yes/no indicator to ask if large vessel or venous invasion was detected
+      by surgery or presence in a tumor specimen.
+    termDef:
+      term: >-
+        Tumor Vascular Invasion Ind-3
+      source: caDSR
+      cde_id: 64358
+      cde_version: 3.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=64358&version=3.0"
+
+vascular_invasion_type:
+  common:
+    description: >-
+      Text term that represents the type of vascular tumor invasion.
+    termDef:
+      term: >-
+        Vascular Tumor Cell Invasion Type
+      source: caDSR
+      cde_id: 3168001
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3168001&version=1.0"
+
+viral_hepatitis_serologies:
+  common:
+    description: >-
+      Text term that describes the kind of serological laboratory test used to determine
+      the patient's hepatitus status.
+    termDef:
+      term: >-
+        Viral Hepatitis Laboratory Procedure Serology Test Method Type
+      source: caDSR
+      cde_id: 4395982
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4395982&version=1.0"
+
+vital_status:
+  common:
+    description: >-
+      The survival state of the person registered on the protocol.
+    termDef:
+      term: >-
+        Patient Vital Status
+      source: caDSR
+      cde_id: 5
+      cde_version: 5.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5&version=5.0"
+
+weeks_gestation_at_birth:
+  common:
+    description: >-
+      Numeric value used to describe the number of weeks starting  from the approximate
+      date of the biological mother's last menstrual period and ending with the birth
+      of the patient.
+    termDef:
+      term: >-
+        Pregnancy Week Number Count
+      source: caDSR
+      cde_id: 2737369
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2737369&version=1.0"
+
+weight:
+  common:
+    description: >-
+      The weight of the patient measured in kilograms.
+    termDef:
+      term: >-
+        Patient Weight Measurement
+      source: caDSR
+      cde_id: 651
+      cde_version: 4.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=651&version=4.0"
+
+well_number:
+  common:
+    description: >-
+      Numeric value that represents the the well location within a plate for the analyte
+      or aliquot from the sample.
+    termDef:
+      term: >-
+        Biospecimen Analyte or Aliquot Plate Well Number
+      source: caDSR
+      cde_id: 5432613
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=5432613&version=1.0"
+
+weiss_assessment_score:
+  common:
+    description: >-
+      The text term used to describe the overall Weiss assessment score, a commonly
+      used assessment describing the malignancy of adrenocortical tumors. The Weiss
+      score is determined based on nine histological criteria including the following:
+      high nuclear grade, mitotic rate greater than five per 50 high power fields
+      (HPF), atypical mitotic figures, eosinophilic tumor cell cytoplasm (greater
+      than 75% tumor cells), diffuse architecture (greater than 33% of tumor), necrosis,
+      venous invasion, sinusoidal invasion, and capsular invasion.
+    termDef:
+      term: >-
+        Weiss System Category Assessment Total Score
+      source: caDSR
+      cde_id: 3648744
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3648744&version=1.0"
+
+wilms_tumor_histologic_subtype:
+  common:
+    description: >-
+      The text term used to describe the classification of Wilms tumors distinguishing
+      between favorable and unfavorable histologic groups.
+    termDef:
+      term: >-
+        Disease Histology Confirmation Favorable Status
+      source: caDSR
+      cde_id: 4358735
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4358735&version=1.0"
+
+workflow_type:
+  common:
+    description: >-
+      Generic name for the workflow used to analyze a data set.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+year_of_birth:
+  common:
+    description: >-
+      Numeric value to represent the calendar year in which an individual was born.
+    termDef:
+      term: >-
+        Year Birth Date Number
+      source: caDSR
+      cde_id: 2896954
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2896954&version=1.0"
+
+year_of_diagnosis:
+  common:
+    description: >-
+      Numeric value to represent the year of an individual's initial pathologic diagnosis
+      of cancer.
+    termDef:
+      term: >-
+        Year of initial pathologic diagnosis
+      source: caDSR
+      cde_id: 2896960
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2896960&version=1.0"
+
+year_of_death:
+  common:
+    description: >-
+      Numeric value to represent the year of the death of an individual.
+    termDef:
+      term: >-
+        Year Death Number
+      source: caDSR
+      cde_id: 2897030
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2897030&version=1.0"
+
+years_smoked:
+  common:
+    description: >-
+      Numeric value (or unknown) to represent the number of years a person has been
+      smoking.
+    termDef:
+      term: >-
+        Person Smoking Duration Year Count
+      source: caDSR
+      cde_id: 3137957
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=3137957&version=1.0"
+
+zygosity:
+  common:
+    description: >-
+      The text term used to describe the zygosity of a specific genetic variant.
+    termDef:
+      term: >-
+        Molecular Laboratory Procedure Genetic Zygosity Type
+      source: caDSR
+      cde_id: 6142510
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6142510&version=1.0"
+
+consent_type:
+  common:
+    description: >-
+      The text term used to describe the type of consent obtain from the subject for
+      participation in the study.
+    termDef:
+      term: >-
+        Subject Consent Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+days_to_consent:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the subject consent
+      was obtained for participation in the study.
+    termDef:
+      term: >-
+        Index Date to Consent Day Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tumor_depth:
+  common:
+    description: >-
+      Numeric value that represents the depth of  tumor invasion, measured in millimeters
+      (mm).
+    termDef:
+      term: >-
+        Depth of Tumor Measurement
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+margin_distance:
+  common:
+    description: >-
+      Numeric value that represents the distance between the tumor and the surgical
+      margin
+    termDef:
+      term: >-
+        Distance to Margin Measurement
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C137815"
+      term_id: C137815
+      term_version: 19.12e
+
+transglottic_extension:
+  common:
+    description: >-
+      The text term used to describe an extension of the tumor beyond the opening
+      into the ventricles and vocal cords.
+    termDef:
+      term: >-
+        Transglottic Extension
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C160996"
+      term_id: C160996
+      term_version: 19.12e
+
+margins_involved_site:
+  common:
+    description: >-
+      The text term used to describe the anatomic sites that were involved in the
+      survival margins.
+    termDef:
+      term: >-
+        Surgical Margins Involved Site
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+gleason_grade_tertiary:
+  common:
+    description: >-
+      The text term used to describe the tertiary pattern as described by the Gleason
+      Grading System.
+    termDef:
+      term: >-
+        Gleason Tertiary Score For Prostate Cancer Category
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C48605"
+      term_id: C48605
+      term_version: 19.12e
+
+papillary_renal_cell_type:
+  common:
+    description: >-
+      The text term used to describe the type of papillary renal cell carcinoma characterized
+      by the presence of papillae covered by small cells with scant amount of cytoplasm.
+    termDef:
+      term: >-
+        Papillary Renal Cell Type Category
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+gleason_patterns_percent:
+  common:
+    description: >-
+      Numeric value that represents the percentage of Patterns 4 and 5, which is used
+      when the Gleason score is greater than 7 to predict prognosis.
+    termDef:
+      term: >-
+        Gleason Pattern Percent For Prostate Cancer Category
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+greatest_tumor_dimension:
+  common:
+    description: >-
+      Numeric value that represents the measurement of the widest portion of the tumor
+      in centimeters.
+    termDef:
+      term: >-
+        Tumor Longest Dimension Centimeters Measurement
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C157135"
+      term_id: C157135
+      term_version: 19.12e
+
+lymph_node_involved_site:
+  common:
+    description: >-
+      The text term used to describe the anatomic site of lymph node involvement.
+    termDef:
+      term: >-
+        Lymph Node Involved Site
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C33027"
+      term_id: C33027
+      term_version: 19.12e
+
+pregnant_at_diagnosis:
+  common:
+    description: >-
+      The text term used to indicate whether the patient was pregnant at the time
+      they were diagnosed.
+    termDef:
+      term: >-
+        Pregnant at Diagnosis Indicator
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+figo_staging_edition_year:
+  common:
+    description: >-
+      The text term used to describe the edition year of the FIGO staging system used
+      to stage the patient's gynecologic tumor.
+    termDef:
+      term: >-
+        FIGO
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+secondhand_smoke_as_child:
+  common:
+    description: >-
+      The text term used to indicate whether the patient was exposed to secondhand
+      smoke as a child.
+    termDef:
+      term: >-
+        Smoking History Secondhand Smoke Exposure Indicator
+      source: caDSR
+      cde_id: 6841888
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6841888&version=1.0"
+
+exposure_type:
+  common:
+    description: >-
+      The text term used to describe the type of environmental exposure.
+    termDef:
+      term: >-
+        Patient Exposure Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+exposure_duration:
+  common:
+    description: >-
+      Text term used to describe the length of time the patient was exposed to an
+      environmental factor.
+    termDef:
+      term: >-
+        Patient Exposure Duration
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tobacco_use_per_day:
+  common:
+    description: >-
+      Numeric value that represents the number of times the patient uses tobacco each
+      day.
+    termDef:
+      term: >-
+        Daily Tobacco Use Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+age_at_onset:
+  common:
+    description: >-
+      Numeric value used to represent the age of the patient when exposure to a specific
+      environmental factor began.
+    termDef:
+      term: >-
+        Patient Environmental Exposure Onset Age Day Value
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+marijuana_use_per_week:
+  common:
+    description: >-
+      Numeric value that represents the number of times the patient uses marijuana
+      each day.
+    termDef:
+      term: >-
+        Daily Marijuana Use Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+country_of_residence_at_enrollment:
+  common:
+    description: >-
+      The text term used to describe the patient's country of residence at the time
+      they were enrolled in the study.
+    termDef:
+      term: >-
+        Country of Residence
+      source: caDSR
+      cde_id: 7050286
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=7050286&version=1.0"
+
+percent_sarcomatoid_features:
+  common:
+    description: >-
+      Numeric value that represents the percentage of sarcomatoid features found in
+      a specific tissue sample.
+    termDef:
+      term: >-
+        Specimen Sarcomatoid Features Percentage Value
+      source: caDSR
+      cde_id: 2429786
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2429786&version=1.0"
+
+percent_rhabdoid_features:
+  common:
+    description: >-
+      Numeric value that represents the percentage of rhabdoid features found in a
+      specific tissue sample.
+    termDef:
+      term: >-
+        Specimen Rhabdoid Features Percentage Value
+      source: caDSR
+      cde_id: 6790120
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6790120&version=1.0"
+
+prostatic_chips_total_count:
+  common:
+    description: >-
+      The text term used to describe the total number of prostatic chips, which are
+      generated from transurethral resection of the prostate (TURP) procedures and
+      are generally used for relieving urinary obstruction due to nodular hyperplasia
+      of the prostate (benign prostatic hyperplasia).
+    termDef:
+      term: >-
+        Prostate Chips Total Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+prostatic_chips_positive_count:
+  common:
+    description: >-
+      The text term used to describe the number of positive prostatic chips, which
+      are generated from transurethral resection of the prostate (TURP) procedures
+      and are generally used for relieving urinary obstruction due to nodular hyperplasia
+      of the prostate (benign prostatic hyperplasia).
+    termDef:
+      term: >-
+        Prostate Chips Positive Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+prostatic_involvement_percent:
+  common:
+    description: >-
+      Numeric value that represents the percentage of prostatic involvement found
+      in a specific tissue sample.
+    termDef:
+      term: >-
+        Specimen Prostatic Involvement Percentage Value
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+bone_marrow_malignant_cells:
+  common:
+    description: >-
+      The text term used to indicate whether there are malignant cells in the bone
+      marrow.
+    termDef:
+      term: >-
+        Malignant Bone Marrow Indicator
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+percent_follicular_component:
+  common:
+    description: >-
+      Numeric value that represents the percentage of follicular features found in
+      a specific tissue sample.
+    termDef:
+      term: >-
+        Specimen Follicular Features Percentage Value
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tissue_collection_type:
+  common:
+    description: >-
+      The text term used to describe the tyoe of collection used to obtain tissue.
+    termDef:
+      term: >-
+        Tissue Collection Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+body_surface_area:
+  common:
+    description: >-
+      Numeric value used to represent the 2-dimensional extent of the body surface
+      relating height to weight.
+    termDef:
+      term: >-
+        Person Body Surface Area Value
+      source: caDSR
+      cde_id: 653
+      cde_version: 6.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=653&version=6.0"
+
+recist_targeted_regions_number:
+  common:
+    description: >-
+      Numeric value that represents the number of baseline target lesions, as described
+      by the Response Evaluation Criteria in Solid Tumours (RECIST) criteria.
+    termDef:
+      term: >-
+        RECIST Targeted Regions Value
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+recist_targeted_regions_sum:
+  common:
+    description: >-
+      Numeric value that represents the sum of baseline target lesions, as described
+      by the Response Evaluation Criteria in Solid Tumours (RECIST) criteria.
+    termDef:
+      term: >-
+        RECIST Targeted Regions Sum
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+adverse_event_grade:
+  common:
+    description: >-
+      The text term used to describe a specific histone variants, which are proteins
+      that substitute for the core canonical histones.
+    termDef:
+      term: >-
+        Adverse Event Severity Grade
+      source: caDSR
+      cde_id: 2944515
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2944515&version=1.0"
+
+cd4_count:
+  common:
+    description: >-
+      The text term used to describe the outcome of the procedure to determine the
+      amount of the CD4 expressing cells in a sample.
+    termDef:
+      term: >-
+        Laboratory Procedure CD4 Expressing Cell Count Outcome
+      source: caDSR
+      cde_id: 4182751
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=4182751&version=1.0"
+
+imaging_type:
+  common:
+    description: >-
+      The text term used to describe the type of imaging or scan performed on the
+      patient.
+    termDef:
+      term: >-
+        Imaging Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+scan_tracer_used:
+  common:
+    description: >-
+      The text term used to describe the type of tracer used during the imaging or
+      scan of the patient.
+    termDef:
+      term: >-
+        Imaging Tracer Used
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+nadir_cd4_count:
+  common:
+    description: >-
+      Numeric value that represents the lowest point to which the CD4 count has dropped
+      (nadir).
+    termDef:
+      term: >-
+        CD4 Nadir Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+hiv_viral_load:
+  common:
+    description: >-
+      Numeric value that represents the concentration of an analyte or aliquot extracted
+      from the sample or sample portion, measured in milligrams per milliliter.
+    termDef:
+      term: >-
+        Human Immunodeficiency Virus Viral Load Value
+      source: caDSR
+      cde_id: 2649682
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2649682&version=1.0"
+
+aids_risk_factors:
+  common:
+    description: >-
+      The text term used to describe a risk factor of  the acquired immunodeficiency
+      syndrome (AIDS) that the patient either had at time time of the study or experienced
+      in the past.
+    termDef:
+      term: >-
+        AIDS Risk Factor Text Name
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+haart_treatment_indicator:
+  common:
+    description: >-
+      The text term used to indicate whether the patient received Highly Active Antiretroviral
+      Therapy (HARRT).
+    termDef:
+      term: >-
+        HARRT Therapy Indicator
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+immunosuppressive_treatment_type:
+  common:
+    description: >-
+      The text term used to describe the type of immunosuppresive treatment the patient
+      received.
+    termDef:
+      term: >-
+        Immunosuppresive Treatment Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+evidence_of_recurrence_type:
+  common:
+    description: >-
+      The text term used to describe the type of evidence used to determine whether
+      the patient's disease recurred.
+    termDef:
+      term: >-
+        Recurrence Evidence Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+imaging_result:
+  common:
+    description: >-
+      The text term used to describe the result of the imaging or scan performed on
+      the patient.
+    termDef:
+      term: >-
+        Imaging Result
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+hormonal_contraceptive_use:
+  common:
+    description: >-
+      The text term used to indicate whether the patient used hormonal contraceptives.
+    termDef:
+      term: >-
+        Hormonal Contraceptive Use Text Term
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+pregnancy_outcome:
+  common:
+    description: >-
+      The text term used to describe the type of pregnancy the patient had.
+    termDef:
+      term: >-
+        Patient Pregnancy Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+hysterectomy_type:
+  common:
+    description: >-
+      The text term used to describe the type of hysterectomy the patient had.
+    termDef:
+      term: >-
+        Patient Hysterectomy Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+hysterectomy_margins_involved:
+  common:
+    description: >-
+      The text term used to indicate whether the patient's disease was determined
+      to be involved based on the surgical margins of the hysterectomy.
+    termDef:
+      term: >-
+        Hysterectomy Margins Involved
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+days_to_imaging:
+  common:
+    description: >-
+      Number of days between the date used for index and the date the imaging or scan
+      was performed on the patient.
+    termDef:
+      term: >-
+        Index Date To Imaging Day Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+cdc_hiv_risk_factors:
+  common:
+    description: >-
+      The text term used to describe a risk factor for human immunodeficiency virus,
+      as described by the Center for Disease Control.
+    termDef:
+      term: >-
+        CDC HIV Risk Factor Text Term
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+clonality:
+  common:
+    description: >-
+      The text term used to describe whether a genomic variant is related by descent
+      from a single progenitor cell.
+    termDef:
+      term: >-
+        Clonality
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C18304"
+      term_id: C18304
+      term_version: 19.12e
+
+tissue_microarray_coordinates:
+  common:
+    description: >-
+      The alphanumeric term used to describe the coordinates of a specific tissue
+      located on a tissue microarray slide.
+    termDef:
+      term: >-
+        Tissue Microarray Coordinates Value
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+stain_type:
+  common:
+    description: >-
+      The text term used to describe the type of stain used on a slide.
+    termDef:
+      term: >-
+        Tissue Slide Stain Type
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tumor_ploidy:
+  common:
+    description: >-
+      Numeric value used to describe the number of sets of chromosomes in a cell or
+      an organism. For example, haploid means one set and diploid means two sets.
+    termDef:
+      term: >-
+        Tumor Ploidy Value
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+tumor_purity:
+  common:
+    description: >-
+      Numeric value used to describe the ratio of tumor cells compared to total cells
+      present in a sample.
+    termDef:
+      term: >-
+        Tumor Purity Ratio
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+number_expect_cells:
+  common:
+    description: >-
+      Expected number of recovered cells in droplet-based single-cell libraries.
+    termDef:
+      term: >-
+        Expected Cells Count
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+single_cell_library:
+  common:
+    description: >-
+      Library preparation strategy that distinguishes different single-cell assays.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+chipseq_target:
+  common:
+    description: >-
+      Antibody target of the ChIP-Seq assay
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+additional_pathology_findings:
+  common:
+    description: >-
+      A section header that includes additional pathologic findings.
+    termDef:
+      term: >-
+        Additional Pathologic Findings
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url:
+      term_id: C158809
+      term_version: 20.10d
+
+necrosis_percent:
+  common:
+    description: >-
+      A quantitative measurement of the percent of cells undergoing necrosis compared
+      to the number of total cells present in a sample.
+    termDef:
+      term: >-
+        Percent of Necrosis
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url:
+      term_id: C159481
+      term_version: 20.10d
+
+experimental_protocol_type:
+  common:
+    description: >-
+      The type of experiment used to extract the analyte.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+rna_integrity_number:
+  common:
+    description: >-
+      A numerical assessment of the integrity of RNA based on the entire electrophoretic
+      trace of the RNA sample, including the presence or absence of degradation products.
+    termDef:
+      term: >-
+        RNA Integrity Number
+      source: NCIt
+      cde_id:
+      cde_version:
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C63637"
+      term_id: C63637
+      term_version: 20.10d
+
+ann_arbor_b_symptoms_described:
+  common:
+    description: >-
+      Text descibing the specific lymphoma B-symptoms present.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+necrosis_present:
+  common:
+    description: >-
+      Indicator describing whether the presence of necrosis was confirmed.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+sarcomatoid_percent:
+  common:
+    description: >-
+      Numeric value that represents the percentage of sarcomatoid features found in
+      a specific tissue sample.
+    termDef:
+      term: >-
+        Specimen Sarcomatoid Features Percentage Value
+      source: caDSR
+      cde_id: 2429786
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=2429786&version=1.0"
+
+rhabdoid_percent:
+  common:
+    description: >-
+      Numeric value that represents the percentage of rhabdoid features found in a
+      specific tissue sample.
+    termDef:
+      term: >-
+        Specimen Rhabdoid Features Percentage Value
+      source: caDSR
+      cde_id: 6790120
+      cde_version: 1.0
+      term_url: "https://cdebrowser.nci.nih.gov/cdebrowserClient/cdeBrowser.html#/search?publicId=6790120&version=1.0"
+
+rhabdoid_present:
+  common:
+    description: >-
+      Indicator describing whether rhabdoid features were present.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+sarcomatoid_present:
+  common:
+    description: >-
+      Indicator describing whether sarcomatoid features were present.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+chipseq_antibody:
+  common:
+    description: >-
+      The antibody used in the ChIP-Seq assay.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+fragmentation_enzyme:
+  common:
+    description: >-
+      The restriction enzyme used for nucleotide fragmentation.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+adrenal_hormone:
+  common:
+    description: >-
+      Indicates the presence of the adrenal hormone. The adrenal hormone is made from
+      cholesterol and protein produced by the adrenal glands and regulate electrolyte
+      balance, blood pressure, inflammation, blood sugar balance, and immune system
+      control.
+    termDef:
+      term: >-
+        Adrenal Hormone
+      source: NCIt
+      cde_id: C2264
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C2264"
+
+diagnosis_is_primary_disease:
+  common:
+    description: >-
+      Indicates whether this specific diagnosis represents the disease that was the
+      primary focus of the study. Additionally, this diagnosis is reflected at the 
+      case level, which is captured using the case.disease_type property.
+    termDef:
+      term: >-
+        Is Diagnosis Primary Disease
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+primary_disease:
+  common:
+    description: >-
+      Indicates whether the specific diagnosis represents the disease that was the
+      primary focus of the study.
+    termDef:
+      term: >-
+        Primary Disease
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+exposure_duration_years:
+  common:
+    description: >-
+      The period of time from start to finish of exposure, in years.
+    termDef:
+      term: >-
+        Exposure Duration
+      source: NCIt
+      cde_id: C83280
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C83280"
+
+parent_with_radiation_exposure:
+  common:
+    description: >-
+      Indicates whether the patient's parent(s) were exposed to radiation
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+route_of_administration:
+  common:
+    description: >-
+      The pathway by which a substance is administered in order to reach the site
+      of action in the body.
+    termDef:
+      term: >-
+        Route of Administration
+      source: NCIt
+      cde_id: C38114
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C38114"
+
+days_to_test:
+  common:
+    description: >-
+      Number of days between the date used for index and the date of the laboratory
+      test.
+    termDef:
+      term: >-
+        Index Date to Laboratory Test
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+eye_color:
+  common:
+    description: >-
+      The color of the iris of the eye
+    termDef:
+      term: >-
+        Eye Color
+      source: NCIt
+      cde_id: C157437
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C157437"
+
+history_of_tumor:
+  common:
+    description: >-
+      Indicates whether patient has a history of tumors.
+    termDef:
+      term: >-
+        History of Tumor
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+history_of_tumor_type:
+  common:
+    description: >-
+      Describes the type of the patient's prior diagnosed tumor.
+    termDef:
+      term: >-
+        Type of Prior Tumor
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+undescended_testis_history:
+  common:
+    description: >-
+      The persistent failure of one or both testes to descend into the scrotum.
+    termDef:
+      term: >-
+        Undescended Testes
+      source: NCIt
+      cde_id: C12326
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C12326"
+
+undescended_testis_history_laterality:
+  common:
+    description: >-
+      Describes the lateral location of the patient's undescended testis.
+    termDef:
+      term: >-
+        Undescended Testis Laterality
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+undescended_testis_corrected:
+  common:
+    description: >-
+      Indicates whether the patient's undescended testis was corrected.
+    termDef:
+      term: >-
+        Undescended Testis Corrected
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+undescended_testis_corrected_age:
+  common:
+    description: >-
+      The patient's age when their undescended testis was corrected.
+    termDef:
+      term: >-
+        Undescended Testis Corrected Age
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+undescended_testis_corrected_method:
+  common:
+    description: >-
+      Describes the method used to correct the patient's undescended testis.
+    termDef:
+      term: >-
+        Undescended Testis Corrected Method
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+undescended_testis_corrected_laterality:
+  common:
+    description: >-
+      Descrives the lateral location of the patient's undescended testis correction.
+    termDef:
+      term: >-
+        Undescended Testis Corrected Laterality
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+consistent_pathology_review:
+  common:
+    description: >-
+      Indicates whether a recent review of tissue is consistent with a prior pathology
+      review.
+    termDef:
+      term: >-
+        Consistent Pathology Review
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+residual_tumor:
+  common:
+    description: >-
+      Tumor cells that remain in the body following cancer treatment.
+    termDef:
+      term: >-
+        Residual Disease
+      source: NCIt
+      cde_id: C4809
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C4809"
+
+tumor_thickness:
+  common:
+    description: >-
+      A measurement of the thickness of a sectioned slice (of tissue or mineral or
+      other substance).
+    termDef:
+      term: >-
+        Section Thickness
+      source: NCIt
+      cde_id: C176286
+      cde_version: 21.04d
+      term_url: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C176286"
+
+size_extraocular_nodule:
+  common:
+    description: >-
+      The size of the nodule that is outside the eye.
+    termDef:
+      term: >-
+        Extraocular Nodule Size
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+proc_internal:
+  common:
+    description: >-
+      Internal data processing flag
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+eln_risk_classification:
+  common:
+    description: >-
+      A recommended risk stratification system used to provide prognostic information
+      in AML patients undergoing chemotherapy as well as allogeneic hematopoietic
+      stem cell transplantation.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+satellite_nodule_present:
+  common:
+    description: >-
+      Indicator noting whether a nodule or tumor is located within a small distance
+      (e.g. 2cm) of the primary tumor.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+sites_of_involvement:
+  common:
+    description: >-
+      The anatomic sites of disease involvement in addition to the primary anatomic
+      site.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+who_cns_grade:
+  common:
+    description: >-
+      The WHO (World Health Organization) grading classification of CNS tumors, which
+      is based on histological characteristics such as cellularity, mitotic activity,
+      pleomorphism, necrosis, and endothelial proliferation (neoangiogenesis).
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+who_nte_grade:
+  common:
+    description: >-
+      The WHO (World Health Organization) grading classification of Neuroendocrine
+      Tumors.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+alcohol_type:
+  common:
+    description: >-
+      A specific type of alcohol.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+smokeless_tobacco_quit_age:
+  common:
+    description: >-
+      The age the subject quit smoking tobacco.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+hormonal_contraceptive_type:
+  common:
+    description: >-
+      The specific type of hormonal contraceptives used by the subject.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+hormone_replacement_therapy_type:
+  common:
+    description: >-
+      The specific type of hormone replacement therapy received by the patient.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+procedures_performed:
+  common:
+    description: >-
+      The type of procedures performed on the patient.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+biospecimen_volume:
+  common:
+    description: >-
+      The volume of the biospecimen.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+mitotic_total_area:
+  common:
+    description: >-
+      The total area reviewed when calculating the mitotic index ratio.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+columnar_mucosa_present:
+  common:
+    description: >-
+      Indicator noting whether columnar mucosa was present within the tissue.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+dysplasia_degree:
+  common:
+    description: >-
+      The degree to which dysplasia was involved.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+dysplasia_type:
+  common:
+    description: >-
+      The type of dysplasia involved.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+lymph_node_involvement:
+  common:
+    description: >-
+      Indicator noting whether lymph nodes were involved.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+margin_status:
+  common:
+    description: >-
+      The determination of the presence of actual or potential neoplastic tissue which
+      has been left outside the boundary of a resected specimen within the patient.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+metaplasia_present:
+  common:
+    description: >-
+      Indicator noting whether metaplasia was present.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
+
+morphologic_architectural_pattern:
+  common:
+    description: >-
+      A specific morphologic or pathologic architectural pattern was discovered within
+      the sample studied.
+    termDef:
+      term:
+      source:
+      cde_id:
+      cde_version:
+      term_url:
