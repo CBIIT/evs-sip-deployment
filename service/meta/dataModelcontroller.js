@@ -452,12 +452,12 @@ const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     + ' RETURN DISTINCT  n.handle as node_name,p.value_domain as value_type, t.value as value, p.handle as handle, p.model as model,'
     + ' t.nanoid as tid, count(*) as total_value  '
     + ' ORDER BY t.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
-    { model: ['ICDC'], searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
+    { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { Type:'values', message: 'No matched data in values' };
+        return { type:'values', message: 'No matched data in values' };
       }
       let props = [];
       results.records.map(r =>
