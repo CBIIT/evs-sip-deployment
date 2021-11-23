@@ -325,8 +325,9 @@ const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
  
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and n1.model= $model AND n1.handle =~ $searchword '
-    + ' WITH n1 , count(distinct n1) as total_nodes ORDER BY n1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n:node) WHERE n._to IS NULL and n.model= $model AND n.handle =~ $searchword '
+    + ' WITH collect(n) as allnodes, count(distinct n.handle) as total_nodes UNWIND allnodes as n1'
+    + ' WITH n1, total_nodes ORDER BY n1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
@@ -342,13 +343,15 @@ const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
         return { type:'node', message: 'No matched data in nodes.' };
       }
       let props = [];
+      let total =0;
       results.records.map(r =>{
+        if (total < 1 && r.get('total_nodes').toNumber()>0) total = r.get('total_nodes').toNumber();
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
         data.Node_Name = r.get('node_name');
         data.Nanoid = r.get("id");
-        data.total_nodes = r.get('total_nodes').toNumber();
+        //data.total_nodes = r.get('total_nodes').toNumber();
         if(prop.length > 0){
           let plist = [];
           prop.map(p => {
@@ -371,7 +374,7 @@ const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
         props.push(data)
       })
     
-      return {type:'node', result: props };
+      return {type:'node', total_nodes: total, result: props };
     
     }).catch(function (error) {
       console.log("get user error in getProp : " + error);
@@ -384,9 +387,11 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
   const neo4jsession = dbUtils.getSession()
  
 
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and n1.model= $model '
-  + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and p1.model= $model AND p1.handle =~ $searchword '
-  + ' WITH n1, p1 , count(distinct p1 ) as total_prop ORDER BY p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (p:property) WHERE p._to IS NULL and p.model= $model AND p.handle =~ $searchword '
+  + ' WITH collect(p) as allprops, count(p.handle) as total_props UNWIND allprops as p1'
+  + ' WITH p1, total_props '
+  + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and n1.model= $model '
+  + ' WITH n1, p1 , total_props ORDER BY p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
   + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
   + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
     + ' RETURN DISTINCT '
@@ -396,24 +401,26 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     + ' p1.handle as handle,'
     + ' p1.model as model,'
     + ' p1.nanoid as pid,'
-    + ' total_prop as total_prop '
+    + ' total_props as total_props '
     + ' ORDER BY model, handle, value ',
     { model:model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize  })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { type:'props', message: 'No matched data in properties.', status: 400 };
+        return { type:'props', message: 'No matched data in properties.'};
       }
       let props = [];
+      let totals = 0;
       results.records.map(r =>{
+        if (totals < 1 && r.get('total_props').toNumber()>0) totals = r.get('total_props').toNumber();
         if(r.get('value') && r.get('value').length>0){
           props.push({
             Model: r.get('model'),
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
             Nanoid: r.get('pid'),
-            Total_Prop: r.get('total_prop').toNumber(),
+           // Total_Prop: r.get('total_props').toNumber(),
             Value_Type: r.get('value_type'),
             Value: r.get('value'),
           })
@@ -423,13 +430,13 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
           Node_Name: r.get('node_name'),
           Property_Name: r.get('handle'),
           Nanoid: r.get('pid'),
-          Total_Prop: r.get('total_prop').toNumber(),
+         // Total_Prop: r.get('total_props').toNumber(),
           Value_Type: r.get('value_type')
         })
       }
       })
   
-      return {type:'props', result: props};
+      return {type:'props',total_props: totals,  result: props};
     }).catch(function (error) {
       console.log("get user error in getProp : " + error);
     });
@@ -445,7 +452,7 @@ const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     + ' RETURN DISTINCT  n.handle as node_name,p.value_domain as value_type, t.value as value, p.handle as handle, p.model as model,'
     + ' t.nanoid as tid, count(*) as total_value  '
     + ' ORDER BY t.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
-    { model: ['ICDC', 'CTDC'], searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
+    { model: ['ICDC'], searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
       neo4jsession.close();
