@@ -265,7 +265,9 @@ const getSearchResults = async function (keyword, model,type, fromIndex, pageSiz
   let resultAll = [];
   
   if(!model) model='ICDC';
-  if(type.includes('prop')) type='prop';
+  if(type.toLowerCase().includes('prop')) type='prop';
+  if(type.toLowerCase().includes('node')) type='node';
+  if(type.toLowerCase().includes('value')) type='value';
   if(type){
     let result=[];
     switch (type) {
@@ -325,7 +327,7 @@ const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
  
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n:node) WHERE n._to IS NULL and n.model= $model AND n.handle =~ $searchword '
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n:node) WHERE n._to IS NULL and toLower(n.model) = toLower($model) AND toLower(n.handle) =~ toLower($searchword) '
     + ' WITH collect(n) as allnodes, count(distinct n.handle) as total_nodes UNWIND allnodes as n1'
     + ' WITH n1, total_nodes ORDER BY n1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
@@ -387,7 +389,7 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
   const neo4jsession = dbUtils.getSession()
  
 
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (p:property) WHERE p._to IS NULL and p.model= $model AND p.handle =~ $searchword '
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (p:property) WHERE p._to IS NULL and toLower(p.model)= toLower($model) AND toLower(p.handle) =~ toLower($searchword) '
   + ' WITH collect(p) as allprops, count(p.handle) as total_props UNWIND allprops as p1'
   + ' WITH p1, total_props '
   + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and n1.model= $model '
@@ -448,7 +450,7 @@ const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
   const neo4jsession = dbUtils.getSession()
  
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
-    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and p.model in $model AND toLower(t.value) =~ toLower($searchword)'
+    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
     + ' RETURN DISTINCT  n.handle as node_name,p.value_domain as value_type, t.value as value, p.handle as handle, p.model as model,'
     + ' t.nanoid as tid, count(*) as total_value  '
     + ' ORDER BY t.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
