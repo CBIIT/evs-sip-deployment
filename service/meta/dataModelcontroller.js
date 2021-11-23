@@ -265,19 +265,21 @@ const getSearchResults = async function (keyword, model,type, fromIndex, pageSiz
   let resultAll = [];
   
   if(!model) model='ICDC';
+  if(type.includes('prop')) type='prop';
   if(type){
     let result=[];
     switch (type) {
       case 'node':
         result = await getNodeListWithPaging(model, keyword,  fromIndex, pageSize);
         break;
-      case 'property':
+      case 'prop':
         result = await getPropListWithPaging(model, keyword,  fromIndex, pageSize);
         break;
       case 'value':
         result = await getValueListWithPaging(model, keyword,  fromIndex, pageSize);
       break;
       default:
+        result = {type: type, message : 'No matched data.'}
         break;
     }
     if (result) resultAll.push(result);
