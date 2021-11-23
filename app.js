@@ -1,9 +1,10 @@
 const express = require('express');
 const routes = require('./routes');
+const session = require('express-session')
 
 // Setup server
 const app = express();
-app.set('trust proxy', 1);
+
 // var server = require('http').createServer(app);
 require('./routes/express')(app);
 // require('./routes')(app);

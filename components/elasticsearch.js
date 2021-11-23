@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const elasticsearch = require('elasticsearch');
 const yaml = require('yamljs');
-const config = require('../config');
+const config = require('../routes');
 const config_dev = require('../routes/dev');
 const logger = require('./logger');
 const cache = require('./cache');
@@ -225,7 +225,7 @@ const helper_gdc = (fileJson, syns) => {
           if (values_icdo_mapping[v_lowcase] != "") {
             tmp.icdo = {};
             tmp.icdo.c = values_icdo_mapping[v_lowcase];
-            tmp.icdo.have = shared.generateICDOHaveWords(tmp.icdo.c),
+            tmp.icdo.have = shared.generateICDOHaveWords(tmp.icdo.c);
               tmp.icdo.s = [];
             for (let key in icdo_mapping[tmp.icdo.c].syn) {
               let entry = { n: key, t: icdo_mapping[tmp.icdo.c].syn[key] };

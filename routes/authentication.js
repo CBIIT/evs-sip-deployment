@@ -1,4 +1,5 @@
 const logger = require("../components/logger");
+const usercontroller = require( '../service/meta/usercontroller');
 
 const timeoutMinutes = 150;
 const maxSessionAge = timeoutMinutes * 60 * 1000; // convert minutes to ms
@@ -11,11 +12,10 @@ module.exports = {
     updateSession,
 }
 
-const baseURL = "http://localhost:3000/evssip"
+//const baseURL = "http://localhost:3001/evssip"
 async function login(request, response) {
     const { headers, session, app, params, query } = request;
-    const { loginType } = params;
-    const { mysql } = app.locals;
+  
     logger.debug(headers)
     logger.info("session")
     logger.info(session)
@@ -42,25 +42,31 @@ async function login(request, response) {
 
         if (!smUser) {
             userName = 'admin';
+            let user = await usercontroller.getUserbyNciUserName('zhangchao');
+            console.log(user)
             session.user = {
                         id: 0,
                         name: 'zhangchao',
-                        role: null,
-                        project: [],
-                        active: true,
+                firstName: user.first_name,
+                role: user.role,
+                project:user.projects,
+                active: user.active,
+                email: user.email,
                         expires,
                         // headers,
             };
         } else {
-            // otherwise, update user-session variable when hitting authRoutes
-            // const isFederated = userAuthType === 'federated';
+   
             userName = smUser;
+            let user = await usercontroller.getUserbyNciUserName(smUser);
             session.user = {
                 id: 1,
                 name: userName,
-                role: 'admin',
-                project: [],
-                active: true,
+                firstName: user.first_name,
+                role: user.role,
+                project:user.projects,
+                active: user.active,
+                email: user.email,
                 expires,
                 // headers,
             };
@@ -68,71 +74,9 @@ async function login(request, response) {
         logger.info("login session:----")
         logger.debug(session.user)
 
-        // const [user] = await mysql.query(
-        //     `SELECT 
-        //         id, 
-        //         access_level as accessLevel, 
-        //         active_status as activeStatus
-        //     FROM user where user_name = ? `,
-        //     [userName]
-        // );
-
-
-        // if (user) {
-        //     const userId = user.id;
-        //     if (!userRole) {
-        //         userRole = user.activeStatus === 'Y'
-        //             ? user.accessLevel
-        //             : null
-        //     }
-
-        //     // update last login date
-        //     await mysql.query(
-        //         `update user set last_login = now() 
-        //         where user_name = ?`,
-        //         [userName]
-        //     );
-
-        //     const cohortAcronyms = await mysql.query(
-        //         `SELECT DISTINCT cohort_acronym as acronym
-        //         FROM cohort_user_mapping 
-        //         WHERE user_id = ? AND active = 'Y'
-        //         ORDER BY acronym ASC`,
-        //         [userId]
-        //     );
-
-        //     let projects = [];
-
-        //     for (const { acronym } of cohortAcronyms) {
-        //         const [editableCohorts] = await mysql.query(
-        //             `call select_editable_cohort_by_acronym(?)`,
-        //             [acronym]
-        //         );
-        //         projects.push(...editableCohorts);
-        //     }
-
-        //     session.user = {
-        //         id: userId,
-        //         name: userName,
-        //         role: userRole,
-        //         project: projects,
-        //         active: user.activeStatus === 'Y',
-        //         expires,
-        //         // headers,
-        //     };
-        // } else {
-        //     session.user = {
-        //         id: null,
-        //         name: null,
-        //         role: null,
-        //         project: [],
-        //         active: false,
-        //         expires,
-        //         // headers,
-        //     };
-        // }
-
-        let redirectUrl = baseURL+ '/mainboard';
+      
+        let redirectUrl = `/evssip/mainboard`;
+        //let redirectUrl =  baseURL + '/mainboard';
 
         // if (!user || !session.user.active) {
         //     redirectUrl = '/unauthorized';
@@ -193,12 +137,9 @@ var request2 = require('request');
 // so we can use the global siteminder agent logout route to invalidate our current session
 function logout(request, response) {
 
-    
-    // request.session.destroy(error => {
-    //     response.json(logoutUrl || '/');
-    // });
-    
-    //response.json(logoutUrl || '/');
+     request.session.destroy(error => {
+         response.json(logoutUrl || '/');
+     });  
 }
 
 function getUserSession(request, response) {

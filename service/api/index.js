@@ -2,6 +2,7 @@ const express = require("express");
 const controller = require("../search/controller");
 const apicontroller = require("./apicontroller");
 const metauser = require("../meta/user");
+const metamodel = require("../meta/dataModel");
 const report = require("../search/report");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../../routes/swagger');
@@ -42,6 +43,9 @@ router.get("/user/userprofile", metauser.getUserProfile);
 router.get("/user/allusers", metauser.getAllUser);
 //router.get("/admin/updateuser", metauser.updateUser);
 //router.get("/admin/createuser", metauser.createUser);
+
+router.get("/datamodel/search", metamodel.getApiSearch);
+router.get("/datamodel/source", metamodel.getApiSource);
 
 
 

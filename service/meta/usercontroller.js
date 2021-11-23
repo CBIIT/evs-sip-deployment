@@ -29,8 +29,8 @@ const getAllUser = function (keyword, fromIndex , pageSize ) {
   return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User) where (any(prop in ["fisrt_name", "last_name","nci_username","email"]'
    + ' where user[prop] =~ $searchword)) return user ORDER BY user.last_name , user.first_name '
    + ' SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ', {searchword: searchword, fromIndex: fromIndex, pageSize: pageSize} )
- )
-    .then(results => {
+   )
+   .then(results => {
       if (_.isEmpty(results.records)) {
         return {message: 'No matched user.', status: 400};
       }

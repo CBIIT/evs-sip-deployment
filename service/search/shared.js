@@ -7,6 +7,7 @@ const yaml = require("yamljs");
 const Datastore = require('nedb-promises');
 let db = Datastore.create();
 const _ = require("lodash");
+const handleError = require("../../components/handleError");
 const $RefParser = require("@apidevtools/json-schema-ref-parser");
 
 const folderPath = path.join(
@@ -15,7 +16,7 @@ const folderPath = path.join(
   "..",
   "data_files",
   "GDC",
-  "model-2.3.0"
+  "model"
 );
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
 const dataFilesDir = path.join(__dirname, "..", "..", "data_files", "GDC");
@@ -918,6 +919,8 @@ const getGraphicalGDCDictionary = async function () {
     jsonData["_terms.yaml"] = termsJson;
     var defJson = yaml.load(folderPath + "/_definitions.yaml");
     jsonData["_definitions.yaml"] = defJson;
+    var termsEnumJson = yaml.load(folderPath + "/_terms_enum.yaml");
+    jsonData["_terms_enum.yaml"] = termsEnumJson;
     // let bulkBody = [];
     fs.readdirSync(folderPath).forEach((file) => {
       let fileJson = yaml.load(folderPath + "/" + file);
@@ -959,6 +962,16 @@ const getGDCDictionaryByVersion = async function(version) {
       jsonData["_terms.yaml"] = termsJson;
       var defJson = yaml.load(DictionaryPath + '/_definitions.yaml');
       jsonData["_definitions.yaml"] = defJson;
+
+      if (!version.includes('2.3')) {
+        try {
+            let termsEnumJson = yaml.load(DictionaryPath + "/_terms_enum.yaml");
+            jsonData["_terms_enum.yaml"] = termsEnumJson;
+        } catch (e) {
+            console.log(e)
+        }
+    }
+      
       // let bulkBody = [];
       fs.readdirSync(DictionaryPath).forEach(file => {
           let fileJson = yaml.load(DictionaryPath + '/' + file);
@@ -1127,10 +1140,11 @@ const genearteCompareResult = async function(){
 		query.terms = {};
 		query.terms.source = [];
 		query.terms.source.push("gdc");
-		let GDCDict = await getGDCDictionaryByVersion("2.3.0");
+		// let GDCDict = await getGDCDictionaryByVersion("2.3.0");
+    let GDCDict = await getGDCDictionaryByVersion("2.4.1");
 		let data = await elastic.query_all(config.index_p, query, "", null);
 		if (data.hits === undefined) {
-			// return handleError.error(res, data);
+			//return handleError.error(res, data);
 		}
 		let rs = data.hits.hits;
 		let local_data = {};

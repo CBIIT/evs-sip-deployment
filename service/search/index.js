@@ -1,5 +1,7 @@
 const express = require("express");
 const controller = require("./controller");
+const metauser = require("../meta/user");
+const metamodel = require("../meta/dataModel");
 const report = require("./report");
 
 const router = express.Router();
@@ -31,6 +33,12 @@ router.get('/exportAllCompareResult', controller.exportAllCompareResult);
 //router.get('/updateGDCPropertyMappings', controller.updateGDCPropertyMappings);
 //router.get("/updateGDCDataMappings", controller.updateGDCDataMappings);
 //router.get("/preloadPCDCDataMappings", controller.preloadPCDCDataMappings);
+
+router.get("/user/userprofile", metauser.getUserProfile);
+router.get("/user/allusers", metauser.getAllUser);
+
+router.get("/datamodel/search", metamodel.getSearch);
+router.get("/datamodel/source", metamodel.getSource);
 
 //get report Diff from mysql table
 router.get('/report/reportDiff', report.getReportDiff);

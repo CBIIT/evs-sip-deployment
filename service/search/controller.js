@@ -1,9 +1,9 @@
-const writeError = require("../../components/response").writeError;
+//const writeError = require("../../components/response").writeError;
 const elastic = require("../../components/elasticsearch");
 const handleError = require("../../components/handleError");
 const logger = require("../../components/logger");
 const cache = require("../../components/cache");
-const config = require("../../config");
+const config = require("../../routes");
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
@@ -21,129 +21,129 @@ const indexing = (req, res) => {
   let config_property = {};
   config_property.index = config.index_p;
   /*
-  config_property.body = {
-    "settings": {
-      "number_of_shards": 10, 
-      "max_inner_result_window": 10000,
-      "max_result_window": 10000,
-      "analysis": {
-        "analyzer": {
-          "case_insensitive": {
-            "tokenizer": "keyword",
-            "filter": ["lowercase", "whitespace_remove"]
-          },
-          "my_standard": {
-            "tokenizer": "standard",
-            "char_filter": ["my_filter"],
-            "filter": ["lowercase","whitespace_remove"]
-          },
-          "my_ngram": {
-            "tokenizer": "ngram_tokenizer",
-            "char_filter": ["my_filter"],
-            "filter": ["lowercase","whitespace_remove"]
-          }
-        },
-        "char_filter": {
-          "my_filter": {
-            "type": "mapping",
-            "mappings": ["_=>-"]
-          }
-        },
-        "filter": {
-          "whitespace_remove": {
-            "type": "pattern_replace",
-            "pattern": "[_-]",
-            "replacement": " "
-          }
-        },
-        "tokenizer": {
-          "ngram_tokenizer": {
-            "type": "nGram",
-            "min_gram": "2",
-            "token_chars": ["letter", "digit", "symbol"]
-          }
-        }
-      }
-    },
-    "mappings": {
-      "properties": {
-        "id": {
-          "type": "keyword"
-        },
-        "source":{
-          "type": "keyword"
-        },
-        "category": {
-          "type": "keyword"
-        },
-        "node": {
-          "type": "keyword"
-        },
-        "prop": {
-          "type": "text",
-          "fields": {
-            "have": {
-              "type": "text",
-              "analyzer": "my_standard"
-            }
-          },
-          "analyzer": "case_insensitive"
-        },
-        "enum":{
-          "type": "nested",
-          "properties": {
-            "n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_standard"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "ncit.s.n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_standard"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "ncit.c": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_standard"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "icdo":{
-              "properties": {
-                "c": {
-                  "type": "text",
-                  "analyzer": "case_insensitive"
-                },
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_standard"
-                }
-              }
-            }
-          }
-        },
-        "cde.id": {
-          "type": "text",
-          "analyzer": "case_insensitive"
-        }
-      }
-    }
-  };
-  */
+	config_property.body = {
+		"settings": {
+			"number_of_shards": 10, 
+			"max_inner_result_window": 10000,
+			"max_result_window": 10000,
+			"analysis": {
+				"analyzer": {
+					"case_insensitive": {
+						"tokenizer": "keyword",
+						"filter": ["lowercase", "whitespace_remove"]
+					},
+					"my_standard": {
+						"tokenizer": "standard",
+						"char_filter": ["my_filter"],
+						"filter": ["lowercase","whitespace_remove"]
+					},
+					"my_ngram": {
+						"tokenizer": "ngram_tokenizer",
+						"char_filter": ["my_filter"],
+						"filter": ["lowercase","whitespace_remove"]
+					}
+				},
+				"char_filter": {
+					"my_filter": {
+						"type": "mapping",
+						"mappings": ["_=>-"]
+					}
+				},
+				"filter": {
+					"whitespace_remove": {
+						"type": "pattern_replace",
+						"pattern": "[_-]",
+						"replacement": " "
+					}
+				},
+				"tokenizer": {
+					"ngram_tokenizer": {
+						"type": "nGram",
+						"min_gram": "2",
+						"token_chars": ["letter", "digit", "symbol"]
+					}
+				}
+			}
+		},
+		"mappings": {
+			"properties": {
+				"id": {
+					"type": "keyword"
+				},
+				"source":{
+					"type": "keyword"
+				},
+				"category": {
+					"type": "keyword"
+				},
+				"node": {
+					"type": "keyword"
+				},
+				"prop": {
+					"type": "text",
+					"fields": {
+						"have": {
+							"type": "text",
+							"analyzer": "my_standard"
+						}
+					},
+					"analyzer": "case_insensitive"
+				},
+				"enum":{
+					"type": "nested",
+					"properties": {
+						"n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_standard"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"ncit.s.n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_standard"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"ncit.c": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_standard"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"icdo":{
+							"properties": {
+								"c": {
+									"type": "text",
+									"analyzer": "case_insensitive"
+								},
+								"have": {
+									"type": "text",
+									"analyzer": "my_standard"
+								}
+							}
+						}
+					}
+				},
+				"cde.id": {
+					"type": "text",
+					"analyzer": "case_insensitive"
+				}
+			}
+		}
+	};
+	*/
   config_property.body = {
     settings: {
       number_of_shards: 10,
@@ -153,7 +153,8 @@ const indexing = (req, res) => {
         analyzer: {
           case_insensitive: {
             tokenizer: "keyword",
-            filter: ["lowercase", "whitespace_remove"],
+            //filter: ["lowercase", "whitespace_remove"],
+            filter: ["lowercase"],
           },
           my_standard: {
             tokenizer: "standard",
@@ -162,8 +163,9 @@ const indexing = (req, res) => {
           },
           my_whitespace: {
             tokenizer: "whitespace",
-            char_filter: ["my_filter"],
-            filter: ["lowercase", "whitespace_remove"],
+            //char_filter: ["my_filter"],
+            //filter: ["lowercase", "whitespace_remove"],
+            filter: ["lowercase"],
           },
         },
         char_filter: {
@@ -184,150 +186,150 @@ const indexing = (req, res) => {
     mappings: {
       properties: {
         "id": {
-          "type": "keyword"
-        },
-        "source": {
-          "type": "keyword"
-        },
-        "category": {
-          "type": "keyword"
-        },
-        "node": {
-          "type": "nested",
-          "properties": {
-            "n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "d": {
-              "type": "text",
-              "analyzer": "my_whitespace"
-            },
-            "ncit.c": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "ncit.s.n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            }
-          }
-        },
-        "prop": {
-          "type": "nested",
-          "properties": {
-            "n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "d": {
-              "type": "text",
-              "analyzer": "my_whitespace"
-            },
-            "ncit.c": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "ncit.s.n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "cde": {
-              "properties": {
-                "c": {
-                  "type": "text",
-                  "analyzer": "case_insensitive"
-                }
-              }
-            }
-          }
-        },
-        "enum": {
-          "type": "nested",
-          "properties": {
-            "n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "ncit.s.n": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "ncit.c": {
-              "type": "text",
-              "fields": {
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              },
-              "analyzer": "case_insensitive"
-            },
-            "icdo": {
-              "properties": {
-                "c": {
-                  "type": "text",
-                  "analyzer": "case_insensitive"
-                },
-                "have": {
-                  "type": "text",
-                  "analyzer": "my_whitespace"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  };
+					"type": "keyword"
+				},
+				"source":{
+					"type": "keyword"
+				},
+				"category": {
+					"type": "keyword"
+				},
+				"node":{
+					"type": "nested",
+					"properties": {
+						"n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"d": {
+							"type": "text",
+							"analyzer": "my_whitespace"
+						},
+						"ncit.c": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"ncit.s.n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						}
+					}
+				},
+				"prop":{
+					"type": "nested",
+					"properties": {
+						"n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"d": {
+							"type": "text",
+							"analyzer": "my_whitespace"
+						},
+						"ncit.c": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"ncit.s.n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"cde":{
+							"properties": {
+								"c": {
+									"type": "text",
+									"analyzer": "case_insensitive"
+								}
+							}
+						}
+					}
+				},
+				"enum":{
+					"type": "nested",
+					"properties": {
+						"n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"ncit.s.n": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"ncit.c": {
+							"type": "text",
+							"fields": {
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							},
+							"analyzer": "case_insensitive"
+						},
+						"icdo":{
+							"properties": {
+								"c": {
+									"type": "text",
+									"analyzer": "case_insensitive"
+								},
+								"have": {
+									"type": "text",
+									"analyzer": "my_whitespace"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	};
   configs.push(config_property);
   //config suggestion index
   let config_suggestion = {};
@@ -348,11 +350,11 @@ const indexing = (req, res) => {
   configs.push(config_suggestion);
   elastic.createIndexes(configs, (result) => {
     if (result.acknowledged === undefined) {
-      return writeError.error(res, result);
+      return handleError.error(res, result);
     }
     elastic.bulkIndex((data) => {
       if (data.property_indexed === undefined) {
-        return writeError.error(res, data);
+        return handleError.error(res, data);
       }
       return res.status(200).json(data);
     });
@@ -372,7 +374,7 @@ const suggestion = (req, res) => {
   };
   elastic.suggest(config.suggestionName, suggest, (result) => {
     if (result.suggest === undefined) {
-      return writeError.error(res, result);
+      return handleError.error(res, result);
     }
     let dt = result.suggest.term_suggest;
     let data = [];
@@ -410,8 +412,8 @@ const searchP = (req, res, formatFlag) => {
     }
     if (keyword && keyword.trim() !== "") {
       let query = shared.generateQuery(keyword, option);
-      logger.debug("keyword: " + keyword)
-      logger.debug("------ query ------  %o ", query)
+     // logger.debug("keyword: " + keyword)
+     // logger.debug("------ query ------  %o ", query)
       let highlight = shared.generateHighlight();
       elastic.query(config.index_p, query, "enum", highlight, (result) => {
         if (result.hits === undefined) {
@@ -465,7 +467,7 @@ const getGDCData = (req, res) => {
   query.terms.id.push(uid);
   elastic.query(config.index_p, query, "", null, (result) => {
     if (result.hits === undefined) {
-      return writeError.error(res, result);
+      return handleError.error(res, result);
     }
     let data = result.hits.hits;
     res.json(data);
@@ -503,7 +505,7 @@ const getValuesForGraphicalView = async function (req, res) {
     query.terms.id.push(uid);
     elastic.query(config.index_p, query, "", null, (data) => {
       if (data.hits === undefined) {
-        return writeError.error(res, data);
+        return handleError.error(res, data);
       }
       let rs = data.hits.hits;
       result = [];
