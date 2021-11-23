@@ -337,7 +337,7 @@ const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { message: 'No matched data in 372.', status: 400 };
+        return { type:'node', message: 'No matched data in nodes.' };
       }
       let props = [];
       results.records.map(r =>{
@@ -401,7 +401,7 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { message: 'No matched data in 372.', status: 400 };
+        return { type:'props', message: 'No matched data in properties.', status: 400 };
       }
       let props = [];
       results.records.map(r =>{
@@ -448,7 +448,7 @@ const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { message: 'No matched data in 152.', status: 400 };
+        return { Type:'values', message: 'No matched data in values' };
       }
       let props = [];
       results.records.map(r =>
