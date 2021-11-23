@@ -413,7 +413,7 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
             Nanoid: r.get('pid'),
-            Total_Prop: r.get('total_prop'),
+            Total_Prop: r.get('total_prop').toNumber(),
             Value_Type: r.get('value_type'),
             Value: r.get('value'),
           })
