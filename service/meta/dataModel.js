@@ -55,11 +55,14 @@ const getApiSearch = async function (req, res) {
 
 const getApiSource = async function (req, res) {
    //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
-    const params = req.query;
-    const model = params.model ? params.model : "";
+    const model = req.params['model'] || 'ICDC';
+    if(['icdc','ctdc','gdc','pctc'].includes(model.toLowerCase())){
 
-    const result = await dataModelcontroller.getApiSouce(model);
+    const result = await dataModelcontroller.getApiDataSource(model);
     res.json(result);
+    }else{
+        res.json( {status: 400 ,message: 'not valid source :'+model  });
+    }
 
 };
 

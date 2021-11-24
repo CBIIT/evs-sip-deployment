@@ -60,16 +60,16 @@ const getApiSearchResults = async function (keyword, model, type) {
 //
 const getApiDataSource = function (model) {
   //console.log(typeof neo4jsession.readTransaction)
-  const neo4jsession = dbUtils.getSession();
- 
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
-    + ' WHERE p._to IS NULL and vs._to IS NULL and t._to IS NULL and p.model= $model RETURN DISTINCT '
-    + '  t.nanoid as id,'
-    + '  t.value as value,'
-    + '  p.handle as handle,'
-    + '  p.model as model,'
-    + '  p.nanoid as pid'
-    + '  ORDER BY model, handle, value ',
+  const neo4jsession = dbUtils.getSession()
+  if(!model) model="ICDC";
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
+    + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
+    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' WITH DISTINCT  n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
+    + ' n1.model as model ORDER BY model, node_name, handle '
+    + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' ORDER BY model, node_name  ',
     { model: model })
   )
     .then(results => {
@@ -77,7 +77,38 @@ const getApiDataSource = function (model) {
       if (_.isEmpty(results.records)) {
         return { message: 'No matched data.', status: 400 };
       }
-      return results.records.map(r => new User(r.get('user')));
+      let props = [];
+      results.records.map(r =>
+        { 
+        let prop = r.get('properties');
+        let data = {};
+        data.Modlel = r.get('model');
+        data.Node_Name = r.get('node_name');
+        if(prop.length > 0){
+          let plist = [];
+          prop.map(p => {
+            if (p.value && p.value.length>0 ){
+              plist.push({
+                property_name: p.property_name,
+                value_type: p.value_domain,
+                values: p.value
+              })
+
+            }else {
+              plist.push({
+                property_name: p.property_name,
+                value_type: p.value_domain
+              })
+            }        
+          });
+          data.properties = plist;
+        }
+        props.push(data) 
+      })
+    
+      return {type:'node', result: props };
+    }).catch(function (error) {
+      console.log("error in getBy Resource: " + error);
     });
 };
 
@@ -85,10 +116,10 @@ const getPropWithValuesByName = function (model, keyword) {
   //console.log(typeof neo4jsession.readTransaction)
   //let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
-  let searchword =  keyword;
+  let searchword =  "(?i).*" + keyword + ".*";
   
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and n1.model= $model '
-  + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and p1.model= $model AND p1.handle in $searchword'
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
+  + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and toLower(p1.model) = toLower($model) AND toLower(p1.handle) =~ toLower($searchword) '
   + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
   + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
     + ' RETURN DISTINCT '
@@ -136,17 +167,18 @@ const getValuesByName = function (model, keyword) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
   let searchword = "(?i).*" + keyword + ".*"
+  if(!model) model ='ICDC';
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
-    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and p.model in $model AND toLower(t.value) =~ toLower($searchword)'
+    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
     + ' WITH DISTINCT  n.handle as node_name,p.value_domain as value_type, collect(t.value) as value, p.handle as handle, p.model as model,'
     + ' p.nanoid as pid ORDER BY model, handle '
     + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties ',
-    { model: ['ICDC', 'CTDC'], searchword: searchword })
+    { model: model, searchword: searchword })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { message: 'No matched data in 152.', status: 400 };
+        return { message: 'No matched data.', status: 400 };
       }
       let props = [];
       results.records.map(r =>
@@ -160,7 +192,7 @@ const getValuesByName = function (model, keyword) {
      
       return {type:'values', result: props };
     }).catch(function (error) {
-      console.log("get user error in getValue: " + error);
+      console.log("error in getValue: " + error);
     });
 };
 
@@ -168,8 +200,8 @@ const getValuesByName = function (model, keyword) {
 const getNodeDetailsByName = function (model, keyword) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
-  let searchword =  keyword ;
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and n1.model= $model AND n1.handle in $searchword '
+  let searchword =  "(?i).*" + keyword + ".*";
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model)= toLower($model) AND toLower(n1.handle) =~ toLower($searchword) '
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
@@ -182,7 +214,7 @@ const getNodeDetailsByName = function (model, keyword) {
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { message: 'No matched data in 188.', status: 400 };
+        return { message: 'No matched data.', status: 400 };
       }
       let props = [];
       results.records.map(r =>
@@ -215,7 +247,7 @@ const getNodeDetailsByName = function (model, keyword) {
     
       return {type:'node', result: props };
     }).catch(function (error) {
-      console.log("get user error in nodebyname: " + error);
+      console.log(" error in nodebyname: " + error);
     });
 };
 
@@ -236,7 +268,7 @@ const getNodebykeyword = function (keyword) {
       }
       return results.records.map(r => { return { name: r.get('name'), model: r.get('model'), type: r.get('type') } });
     }).catch(function (error) {
-      console.log("get user error: " + error);
+      console.log("error in getNodeByKeyword: " + error);
     });
 };
 
@@ -256,7 +288,7 @@ const getNodebykeywordAndModel = function (keyword, model) {
       }
       return results.records.map(r => { return { name: r.get('name'), model: r.get('model'), type: r.get('type') } });
     }).catch(function (error) {
-      console.log("get user error: " + error);
+      console.log("error in getNodeByKeyword and model: " + error);
     });
 };
 const getSearchResults = async function (keyword, model,type, fromIndex, pageSize) {
@@ -300,25 +332,55 @@ const getSearchResults = async function (keyword, model,type, fromIndex, pageSiz
 
 const getDataSource = function (model, keyword, fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
-  const neo4jsession = dbUtils.getSession();
-  let searchword = "(?i).*" + keyword + ".*"
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
-    + ' WHERE p._to IS NULL and vs._to IS NULL and t._to IS NULL and p.model= $model RETURN DISTINCT '
-    + '  t.nanoid as id,'
-    + '  t.value as value,'
-    + '  p.handle as handle,'
-    + '  p.model as model,'
-    + '  p.nanoid as pid'
-    + '  ORDER BY model, handle, value '
-    + ' SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
-    { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
+  const neo4jsession = dbUtils.getSession()
+  if(!model) model="ICDC";
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
+    + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
+    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' WITH DISTINCT  n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
+    + ' n1.model as model ORDER BY model, node_name, handle '
+    + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' ORDER BY model, node_name  ',
+    { model: model })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
         return { message: 'No matched data.', status: 400 };
       }
-      return results.records.map(r => new User(r.get('user')));
+      let props = [];
+      results.records.map(r =>
+        { 
+        let prop = r.get('properties');
+        let data = {};
+        data.Modlel = r.get('model');
+        data.Node_Name = r.get('node_name');
+        if(prop.length > 0){
+          let plist = [];
+          prop.map(p => {
+            if (p.value && p.value.length>0 ){
+              plist.push({
+                property_name: p.property_name,
+                value_type: p.value_domain,
+                values: p.value
+              })
+
+            }else {
+              plist.push({
+                property_name: p.property_name,
+                value_type: p.value_domain
+              })
+            }        
+          });
+          data.properties = plist;
+        }
+        props.push(data) 
+      })
+    
+      return {type:'node', result: props };
+    }).catch(function (error) {
+      console.log("error in getBy Resource: " + error);
     });
 };
 
