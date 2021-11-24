@@ -8,52 +8,59 @@ const { session } = require('neo4j-driver');
 const getApiSearchResults = async function (keyword, model, type) {
   let nodeinfo = [];
   let resultAll = [];
+  let typeList = [];
+  if (type.toLowerCase().includes('prop')) typeList.push('property');
+  if (type.toLowerCase().includes('node')) typeList.push('node');
+  if (type.toLowerCase().includes('value')) typeList.push('term');
   if (model && model.length > 1) {
- 
     nodeinfo = await getNodebykeywordAndModel(keyword, model)
   } else if (keyword) {
-  
     nodeinfo = await getNodebykeyword(keyword)
   }
 
   if ('string' != (typeof nodeinfo)) {
     let promises = nodeinfo.map(async r => {
       let nodetype = r.type[0];
-      if (r.model && ['icdc', 'ctdc'].includes(r.model.toLowerCase())) {
-        switch (nodetype) {
-          case 'node':
-          
-            return await getNodeDetailsByName(r.model, r.name);
-            break;
-          case 'property':
-            
-            return await getPropWithValuesByName(r.model, r.name);
-            break;
-          case 'term':
-           
-            return await getValuesByName(r.model, r.name);
-            break;
-          default:
-            
-            return null;
-            break;
-        };
-      }else if(nodetype==='term') {
-       // return await getValuesByName(r.model, r.name);
-       
-       return null;
-      } else {
-        return null;
+      if (typeList.length === 0 || typeList.includes(nodetype)) {
+        if (r.model && ['icdc', 'ctdc'].includes(r.model.toLowerCase())) {
+          switch (nodetype) {
+            case 'node':
+
+              return await getNodeDetailsByName(r.model, r.name);
+              break;
+            case 'property':
+
+              return await getPropWithValuesByName(r.model, r.name);
+              break;
+            case 'term':
+
+              return await getValuesByName(r.model, r.name);
+              break;
+            default:
+
+              return null;
+              break;
+          };
+        } else if (nodetype === 'term') {
+          // return await getValuesByName(r.model, r.name);
+
+          return null;
+        } else {
+          return null;
+        }
       }
     })
 
     for await (let val of promises) {
       if (val) resultAll.push(val);
     }
+    if (!resultAll) {
+      resultAll.push({ status: 400, message: " No data found. " });
+    }
   } else {
     resultAll = nodeinfo;
   }
-  
+
   return resultAll;
 }
 
@@ -61,7 +68,7 @@ const getApiSearchResults = async function (keyword, model, type) {
 const getApiDataSource = function (model) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
-  if(!model) model="ICDC";
+  if (!model) model = "ICDC";
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
@@ -78,35 +85,34 @@ const getApiDataSource = function (model) {
         return { message: 'No matched data.', status: 400 };
       }
       let props = [];
-      results.records.map(r =>
-        { 
+      results.records.map(r => {
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
         data.Node_Name = r.get('node_name');
-        if(prop.length > 0){
+        if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
-            if (p.value && p.value.length>0 ){
+            if (p.value && p.value.length > 0) {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain,
                 values: p.value
               })
 
-            }else {
+            } else {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain
               })
-            }        
+            }
           });
           data.properties = plist;
         }
-        props.push(data) 
+        props.push(data)
       })
-    
-      return {type:'node', result: props };
+
+      return { type: 'node', result: props };
     }).catch(function (error) {
       console.log("error in getBy Resource: " + error);
     });
@@ -116,12 +122,12 @@ const getPropWithValuesByName = function (model, keyword) {
   //console.log(typeof neo4jsession.readTransaction)
   //let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
-  let searchword =  "(?i).*" + keyword + ".*";
-  
+  let searchword = keyword;
+
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
-  + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and toLower(p1.model) = toLower($model) AND toLower(p1.handle) =~ toLower($searchword) '
-  + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
-  + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and toLower(p1.model) = toLower($model) AND p1.handle in $searchword '
+    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
     + ' RETURN DISTINCT '
     + ' n1.handle as node_name,'
     + ' p1.value_domain as value_type,'
@@ -130,16 +136,16 @@ const getPropWithValuesByName = function (model, keyword) {
     + ' p1.model as model,'
     + ' p1.nanoid as pid'
     + ' ORDER BY model, handle, value ',
-    { model:model, searchword: searchword })
+    { model: model, searchword: searchword })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { message: 'No matched data in 120.', status: 400 };
+        return { message: 'No matched data in properties.', status: 400 };
       }
       let props = [];
-      results.records.map(r =>{
-        if(r.get('value') && r.get('value').length>0){
+      results.records.map(r => {
+        if (r.get('value') && r.get('value').length > 0) {
           props.push({
             Model: r.get('model'),
             Node_Name: r.get('node_name'),
@@ -147,17 +153,17 @@ const getPropWithValuesByName = function (model, keyword) {
             Value_Type: r.get('value_type'),
             Value: r.get('value'),
           })
-        }else{
-        props.push({
-          Model: r.get('model'),
-          Node_Name: r.get('node_name'),
-          Property_Name: r.get('handle'),
-          Value_Type: r.get('value_type')
-        })
-      }
+        } else {
+          props.push({
+            Model: r.get('model'),
+            Node_Name: r.get('node_name'),
+            Property_Name: r.get('handle'),
+            Value_Type: r.get('value_type')
+          })
+        }
       })
-      
-      return {type:'props', result: props};
+
+      return { type: 'props', result: props };
     }).catch(function (error) {
       console.log("get user error in getProp : " + error);
     });
@@ -166,13 +172,13 @@ const getPropWithValuesByName = function (model, keyword) {
 const getValuesByName = function (model, keyword) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
-  let searchword = "(?i).*" + keyword + ".*"
-  if(!model) model ='ICDC';
+  let searchword = keyword;
+  if (!model) model = 'ICDC';
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
-    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
+    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND t.value) in $searchword'
     + ' WITH DISTINCT  n.handle as node_name,p.value_domain as value_type, collect(t.value) as value, p.handle as handle, p.model as model,'
     + ' p.nanoid as pid ORDER BY model, handle '
-    + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties ',
+    + ' RETURN DISTINCT model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties ',
     { model: model, searchword: searchword })
   )
     .then(results => {
@@ -189,8 +195,8 @@ const getValuesByName = function (model, keyword) {
           Value_Type: r.get('value_type'),
           Value: r.get('value'),
         }))
-     
-      return {type:'values', result: props };
+
+      return { type: 'values', result: props };
     }).catch(function (error) {
       console.log("error in getValue: " + error);
     });
@@ -200,14 +206,14 @@ const getValuesByName = function (model, keyword) {
 const getNodeDetailsByName = function (model, keyword) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
-  let searchword =  "(?i).*" + keyword + ".*";
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model)= toLower($model) AND toLower(n1.handle) =~ toLower($searchword) '
+  let searchword = keyword;
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model)= toLower($model) AND n1.handle in $searchword '
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
     + ' WITH DISTINCT  n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
     + ' n1.model as model ORDER BY model, node_name, handle '
-    + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' RETURN DISTINCT model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
     + ' ORDER BY model, node_name  ',
     { model: model, searchword: searchword })
   )
@@ -217,35 +223,34 @@ const getNodeDetailsByName = function (model, keyword) {
         return { message: 'No matched data.', status: 400 };
       }
       let props = [];
-      results.records.map(r =>
-        { 
+      results.records.map(r => {
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
         data.Node_Name = r.get('node_name');
-        if(prop.length > 0){
+        if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
-            if (p.value && p.value.length>0 ){
+            if (p.value && p.value.length > 0) {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain,
                 values: p.value
               })
 
-            }else {
+            } else {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain
               })
-            }        
+            }
           });
           data.properties = plist;
         }
-        props.push(data) 
+        props.push(data)
       })
-    
-      return {type:'node', result: props };
+
+      return { type: 'node', result: props };
     }).catch(function (error) {
       console.log(" error in nodebyname: " + error);
     });
@@ -258,7 +263,7 @@ const getNodebykeyword = function (keyword) {
   let searchword = "(?i).*" + keyword + ".*"
   // return neo4jsession.readTransaction(txc => txc.run('MATCH (n) WHERE n._to IS NULL AND ((toLower(n.handle) =~ toLower($searchword) AND n.model  in $model ) OR toLower(n.value) =~ toLower($searchword))'
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n) WHERE n._to IS NULL AND (toLower(n.handle) =~ toLower($searchword) AND n.model in $model )'
-   + '  RETURN distinct collect(n.handle) AS name,n.model AS model, labels(n) AS type; ',
+    + '  RETURN distinct collect(n.handle) AS name,n.model AS model, labels(n) AS type; ',
     { searchword: searchword, model: ['ICDC', 'CTDC'] })
   )
     .then(results => {
@@ -291,40 +296,40 @@ const getNodebykeywordAndModel = function (keyword, model) {
       console.log("error in getNodeByKeyword and model: " + error);
     });
 };
-const getSearchResults = async function (keyword, model,type, fromIndex, pageSize) {
+const getSearchResults = async function (keyword, model, type, fromIndex, pageSize) {
   // this support GUI, assume model is NOT NULL and single
   // keyword could be null
   let resultAll = [];
-  
-  if(!model) model='ICDC';
-  if(type.toLowerCase().includes('prop')) type='prop';
-  if(type.toLowerCase().includes('node')) type='node';
-  if(type.toLowerCase().includes('value')) type='value';
-  if(type){
-    let result=[];
+
+  if (!model) model = 'ICDC';
+  if (type.toLowerCase().includes('prop')) type = 'prop';
+  if (type.toLowerCase().includes('node')) type = 'node';
+  if (type.toLowerCase().includes('value')) type = 'value';
+  if (type) {
+    let result = [];
     switch (type) {
       case 'node':
-        result = await getNodeListWithPaging(model, keyword,  fromIndex, pageSize);
+        result = await getNodeListWithPaging(model, keyword, fromIndex, pageSize);
         break;
       case 'prop':
-        result = await getPropListWithPaging(model, keyword,  fromIndex, pageSize);
+        result = await getPropListWithPaging(model, keyword, fromIndex, pageSize);
         break;
       case 'value':
-        result = await getValueListWithPaging(model, keyword,  fromIndex, pageSize);
-      break;
+        result = await getValueListWithPaging(model, keyword, fromIndex, pageSize);
+        break;
       default:
-        result = {type: type, message : 'No matched data.'}
+        result = { type: type, message: 'No matched data.' }
         break;
     }
     if (result) resultAll.push(result);
 
-  }else {
-  let nresult = await getNodeListWithPaging(model, keyword,  fromIndex, pageSize);
-  let presult = await getPropListWithPaging(model, keyword,  fromIndex, pageSize);
-  let vresult = await getValueListWithPaging(model, keyword,  fromIndex, pageSize);
-  if (nresult) resultAll.push(nresult);
-  if (presult) resultAll.push(presult);
-  if (vresult) resultAll.push(vresult);
+  } else {
+    let nresult = await getNodeListWithPaging(model, keyword, fromIndex, pageSize);
+    let presult = await getPropListWithPaging(model, keyword, fromIndex, pageSize);
+    let vresult = await getValueListWithPaging(model, keyword, fromIndex, pageSize);
+    if (nresult) resultAll.push(nresult);
+    if (presult) resultAll.push(presult);
+    if (vresult) resultAll.push(vresult);
 
   }
   return resultAll;
@@ -333,7 +338,7 @@ const getSearchResults = async function (keyword, model,type, fromIndex, pageSiz
 const getDataSource = function (model, keyword, fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
-  if(!model) model="ICDC";
+  if (!model) model = "ICDC";
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
@@ -350,45 +355,44 @@ const getDataSource = function (model, keyword, fromIndex, pageSize) {
         return { message: 'No matched data.', status: 400 };
       }
       let props = [];
-      results.records.map(r =>
-        { 
+      results.records.map(r => {
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
         data.Node_Name = r.get('node_name');
-        if(prop.length > 0){
+        if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
-            if (p.value && p.value.length>0 ){
+            if (p.value && p.value.length > 0) {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain,
                 values: p.value
               })
 
-            }else {
+            } else {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain
               })
-            }        
+            }
           });
           data.properties = plist;
         }
-        props.push(data) 
+        props.push(data)
       })
-    
-      return {type:'node', result: props };
+
+      return { type: 'node', result: props };
     }).catch(function (error) {
       console.log("error in getBy Resource: " + error);
     });
 };
 
-const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
+const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
- 
+
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n:node) WHERE n._to IS NULL and toLower(n.model) = toLower($model) AND toLower(n.handle) =~ toLower($searchword) '
     + ' WITH collect(n) as allnodes, count(distinct n.handle) as total_nodes UNWIND allnodes as n1'
     + ' WITH n1, total_nodes ORDER BY n1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
@@ -399,65 +403,65 @@ const getNodeListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     + ' n1.model as model, total_nodes ORDER BY model, node_name, handle '
     + ' RETURN model, node_name, id, total_nodes, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
     + ' ORDER BY model, node_name  ',
-    { model:model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize  })
+    { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { type:'node', message: 'No matched data in nodes.' };
+        return { type: 'node', message: 'No matched data in nodes.' };
       }
       let props = [];
-      let total =0;
-      results.records.map(r =>{
-        if (total < 1 && r.get('total_nodes').toNumber()>0) total = r.get('total_nodes').toNumber();
+      let total = 0;
+      results.records.map(r => {
+        if (total < 1 && r.get('total_nodes').toNumber() > 0) total = r.get('total_nodes').toNumber();
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
         data.Node_Name = r.get('node_name');
         data.Nanoid = r.get("id");
         //data.total_nodes = r.get('total_nodes').toNumber();
-        if(prop.length > 0){
+        if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
-            if (p.value && p.value.length>0 ){
+            if (p.value && p.value.length > 0) {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain,
                 values: p.value
               })
 
-            }else {
+            } else {
               plist.push({
                 property_name: p.property_name,
                 value_type: p.value_domain
               })
-            }        
+            }
           });
           data.properties = plist;
         }
         props.push(data)
       })
-    
-      return {type:'node', total_nodes: total, result: props };
-    
+
+      return { type: 'node', total_nodes: total, result: props };
+
     }).catch(function (error) {
       console.log("get user error in getProp : " + error);
     });
 };
 
-const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
+const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
- 
+
 
   return neo4jsession.readTransaction(txc => txc.run('MATCH (p:property) WHERE p._to IS NULL and toLower(p.model)= toLower($model) AND toLower(p.handle) =~ toLower($searchword) '
-  + ' WITH collect(p) as allprops, count(p.handle) as total_props UNWIND allprops as p1'
-  + ' WITH p1, total_props '
-  + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and n1.model= $model '
-  + ' WITH n1, p1 , total_props ORDER BY p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
-  + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
-  + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' WITH collect(p) as allprops, count(p.handle) as total_props UNWIND allprops as p1'
+    + ' WITH p1, total_props '
+    + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and n1.model= $model '
+    + ' WITH n1, p1 , total_props ORDER BY p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
+    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
     + ' RETURN DISTINCT '
     + ' n1.handle as node_name,'
     + ' p1.value_domain as value_type,'
@@ -467,50 +471,50 @@ const getPropListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     + ' p1.nanoid as pid,'
     + ' total_props as total_props '
     + ' ORDER BY model, handle, value ',
-    { model:model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize  })
+    { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { type:'props', message: 'No matched data in properties.'};
+        return { type: 'props', message: 'No matched data in properties.' };
       }
       let props = [];
       let totals = 0;
-      results.records.map(r =>{
-        if (totals < 1 && r.get('total_props').toNumber()>0) totals = r.get('total_props').toNumber();
-        if(r.get('value') && r.get('value').length>0){
+      results.records.map(r => {
+        if (totals < 1 && r.get('total_props').toNumber() > 0) totals = r.get('total_props').toNumber();
+        if (r.get('value') && r.get('value').length > 0) {
           props.push({
             Model: r.get('model'),
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
             Nanoid: r.get('pid'),
-           // Total_Prop: r.get('total_props').toNumber(),
+            // Total_Prop: r.get('total_props').toNumber(),
             Value_Type: r.get('value_type'),
             Value: r.get('value'),
           })
-        }else{
-        props.push({
-          Model: r.get('model'),
-          Node_Name: r.get('node_name'),
-          Property_Name: r.get('handle'),
-          Nanoid: r.get('pid'),
-         // Total_Prop: r.get('total_props').toNumber(),
-          Value_Type: r.get('value_type')
-        })
-      }
+        } else {
+          props.push({
+            Model: r.get('model'),
+            Node_Name: r.get('node_name'),
+            Property_Name: r.get('handle'),
+            Nanoid: r.get('pid'),
+            // Total_Prop: r.get('total_props').toNumber(),
+            Value_Type: r.get('value_type')
+          })
+        }
       })
-  
-      return {type:'props',total_props: totals,  result: props};
+
+      return { type: 'props', total_props: totals, result: props };
     }).catch(function (error) {
       console.log("get user error in getProp : " + error);
     });
 };
 
-const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
+const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
- 
+
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
     + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
     + ' RETURN DISTINCT  n.handle as node_name,p.value_domain as value_type, t.value as value, p.handle as handle, p.model as model,'
@@ -521,7 +525,7 @@ const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
     .then(results => {
       neo4jsession.close();
       if (_.isEmpty(results.records)) {
-        return { type:'values', message: 'No matched data in values' };
+        return { type: 'values', message: 'No matched data in values' };
       }
       let props = [];
       results.records.map(r =>
@@ -534,8 +538,8 @@ const getValueListWithPaging = function (model, keyword,  fromIndex, pageSize) {
           Total_Values: r.get('total_value').toNumber(),
           Value: r.get('value'),
         }))
-    
-      return {type:'values', result: props };
+
+      return { type: 'values', result: props };
 
     }).catch(function (error) {
       console.log("get user error in getValues : " + error);
