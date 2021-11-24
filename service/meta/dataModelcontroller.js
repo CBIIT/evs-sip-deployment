@@ -54,13 +54,13 @@ const getApiSearchResults = async function (keyword, model, type) {
     for await (let val of promises) {
       if (val) resultAll.push(val);
     }
-    if (!resultAll) {
-      resultAll.push({ status: 400, message: " No data found. " });
-    }
+    
   } else {
     resultAll = nodeinfo;
   }
-
+  if (resultAll.length ===0 ) {
+    resultAll.push({ status: 400, message: " No data found. " });
+  }
   return resultAll;
 }
 
@@ -112,7 +112,11 @@ const getApiDataSource = function (model) {
         props.push(data)
       })
 
-      return { type: 'node', result: props };
+      if (props.length ===0 ) {
+        return({ status: 400, message: " No data found. " });
+      }else {
+        return { status: 200, results: props };
+      }
     }).catch(function (error) {
       console.log("error in getBy Resource: " + error);
     });
@@ -165,7 +169,7 @@ const getPropWithValuesByName = function (model, keyword) {
 
       return { type: 'props', result: props };
     }).catch(function (error) {
-      console.log("get user error in getProp : " + error);
+      console.log("error in getProp : " + error);
     });
 };
 
@@ -445,7 +449,7 @@ const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
       return { type: 'node', total_nodes: total, result: props };
 
     }).catch(function (error) {
-      console.log("get user error in getProp : " + error);
+      console.log("error in getNodeList : " + error);
     });
 };
 
@@ -454,11 +458,10 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
 
-
   return neo4jsession.readTransaction(txc => txc.run('MATCH (p:property) WHERE p._to IS NULL and toLower(p.model)= toLower($model) AND toLower(p.handle) =~ toLower($searchword) '
     + ' WITH collect(p) as allprops, count(p.handle) as total_props UNWIND allprops as p1'
     + ' WITH p1, total_props '
-    + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and n1.model= $model '
+    + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and toLower(n1.model) = toLower($model) '
     + ' WITH n1, p1 , total_props ORDER BY p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
@@ -506,7 +509,7 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
 
       return { type: 'props', total_props: totals, result: props };
     }).catch(function (error) {
-      console.log("get user error in getProp : " + error);
+      console.log("error in getPropList : " + error);
     });
 };
 
@@ -515,11 +518,16 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
   let searchword = "(?i).*" + keyword + ".*"
   const neo4jsession = dbUtils.getSession()
 
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
+  return neo4jsession.readTransaction(txc => txc.run(
+     ' MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
     + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
-    + ' RETURN DISTINCT  n.handle as node_name,p.value_domain as value_type, t.value as value, p.handle as handle, p.model as model,'
-    + ' t.nanoid as tid, count(*) as total_value  '
-    + ' ORDER BY t.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
+    + ' WITH collect(t) as allvalues, count(distinct t.value) as total_values UNWIND allvalues as t1'
+    + ' WITH t1, total_values '
+    + ' MATCH (n1) -[:has_property]- (p1)-[:has_value_set]->(vs1) MATCH (vs1)-[:has_term]->(t1)'
+    + ' WHERE n1._to IS NULL and p1._to IS NULL and vs1._to IS NULL and t1._to IS NULL and toLower(p1.model) = toLower($model) AND toLower(t1.value) =~ toLower($searchword)'
+    + ' RETURN DISTINCT  n1.handle as node_name,p1.value_domain as value_type, t1.value as value, p1.handle as handle, p1.model as model,'
+    + ' t1.nanoid as tid, total_values as total_values '
+    + ' ORDER BY t1.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
     { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
@@ -528,21 +536,23 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
         return { type: 'values', message: 'No matched data in values' };
       }
       let props = [];
-      results.records.map(r =>
+      let totals = 0;
+      results.records.map(r => {
+        if (totals < 1 && r.get('total_values').toNumber() > 0) totals = r.get('total_values').toNumber();
         props.push({
           Model: r.get('model'),
           Node_Name: r.get('node_name'),
           Property_Name: r.get('handle'),
           Value_Type: r.get('value_type'),
           Nanoid: r.get('tid'),
-          Total_Values: r.get('total_value').toNumber(),
           Value: r.get('value'),
-        }))
+        })
+      })
 
-      return { type: 'values', result: props };
+      return { type: 'values',total_values:totals, result: props };
 
     }).catch(function (error) {
-      console.log("get user error in getValues : " + error);
+      console.log("error in getValuesList : " + error);
     });
 };
 

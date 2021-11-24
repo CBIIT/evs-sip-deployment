@@ -38,7 +38,7 @@ router.get("/user/userprofile", metauser.getUserProfile);
 router.get("/user/allusers", metauser.getAllUser);
 
 router.get("/datamodel/search", metamodel.getSearch);
-router.get("/datamodel/source", metamodel.getSource);
+router.get("/datamodel/source/:model", metamodel.getApiSource);
 
 //get report Diff from mysql table
 router.get('/report/reportDiff', report.getReportDiff);
