@@ -46,13 +46,14 @@ const updateUser = async function (req, res) {
 };
 
 const createUser = async function (req, res) {
-    const params = req.query;
-    const userName = params.username ? params.username : "";
-    if(userName) {
-        const result = await usercontroller.getUserbyNciUserName(userName);
+    let body = req.body;
+    let requester = body.requester ? body.requester : "";
+    let user = body.user? body.user :{};
+    if(user) {
+        const result = await usercontroller.createUseWithNciUserName(requester,user);
         res.json(result)
     }else{
-        return writeError(res, {detail: 'no proper NCI username provided'}, 400);
+        res.json({detail: 'no User data provided', status: 400});
     }
   
 };

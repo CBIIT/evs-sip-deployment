@@ -43,7 +43,7 @@ const updateUserbyNciUserName = function (requester, user) {
   if (!requester && !user.nci_username) {
     return { message: 'invalid NCI username for requester', status: 400 };
   }
-  let updatedUser = { last_updated_time: new Date().toISOString().slice(0, 10)};
+  let updatedUser = { last_updated_time: new Date().toISOString().slice(0, 10) };
   if (user.email && (typeof user.email) === 'string') updatedUser.email = user.email;
   if (user.last_name && (typeof user.last_name) === 'string') updatedUser.last_name = user.last_name;
   if (user.first_name && (typeof user.first_name) === 'string') updatedUser.first_name = user.first_name;
@@ -51,7 +51,7 @@ const updateUserbyNciUserName = function (requester, user) {
   if (user.projects && (typeof user.projects) === 'string') updatedUser.projects = user.projects;
   if (user.active && (typeof user.active) === 'string') updatedUser.active = user.active.toLowerCase().includes('y') ? 'Y' : 'N';
 
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User {nci_username: $username}) RETURN user', { username: requester }))
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User {nci_username: toLower($username)}) RETURN user', { username: requester.toLowerCase() }))
     .then(results => {
       if (_.isEmpty(results.records)) {
         return { message: 'requester is not valid.', status: 400 }
@@ -59,26 +59,71 @@ const updateUserbyNciUserName = function (requester, user) {
       else {
         let requestUser = new User(results.records[0].get('user'));
         if (requestUser.role.toLowerCase().includes('admin')) {
-          return neo4jsession.writeTransaction(txc => txc.run('MATCH (user:User {nci_username: $username}) SET user += $updateduser RETURN user',
-            { username: user.nci_username, updateduser: updatedUser }
+          return neo4jsession.writeTransaction(txc => txc.run('MATCH (user:User {nci_username: toLower($username)}) SET user += $updateduser RETURN user',
+            { username: user.nci_username.toLowerCase(), updateduser: updatedUser }
           )).then(results => {
             if (_.isEmpty(results.records)) {
               return { message: 'invalid NCI username', status: 400 };
             }
-            return { status:200, user: new User(results.records[0].get('user'))};
+            return { status: 200, user: new User(results.records[0].get('user')) };
           }
           )
 
-        }else{
+        } else {
           return { message: 'requester is not an admin.', status: 400 };
         }
       }
     });
 };
 
+const createUseWithNciUserName = function (requester, user) {
+
+  if (!requester && !user.nci_username) {
+    return { message: 'invalid NCI username for requester', status: 400 };
+  }
+  let today_date = new Date().toISOString().slice(0, 10);
+  let newUser = { last_updated_time: today_date, created_time: today_date, nci_username: user.nci_username.toLowerCase() };
+  if (user.email && (typeof user.email) === 'string') newUser.email = user.email;
+  if (user.last_name && (typeof user.last_name) === 'string') newUser.last_name = user.last_name;
+  if (user.first_name && (typeof user.first_name) === 'string') newUser.first_name = user.first_name;
+  if (user.organization && (typeof user.organization) === 'string') newUser.organization = user.organization;
+  if (user.projects && (typeof user.projects) === 'string') newUser.projects = user.projects;
+  if (user.active && (typeof user.active) === 'string') newUser.active = user.active.toLowerCase().includes('y') ? 'Y' : 'N';
+
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User { nci_username : toLower($username) }) RETURN user', { username: requester.toLowerCase() }))
+    .then(results => {
+      if (_.isEmpty(results.records)) {
+        return { message: 'requester is not valid.', status: 400 }
+      }
+      else {
+        let requestUser = new User(results.records[0].get('user'));
+        if (requestUser.role.toLowerCase().includes('admin')) {
+          return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User {nci_username: toLower($username)}) RETURN user',
+            { username: user.nci_username.toLowerCase() }
+          )).then(results => {
+            if (!_.isEmpty(results.records)) {
+              return { message: 'existing NCI username', status: 400 };
+            } else {
+              return neo4jsession.writeTransaction(txc => txc.run('MERGE (user:User { nci_username: toLower($username) }) SET user = $newuser RETURN user',
+                { username: user.nci_username.toLowerCase(), newuser: newUser }
+              )).then(results => {
+                if (_.isEmpty(results.records)) {
+                  return { message: 'failed to create user', status: 400 };
+                }
+                return { status: 200, user: new User(results.records[0].get('user')) };
+              })
+            }
+          })
+        } else {
+          return { message: 'requester is not an admin.', status: 400 };
+        }
+      }
+    });
+};
 
 module.exports = {
   getAllUser,
   getUserbyNciUserName,
-  updateUserbyNciUserName
+  updateUserbyNciUserName,
+  createUseWithNciUserName,
 };
