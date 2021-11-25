@@ -36,6 +36,8 @@ router.get('/exportAllCompareResult', controller.exportAllCompareResult);
 
 router.get("/user/userprofile", metauser.getUserProfile);
 router.get("/user/allusers", metauser.getAllUser);
+router.post("/user/updateuser", metauser.updateUser);
+router.post("/user/createuser", metauser.createUser);
 
 router.get("/datamodel/search", metamodel.getSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
