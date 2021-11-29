@@ -2,6 +2,38 @@
 const {writeResponse,writeError} = require( '../../components/response');
 const dataModelcontroller = require( './dataModelcontroller');
 const _ = require('lodash');
+/**
+ * @swagger
+ * definition:
+ *   Node:
+ *     type: object
+ *     properties:
+ *       model:
+ *         type: string
+ *       node_name:
+ *         type: string
+ *       properties:
+ *         type: object
+ */
+
+/**
+ * @swagger
+ * /api/datamodel/source/{model}:
+ *   get:
+ *     tags:
+ *     - datamodel
+ *     description: Find all nodes in requested model
+ *     summary: Find all nodes in requested model
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: A list of nodes
+ *         schema:
+ *           type: array
+ *           items:
+ *             $ref: '#/definitions/Node'
+ */
 
 // expect NCI_USERNAME as parameter
 const getSearch = async function (req, res) {
@@ -44,13 +76,18 @@ const getApiSearch = async function (req, res) {
     const keyword = params.keyword ? params.keyword : "";
     const model = params.model ? params.model : "";
     const type = params.type ? params.type : "";
+    const formatFlag = req.query.format || '';
     if(keyword) {
         const result = await dataModelcontroller.getApiSearchResults(keyword, model, type);
-        res.json(result)
+       
+        if(+result.status === 200 ){
+            res.json(result);
+        }else{
+            res.json( {status: 404 ,message: 'Data not found'  });
+        }
     }else{
-        return writeError(res, {detail: 'no result found' }, 400);
-    }
-  
+        res.json( {status: 400, message: 'Wrong request format' });
+    }  
 };
 
 const getApiSource = async function (req, res) {
@@ -59,9 +96,14 @@ const getApiSource = async function (req, res) {
     if(['icdc','ctdc','gdc','pctc'].includes(model.toLowerCase())){
 
     const result = await dataModelcontroller.getApiDataSource(model);
-    res.json(result);
+    if(+result.status === 200){
+        res.json(result);
     }else{
-        res.json( {status: 400 ,message: 'not valid source :'+model  });
+        res.json( {status: 404 ,message: 'Data not found in :'+model  });
+    }
+    
+    }else{
+        res.json( {status: 400 ,message: 'Not valid data model :'+model  });
     }
 
 };

@@ -1,8 +1,8 @@
 const express = require("express");
-const controller = require("./controller");
-const metauser = require("../meta/user");
-const metamodel = require("../meta/dataModel");
-const report = require("./report");
+const controller = require("../service/search/controller");
+const metauser = require("../service/meta/user");
+const metamodel = require("../service/meta/dataModel");
+const report = require("../service/search/report");
 
 const router = express.Router();
 

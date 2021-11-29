@@ -2,6 +2,42 @@ const controller = require("../search/controller");
 const shared = require("../search/shared");
 const xmlBuilder = require("../xmlBuilder");
 
+
+/**
+ * @swagger
+ * definition:
+ *   Node:
+ *     type: object
+ *     properties:
+ *       model:
+ *         type: string
+ *       node_name:
+ *         type: string
+ *       properties:
+ *         type: object
+ */
+
+/**
+ * @swagger
+ * /api/datamodel/source/{model}:
+ *   get:
+ *     tags:
+ *     - datamodel
+ *     description: Find all nodes in requested model
+ *     summary: Find all nodes in requested model
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: A list of nodes
+ *         schema:
+ *           type: array
+ *           items:
+ *             $ref: '#/definitions/Node'
+ */
+
+
+
 const apiSearch = (req, res) => {
     let formatFlag = req.query.format;
     return controller.searchP(req, res, formatFlag);

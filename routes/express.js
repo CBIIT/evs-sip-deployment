@@ -9,7 +9,10 @@ const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const logger = require('../components/logger');
 const config = require('./index');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require('swagger-ui-express');
 const { login, logout, getUserSession, updateSession } = require('./authentication');
+
 
 
 // const indexRouter = require('./routes/index')
@@ -38,6 +41,69 @@ module.exports = function (app) {
   app.use(express.static(path.resolve(config.root, 'build')));
   //  app.use(require('./session'));
   app.use(compression());
+
+
+var swaggerDefinition = {
+  info: {
+    title: "EVS-SIP Restful API",
+    version: "1.0.1",
+    description: "EVS-SIP Restful API",
+  },
+  servers: ["http://localhost:3000"],
+  basePath: "/api",
+  schemes: [
+      'http',
+      'https'
+  ],
+};
+
+
+/**
+ * @swagger
+ * definition:
+ *   Node:
+ *     type: object
+ *     properties:
+ *       model:
+ *         type: string
+ *       node_name:
+ *         type: string
+ */
+
+/**
+ * @swagger
+ * /api/datamodel/source/{model}:
+ *   get:
+ *     description: Find all nodes in requested model
+ *     summary: Find all nodes in requested model
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: A list of nodes
+ */
+
+
+
+// options for the swagger docs
+var options = {
+  // import swaggerDefinitions
+  swaggerDefinition: swaggerDefinition,
+  // path to the API docs
+  apis: ["*.js"],
+};
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJsdoc(options);
+
+// serve swagger
+// api.get("/swagger.json", function (req, res) {
+//   res.setHeader("Content-Type", "application/json");
+//   res.send(swaggerSpec);
+// });
+
+app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
   // app.use('/session-test', function (req, res, next) {
   //   const { session } = req;
@@ -93,8 +159,8 @@ module.exports = function (app) {
 
   //Routers
   //app.use('/api', indexRouter)
-  app.use('/api', require('../service/api'));
-  app.use('/service/search', require('../service/search'));
+  app.use('/api', require('./apiroutes'));
+  app.use('/service/search', require('./guiroutes'));
   app.use('/dashboard/login', login);
   app.use('/dashboard/logout', logout);
   app.use('/service/user-session', getUserSession);

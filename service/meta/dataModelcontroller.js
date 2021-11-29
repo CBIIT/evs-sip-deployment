@@ -56,12 +56,12 @@ const getApiSearchResults = async function (keyword, model, type) {
     }
     
   } else {
-    resultAll = nodeinfo;
+    //resultAll = nodeinfo;
   }
   if (resultAll.length ===0 ) {
-    resultAll.push({ status: 400, message: " No data found. " });
+    return { status: 400, message: " No data found. " };
   }
-  return resultAll;
+  return { status: 200, results: resultAll };
 }
 
 //
@@ -151,18 +151,18 @@ const getPropWithValuesByName = function (model, keyword) {
       results.records.map(r => {
         if (r.get('value') && r.get('value').length > 0) {
           props.push({
-            Model: r.get('model'),
-            Node_Name: r.get('node_name'),
-            Property_Name: r.get('handle'),
-            Value_Type: r.get('value_type'),
-            Value: r.get('value'),
+            model: r.get('model'),
+            node_name: r.get('node_name'),
+            property_name: r.get('handle'),
+            value_type: r.get('value_type'),
+            values: r.get('value'),
           })
         } else {
           props.push({
-            Model: r.get('model'),
-            Node_Name: r.get('node_name'),
-            Property_Name: r.get('handle'),
-            Value_Type: r.get('value_type')
+            model: r.get('model'),
+            node_name: r.get('node_name'),
+            property_mame: r.get('handle'),
+            value_type: r.get('value_type')
           })
         }
       })
@@ -193,11 +193,11 @@ const getValuesByName = function (model, keyword) {
       let props = [];
       results.records.map(r =>
         props.push({
-          Model: r.get('model'),
-          Node_Name: r.get('node_name'),
-          Property_Name: r.get('handle'),
-          Value_Type: r.get('value_type'),
-          Value: r.get('value'),
+          model: r.get('model'),
+          node_name: r.get('node_name'),
+          property_name: r.get('handle'),
+          value_type: r.get('value_type'),
+          values: r.get('value'),
         }))
 
       return { type: 'values', result: props };
@@ -230,8 +230,8 @@ const getNodeDetailsByName = function (model, keyword) {
       results.records.map(r => {
         let prop = r.get('properties');
         let data = {};
-        data.Modlel = r.get('model');
-        data.Node_Name = r.get('node_name');
+        data.modlel = r.get('model');
+        data.node_name = r.get('node_name');
         if (prop.length > 0) {
           let plist = [];
           prop.map(p => {

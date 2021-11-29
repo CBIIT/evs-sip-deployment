@@ -1,11 +1,12 @@
 const express = require("express");
-const controller = require("../search/controller");
-const apicontroller = require("./apicontroller");
-const metauser = require("../meta/user");
-const metamodel = require("../meta/dataModel");
-const report = require("../search/report");
+const controller = require("../service/search/controller");
+const apicontroller = require("../service/api/apicontroller");
+const metauser = require("../service/meta/user");
+const metamodel = require("../service/meta/dataModel");
+const report = require("../service/search/report");
+const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../../routes/swagger');
+const swaggerDocument = require('./swagger');
 
 const router = express.Router();
 
@@ -22,11 +23,11 @@ router.use('/docs',
     function (req, res) {
         const protocol = 'http';
         const host = req.get('host');
-        const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api':'/evssip/api';
+        const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api/datamodel':'/evssip/api/datamodel';
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
     }
 );
-
+  
 // property based api
 router.get("/search", apicontroller.apiSearch);
 
