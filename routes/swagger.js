@@ -109,7 +109,7 @@ module.exports = function (protocol, host, basePath) {
                 '| will perform exact search in enums, ICDO-3 code, NCIt code and property name and return data that exactly matches diagnosis.  | [source/icdc?format=json](' + protocol + '://' + host + basePath + '/source/icdc?format=json)|\n',
                 'parameters': [
                 {
-                  'name': 'source',
+                  'name': 'model',
                   'in': 'path',
                   'required': true,
                   'description': 'The term/phrase to be searched',

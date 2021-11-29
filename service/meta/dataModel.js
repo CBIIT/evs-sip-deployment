@@ -83,10 +83,12 @@ const getApiSearch = async function (req, res) {
         if(+result.status === 200 ){
             res.json(result);
         }else{
-            res.json( {status: 404 ,message: 'Data not found'  });
+            //res.json( {status: 404 ,message: 'Data not found'  });
+            return writeError(res, {detail: 'Data not found' }, 404);
         }
     }else{
-        res.json( {status: 400, message: 'Wrong request format' });
+        //res.json( {status: 400, message: 'Wrong request format' });
+        return writeError(res, {message: 'Wrong request format' }, 400);
     }  
 };
 
@@ -99,11 +101,13 @@ const getApiSource = async function (req, res) {
     if(+result.status === 200){
         res.json(result);
     }else{
-        res.json( {status: 404 ,message: 'Data not found in :'+model  });
+        //res.json( {status: 404 ,message: 'Data not found in :'+model  });
+        return writeError(res, {message: 'no result found' }, 404);
     }
     
     }else{
-        res.json( {status: 400 ,message: 'Not valid data model :'+model  });
+        //res.json( {status: 400 ,message: 'Not valid data model :'+model  });
+        return writeError(res, {message: 'Not valid data model' }, 400);
     }
 
 };
