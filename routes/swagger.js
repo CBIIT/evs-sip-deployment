@@ -141,7 +141,7 @@ module.exports = function (protocol, host, basePath) {
           'properties': {
             'type': {
               'type': 'string',
-              'description': 'data model',
+              'description': 'data entity type',
               'enum': [
                 'node',
                 'props',
