@@ -33,30 +33,30 @@ module.exports = function (protocol, host, basePath) {
             'tags': ['Search'],
             'summary': 'Search data with specified keywords and additional conditions. The syntax needed to perform api calls is described below. API calls can be tested interactively using the embedded interface before accessing the api programmatically. Output is returned in JSON format except when specifically indicated. ',
             'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/search?keyword={keywords}&model={ctdc,gdc,icdc,pcdc}&type={node,prop,value}**. \n'+ 
-              '# Keyword\n' +
+              ' \n' +
               'The **keyword** parameter is required to specify the term or phrase to be searched.\n' +
-              '# Model\n' +
+              '# \n' +
               'The **model** parameter is specify one or more data model to perform a custom search.\n' +
-              'Valid entries for options specifications are: **ctdc** or **gdc**, **icdc**, **pcddc**. \n' +
+              'Valid entries for options specifications are: **gdc** or **CTDC**, **ICDC**, **PCDC**. \n' +
               '\n' +
-              '# Type\n' +
+              '# \n' +
               'The **type** parameter is used to perform a custom search at specified entity level.\n' +
               'Valid entries for options specifications are: **node** or **prop**, **value**. \n' +
               '\n' +
-              'The **node** is **default** search option, It is not necessary to specify it \n' +
-              'The **prop** is used to perform search properties for term or phrase specified in keyword. \n' +
-              'The **value** is used to perform search terms values for term or phrase specified in keyword. \n' +
+              '  The **node** is **default** search option, It is not necessary to specify it \n' +
+              '  The **prop** is used to perform search properties for term or phrase specified in keyword. \n' +
+              '  The **value** is used to perform search terms values for term or phrase specified in keyword. \n' +
               '\n' +
               '| Example | URL |\n' +
               '|---|---|\n' +
               '| **keyword** only | |\n' +
-              '| - perform partial search in node name <br> return data that partially matches **diagnosis**. | [search?keyword=diagnosis](' + protocol + '://' + host + basePath + '/search?keyword=diagnosis)|\n' +
+              '| - perform search in node name in all data models. <br> return data node name including **diagnosis**. | [search?keyword=diagnosis](' + protocol + '://' + host + basePath + '/search?keyword=diagnosis)|\n' +
               '| | |\n' +
               '| **keyword & model** | |\n' +
-              '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches diagnosis. | [search?keyword=diagnosis&model=icdc](' + protocol + '://' + host + basePath + '/search?keyword=diagnosis&model=icdc)|\n' +
+              '| - perform search in node name in specified data model<br> return data node name including **diagnosis** in **ICDC**. | [search?keyword=diagnosis&model=icdc](' + protocol + '://' + host + basePath + '/search?keyword=diagnosis&model=icdc)|\n' +
               '| | |\n' +
-              '| **keyword & options & sources**  | |\n' +
-              '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches diagnosis from **ctdc** data. | [search?keyword=diagnosis&model=icdc&type=prop](' + protocol + '://' + host + basePath + '/search?keyword=diagnosis&model=icdc&type=prop)|\n',
+              '| **keyword & model & type**  | |\n' +
+              '| - perform search in specified data entities in data model <br> return data with properties name including **diagnosis** in **ICDC**. | [search?keyword=diagnosis&model=icdc&type=prop](' + protocol + '://' + host + basePath + '/search?keyword=diagnosis&model=icdc&type=prop)|\n',
             'parameters': [
               {
                 'name': 'keyword',
@@ -167,6 +167,9 @@ module.exports = function (protocol, host, basePath) {
                 'ICDC',
                 'PCDC'
               ]
+            },
+            'category': {
+              'type': 'string'
             },
             'node_name': {
               'type': 'string'

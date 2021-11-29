@@ -152,6 +152,7 @@ const getPropWithValuesByName = function (model, keyword) {
         if (r.get('value') && r.get('value').length > 0) {
           props.push({
             model: r.get('model'),
+            category: 'category',
             node_name: r.get('node_name'),
             property_name: r.get('handle'),
             value_type: r.get('value_type'),
@@ -160,6 +161,7 @@ const getPropWithValuesByName = function (model, keyword) {
         } else {
           props.push({
             model: r.get('model'),
+            category: 'category',
             node_name: r.get('node_name'),
             property_mame: r.get('handle'),
             value_type: r.get('value_type')
@@ -194,6 +196,7 @@ const getValuesByName = function (model, keyword) {
       results.records.map(r =>
         props.push({
           model: r.get('model'),
+          category: 'category',
           node_name: r.get('node_name'),
           property_name: r.get('handle'),
           value_type: r.get('value_type'),
@@ -232,6 +235,7 @@ const getNodeDetailsByName = function (model, keyword) {
         let data = {};
         data.modlel = r.get('model');
         data.node_name = r.get('node_name');
+        data.category = 'category';
         if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
@@ -363,6 +367,7 @@ const getDataSource = function (model, keyword, fromIndex, pageSize) {
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
+        data.Category = 'category';
         data.Node_Name = r.get('node_name');
         if (prop.length > 0) {
           let plist = [];
@@ -421,6 +426,7 @@ const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
         let prop = r.get('properties');
         let data = {};
         data.Modlel = r.get('model');
+        data.Category = 'category';
         data.Node_Name = r.get('node_name');
         data.Nanoid = r.get("id");
         //data.total_nodes = r.get('total_nodes').toNumber();
@@ -488,6 +494,7 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
         if (r.get('value') && r.get('value').length > 0) {
           props.push({
             Model: r.get('model'),
+            Category: 'category',
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
             Nanoid: r.get('pid'),
@@ -498,6 +505,7 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
         } else {
           props.push({
             Model: r.get('model'),
+            Category: 'category',
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
             Nanoid: r.get('pid'),
@@ -541,6 +549,7 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
         if (totals < 1 && r.get('total_values').toNumber() > 0) totals = r.get('total_values').toNumber();
         props.push({
           Model: r.get('model'),
+          Category: 'category',
           Node_Name: r.get('node_name'),
           Property_Name: r.get('handle'),
           Value_Type: r.get('value_type'),
