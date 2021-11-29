@@ -65,30 +65,24 @@ module.exports = function (protocol, host, basePath) {
                 'description': 'The term/phrase to be searched',
                 'type': 'string'
               }, {
-                'name': 'options',
+                'name': 'model',
                 'in': 'query',
-                description: 'The options specifications are: partial or exact, syn, desc.',
-                'type': 'string'
-              }, {
-                'name': 'sources',
-                'in': 'query',
-                'description': 'The sources specifications are: ctdc, gdc, icdc or pcdc.',
-                'type': 'string'
-              }, {
-                'name': 'format',
-                'in': 'query',
-                'description': 'The format specifications are: json and xml.',
+                'description': 'The sources specifications are: GDC, CTDC, ICDC or PCDC.',
                 'type': 'string',
-                'enum': ['json','xml',],
-                'value':'json'
+                'default': 'ICDC'
+              }, {
+                'name': 'type',
+                'in': 'query',
+                'description': 'The options specifications are: node or prop, value.',
+                'type': 'string',
+                'default': 'node'
               }
-
             ],
             'responses': {
               '200': {
                 'description': 'Success',
                 'schema': {
-                  '$ref': '#/definitions/Node'
+                  '$ref': '#/definitions/Result'
                 }
               },
               '400': {
@@ -142,6 +136,25 @@ module.exports = function (protocol, host, basePath) {
           }
       },
       'definitions': {
+        'Result': {
+          'type': 'object',
+          'properties': {
+            'type': {
+              'type': 'string',
+              'description': 'data model',
+              'enum': [
+                'node',
+                'props',
+                'node'
+              ]},
+            'result': {
+              '$ref': '#/definitions/Node'
+            }
+          },
+          'xml': {
+            'name': 'Results'
+          }
+        },
         'Node': {
           'type': 'object',
           'properties': {
@@ -158,8 +171,11 @@ module.exports = function (protocol, host, basePath) {
             'node_name': {
               'type': 'string'
             },
-            'Properties': {
-              '$ref': '#/definitions/Property'
+            'properties': {
+              'type': 'array',
+              'items':{
+                '$ref': '#/definitions/Property'
+              }
             }
           },
           'xml': {
@@ -176,7 +192,10 @@ module.exports = function (protocol, host, basePath) {
               'type': 'string'
             },
             'values': {
-              '$ref': '#/definitions/Term'
+              'type': 'array',
+              'items':{
+                '$ref': '#/definitions/Term'
+              }
             }
           },
           'xml': {
