@@ -105,8 +105,7 @@ module.exports = function (protocol, host, basePath) {
             'The **json** format is the default one and could be omitted. Valid entries for data format are: **json** or **xml**. \n' +
             '| Example | URL |\n' +
             '|---|---|\n' +
-            '| will perform partial search in enums, ICDO-3 code, NCIt code and property name and return data that partially matches diagnosis. | [source/icdc](' + protocol + '://' + host + basePath + '/source/icdc)|\n' +
-            '| will perform exact search in enums, ICDO-3 code, NCIt code and property name and return data that exactly matches diagnosis.  | [source/icdc?format=json](' + protocol + '://' + host + basePath + '/source/icdc?format=json)|\n',
+            '| will return all nodes with properties and terms if available. | [source/icdc](' + protocol + '://' + host + basePath + '/source/icdc)|\n',
           'parameters': [
             {
               'name': 'model',
