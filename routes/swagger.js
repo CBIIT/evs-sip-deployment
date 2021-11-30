@@ -100,9 +100,6 @@ module.exports = function (protocol, host, basePath) {
           'summary': 'Restful APIs Description Summary',
           'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/source/{ctdc,gdc,icdc,pcdc}?format={json,xml}**. \n' +
             'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
-            '# Format\n' +
-            'The **format** parameter is specify the result data format. \n' +
-            'The **json** format is the default one and could be omitted. Valid entries for data format are: **json** or **xml**. \n' +
             '| Example | URL |\n' +
             '|---|---|\n' +
             '| will return all nodes with properties and terms if available. | [source/icdc](' + protocol + '://' + host + basePath + '/source/icdc)|\n',
