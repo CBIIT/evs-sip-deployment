@@ -98,7 +98,7 @@ module.exports = function (protocol, host, basePath) {
         'get': {
           'tags': ['Retrieve Model Data'],
           'summary': 'Restful APIs Description Summary',
-          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/source/{ctdc,gdc,icdc,pcdc}?format={json,xml}**. \n' +
+          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/source/{ctdc,gdc,icdc,pcdc}**. \n' +
             'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
             '| Example | URL |\n' +
             '|---|---|\n' +
