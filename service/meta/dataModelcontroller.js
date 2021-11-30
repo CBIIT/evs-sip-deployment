@@ -73,10 +73,16 @@ const getApiDataSource = function (model) {
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
-    + ' n1.model as model ORDER BY model, node_name, handle '
-    + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
-    + ' ORDER BY model, node_name  ',
+    + ' WITH DISTINCT  n1, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle '
+    + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
+    + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (n3)<-[:has_src]-(r31:relationship)-[:has_dst]->(n1:node) '
+    + ' WHERE NOT (n3._to is NOT NULL) and NOT (r31._to IS NOT NULL) '
+    + ' WITH DISTINCT n1, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
+    + ' WITH DISTINCT n1, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
+    + ' RETURN n1.handle as node_name, n1.model as model, properties, startnodes, endnodes '
+    + ' ORDER BY n1.model, n1.handle ',
     { model: model })
   )
     .then(results => {
@@ -87,9 +93,12 @@ const getApiDataSource = function (model) {
       let props = [];
       results.records.map(r => {
         let prop = r.get('properties');
+        let rel_start = r.get('startnodes');
+        let rel_end = r.get('endnodes');
         let data = {};
-        data.Modlel = r.get('model');
-        data.Node_Name = r.get('node_name');
+        data.modlel = r.get('model');
+        data.category = 'category';
+        data.node_name = r.get('node_name');
         if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
@@ -108,6 +117,58 @@ const getApiDataSource = function (model) {
             }
           });
           data.properties = plist;
+        }
+        if (rel_start && rel_start.length > 0) {
+          let rel =
+          rel_start.reduce((acc, p) => {
+           
+            if(p.rel_name){
+            (acc[p.rel_name] = acc[p.rel_name] || []).push(
+              {source: p.start_node, destination:r.get('node_name'), type: p.rel_type}
+            );
+            }
+            return acc;
+          },{});
+       
+          if(rel && Object.keys(rel).length > 0) {
+           // rel_list.push({Incoming : rel});
+           data.relationship = {};
+           let dlist = [];
+           for (let property in rel){
+            let rel_mul= rel[property][0].type;
+            let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
+            dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
+
+          }
+           data.relationship.incoming = dlist;
+          }
+        }
+        if (rel_end && rel_end.length > 0) {
+          let rel =
+          rel_end.reduce((acc, p) => {
+         
+            if(p.rel_name){
+            (acc[p.rel_name] = acc[p.rel_name] || []).push(
+              {source: r.get('node_name'), destination: p.end_node, type: p.rel_type }
+            );
+            }
+            return acc;
+          },{});
+        
+          if(rel && Object.keys(rel).length > 0) {
+           // rel_list.push({Outing: rel});
+           if(!data.relationship)  {
+             data.relationship = {}; 
+           }
+           let dlist = [];
+           for (let property in rel){
+             let rel_mul= rel[property][0].type;
+             let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
+             dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
+           }
+           data.relationship.outgoing = dlist;
+           
+          }
         }
         props.push(data)
       })
@@ -218,10 +279,16 @@ const getNodeDetailsByName = function (model, keyword) {
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
-    + ' n1.model as model ORDER BY model, node_name, handle '
-    + ' RETURN DISTINCT model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
-    + ' ORDER BY model, node_name  ',
+    + ' WITH DISTINCT  n1, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle '
+    + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
+    + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (n3)<-[:has_src]-(r31:relationship)-[:has_dst]->(n1:node) '
+    + ' WHERE NOT (n3._to is NOT NULL) and NOT (r31._to IS NOT NULL) '
+    + ' WITH DISTINCT n1, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
+    + ' WITH DISTINCT n1, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
+    + ' RETURN n1.handle as node_name, n1.model as model, properties, startnodes, endnodes '
+    + ' ORDER BY n1.model, n1.handle ',
     { model: model, searchword: searchword })
   )
     .then(results => {
@@ -232,6 +299,8 @@ const getNodeDetailsByName = function (model, keyword) {
       let props = [];
       results.records.map(r => {
         let prop = r.get('properties');
+        let rel_start = r.get('startnodes');
+        let rel_end = r.get('endnodes');
         let data = {};
         data.modlel = r.get('model');
         data.node_name = r.get('node_name');
@@ -254,6 +323,57 @@ const getNodeDetailsByName = function (model, keyword) {
             }
           });
           data.properties = plist;
+        }
+          if (rel_start && rel_start.length > 0) {
+            let rel =
+            rel_start.reduce((acc, p) => {
+             
+              if(p.rel_name){
+              (acc[p.rel_name] = acc[p.rel_name] || []).push(
+                {source: p.start_node, destination:r.get('node_name'), type: p.rel_type}
+              );
+              }
+              return acc;
+            },{});
+         
+            if(rel && Object.keys(rel).length > 0) {
+             // rel_list.push({Incoming : rel});
+             data.relationship = {};
+             let dlist = [];
+             for (let property in rel){
+              let rel_mul= rel[property][0].type;
+              let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
+              dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
+  
+            }
+             data.relationship.incoming = dlist;
+            }
+          }
+          if (rel_end && rel_end.length > 0) {
+            let rel =
+            rel_end.reduce((acc, p) => {
+           
+              if(p.rel_name){
+              (acc[p.rel_name] = acc[p.rel_name] || []).push(
+                {source: r.get('node_name'), destination: p.end_node, type: p.rel_type }
+              );
+              }
+              return acc;
+            },{});
+          
+            if(rel && Object.keys(rel).length > 0) {
+             // rel_list.push({Outing: rel});
+             if(!data.relationship)  {
+               data.relationship = {}; 
+             }
+             let dlist = [];
+             for (let property in rel){
+               let rel_mul= rel[property][0].type;
+               let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
+               dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
+             }
+             data.relationship.outgoing = dlist;
+          }
         }
         props.push(data)
       })
