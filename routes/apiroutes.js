@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
 router.use('/docs',
     swaggerUi.serve,
     function (req, res) {
-        const protocol = 'http';
+        const protocol = 'https';
         const host = req.get('host');
         const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api/datamodel':'/evssip/api/datamodel';
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
