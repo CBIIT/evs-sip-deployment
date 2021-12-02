@@ -99,7 +99,7 @@ const searchP = (req, res, formatFlag) => {
 const getGraphicalGDCDictionary = async function (node) {
 
   let result = cache.getValue("gdc_dict_api");
-  if (result == undefined || node === '') {
+  if (result == undefined || node !== '') {
     console.log(
       "Start to generate GDC Dictionary Data and load to local cache."
     );
@@ -113,7 +113,10 @@ const getGraphicalGDCDictionary = async function (node) {
     // let bulkBody = [];
     console.log(" gdc ", node )
     fs.readdirSync(folderPath).forEach((file) => {
+      console.log(" line 116 ", file);
+      console.log(" line 116 node ", node );
       if(!node || node ==='' || file.toLowerCase().includes(node.toLowerCase())){
+        console.log(" line 118 node ", node, " file", file );
       let fileJson = yaml.load(folderPath + "/" + file);
       // Do not include annotation.yaml, metaschema.yaml
       // Only include node in the gdc_searchable_nodes
