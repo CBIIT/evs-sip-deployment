@@ -1,5 +1,5 @@
 const logger = require("../components/logger");
-const usercontroller = require( '../service/meta/usercontroller');
+const usercontroller = require( '../service/user/usercontroller');
 
 const timeoutMinutes = 150;
 const maxSessionAge = timeoutMinutes * 60 * 1000; // convert minutes to ms

@@ -13,7 +13,7 @@ const shared = require("./shared");
 const export_excel = require('node-excel-export');
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
 var syns = {};
-const xmlBuilder = require("../xmlBuilder")
+const xmlBuilder = require("../tools/xmlBuilder")
 
 const indexing = (req, res) => {
   let configs = [];
@@ -412,8 +412,8 @@ const searchP = (req, res, formatFlag) => {
     }
     if (keyword && keyword.trim() !== "") {
       let query = shared.generateQuery(keyword, option);
-     // logger.debug("keyword: " + keyword)
-     // logger.debug("------ query ------  %o ", query)
+     logger.debug("keyword: " + keyword)
+     logger.debug("------ query ------  %o ", query)
       let highlight = shared.generateHighlight();
       elastic.query(config.index_p, query, "enum", highlight, (result) => {
         if (result.hits === undefined) {

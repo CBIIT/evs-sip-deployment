@@ -73,7 +73,8 @@ const getApiDataSource = function (model) {
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle ORDER BY p1.handle, t.value '
+    + ' WITH DISTINCT  n1, value_domain as value_type,collect(value) as value, handle ORDER BY handle '
     + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
     + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
     + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
@@ -96,7 +97,7 @@ const getApiDataSource = function (model) {
         let rel_start = r.get('startnodes');
         let rel_end = r.get('endnodes');
         let data = {};
-        data.modlel = r.get('model');
+        data.model = r.get('model');
         data.category = 'category';
         data.node_name = r.get('node_name');
         if (prop.length > 0) {
@@ -200,7 +201,7 @@ const getPropWithValuesByName = function (model, keyword) {
     + ' p1.handle as handle,'
     + ' p1.model as model,'
     + ' p1.nanoid as pid'
-    + ' ORDER BY model, handle, value ',
+    + ' ORDER BY model,node_name, handle, value ',
     { model: model, searchword: searchword })
   )
     .then(results => {
@@ -302,7 +303,7 @@ const getNodeDetailsByName = function (model, keyword) {
         let rel_start = r.get('startnodes');
         let rel_end = r.get('endnodes');
         let data = {};
-        data.modlel = r.get('model');
+        data.model = r.get('model');
         data.node_name = r.get('node_name');
         data.category = 'category';
         if (prop.length > 0) {
@@ -486,7 +487,7 @@ const getDataSource = function (model, keyword, fromIndex, pageSize) {
       results.records.map(r => {
         let prop = r.get('properties');
         let data = {};
-        data.Modlel = r.get('model');
+        data.Model = r.get('model');
         data.Category = 'category';
         data.Node_Name = r.get('node_name');
         if (prop.length > 0) {
@@ -545,7 +546,7 @@ const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
         if (total < 1 && r.get('total_nodes').toNumber() > 0) total = r.get('total_nodes').toNumber();
         let prop = r.get('properties');
         let data = {};
-        data.Modlel = r.get('model');
+        data.Model = r.get('model');
         data.Category = 'category';
         data.Node_Name = r.get('node_name');
         data.Nanoid = r.get("id");

@@ -1,9 +1,7 @@
 const express = require("express");
-const controller = require("../service/search/controller");
-const apicontroller = require("../service/api/apicontroller");
-const metauser = require("../service/meta/user");
-const metamodel = require("../service/meta/dataModel");
-const report = require("../service/search/report");
+const esapi = require("../service/esapi/esapi");
+const metauser = require("../service/user/user");
+const metamodel = require("../service/datamodel/dataModel");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger');
@@ -21,36 +19,31 @@ router.get('/', function (req, res) {
 router.use('/docs',
     swaggerUi.serve,
     function (req, res) {
-        const protocol = 'https';
+        const protocol = 'http';
         const host = req.get('host');
-        const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api/datamodel':'/evssip/api/datamodel';
+        const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api':'/evssip/api';
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
     }
 );
   
 // property based api
-router.get("/search", apicontroller.apiSearch);
+router.get("/es/search", esapi.apiEsSearch);
 
-//graphical view
-router.get("/source/gdc", apicontroller.getGraphicalGDCDictionary);
-router.get("/source/icdc", apicontroller.getGraphicalICDCDictionary);
-router.get("/source/ctdc", apicontroller.getGraphicalCTDCDictionary);
-router.get("/source/pcdc", apicontroller.getGraphicalPCDCDictionary);
-router.get("/graph/p/vs", controller.getValuesForGraphicalView);
-router.get("/p/local/vs", controller.getGDCData);
+//source view from elasticSearch
+router.get("/es/source/:model", esapi.getEsModelData);
+router.get("/es/source/:model/:node", esapi.getEsModelData);
 
-// neo4j data
+
+// neo4j user
 router.get("/user/userprofile", metauser.getUserProfile);
 router.get("/user/allusers", metauser.getAllUser);
+// user admin disabled for API 
 //router.get("/admin/updateuser", metauser.updateUser);
 //router.get("/admin/createuser", metauser.createUser);
 
+// neo4j datamodel
 router.get("/datamodel/search", metamodel.getApiSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
-
-
-
-//get report Diff from mysql table
-router.get('/reportDiff', report.getReportDiff);
+router.get("/datamodel/source/:model/:node", metamodel.getApiSource);
 
 module.exports = router;

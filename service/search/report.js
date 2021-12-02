@@ -1,7 +1,7 @@
 // pre-build report in mysql DB
 //const mysql = require("../../components/mysql");
 
-const xmlBuilder = require('../xmlBuilder')
+const xmlBuilder = require('../tools/xmlBuilder')
 
 //const connection = mysql.pool;
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const controller = require("../service/search/controller");
-const metauser = require("../service/meta/user");
-const metamodel = require("../service/meta/dataModel");
+const metauser = require("../service/user/user");
+const metamodel = require("../service/datamodel/dataModel");
 const report = require("../service/search/report");
 
 const router = express.Router();
@@ -34,11 +34,13 @@ router.get('/exportAllCompareResult', controller.exportAllCompareResult);
 //router.get("/updateGDCDataMappings", controller.updateGDCDataMappings);
 //router.get("/preloadPCDCDataMappings", controller.preloadPCDCDataMappings);
 
+// user module 
 router.get("/user/userprofile", metauser.getUserProfile);
 router.get("/user/allusers", metauser.getAllUser);
 router.post("/user/updateuser", metauser.updateUser);
 router.post("/user/createuser", metauser.createUser);
 
+// neo4j datamodel
 router.get("/datamodel/search", metamodel.getSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
 

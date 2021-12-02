@@ -1,0 +1,127 @@
+const esapicontroller = require("./esapicontroller");
+const shared = require("../search/shared");
+const xmlBuilder = require("../tools/xmlBuilder");
+const { writeResponse, writeError } = require('../../components/response');
+
+/**
+ * @swagger
+ * definition:
+ *   Node:
+ *     type: object
+ *     properties:
+ *       model:
+ *         type: string
+ *       node_name:
+ *         type: string
+ *       properties:
+ *         type: object
+ */
+
+/**
+ * @swagger
+ * /api/datamodel/source/{model}:
+ *   get:
+ *     tags:
+ *     - datamodel
+ *     description: Find all nodes in requested model
+ *     summary: Find all nodes in requested model
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: A list of nodes
+ *         schema:
+ *           type: array
+ *           items:
+ *             $ref: '#/definitions/Node'
+ */
+
+
+
+const apiEsSearch = async (req, res) => {
+    let formatFlag = req.query.format;
+    return await esapicontroller.searchP(req, res, formatFlag);
+};
+
+const getEsModelData = async function (req, res) {
+    //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
+    const model = req.params['model'] || 'ICDC';
+    const node = req.params['node'] || '';
+    console.log(" node name ", node)
+    
+    let result ={};
+    if (['icdc', 'ctdc', 'gdc', 'pctc'].includes(model.toLowerCase())) {
+        
+            switch (model.toLowerCase()) {
+                case 'gdc':
+                    result = await getGraphicalGDCDictionary(node);
+                    break;
+                case 'ctdc':
+                    result =  await getGraphicalCTDCDictionary(node);
+                    break;
+                case 'icdc':
+                    result =  await getGraphicalICDCDictionary(node);
+                    break;
+                case 'pcdc':
+                    let project = (req.query.project || '') === "" ? "AML" : req.query.project;
+                    result =  await getGraphicalPCDCDictionary(project, node);
+                    break;
+                default:
+                    break;
+            };
+            if (+result.status === 200) {
+                res.json(result);
+            } else {
+                //res.json( {status: 404 ,message: 'Data not found'  });
+                return writeError(res, { detail: 'Data not found' }, 404);
+            }
+       
+    } else {
+        //res.json( {status: 400 ,message: 'Not valid data model :'+model  });
+        return writeError(res, { message: 'Not valid data model' }, 400);
+    }
+
+};
+
+
+const getGraphicalGDCDictionary = async function (node) {
+    return await esapicontroller.getGraphicalGDCDictionary(node);
+    // let jsonData = await shared.getGraphicalGDCDictionary();
+    // //res.json(jsonData);
+    // let formatFlag = req.query.format || '';
+    // if (formatFlag === 'xml') {
+    //     res.setHeader('Content-Type', 'application/xml');
+    //     // xmlBuilder.buildResponse(formatFlag, res, 200, JSON.parse(JSON.stringify(jsonData)), 'data');
+    //     xmlBuilder.buildResponse(formatFlag, res, 200, { message: "Invalid data for xml format, Please select json format. " });
+    // } else {
+    //     res.json(jsonData);
+    // }
+};
+
+const getGraphicalICDCDictionary = async  (node)=> 
+     await esapicontroller.getGraphicalICDCDictionary(node)
+;
+
+const getGraphicalCTDCDictionary = async function (node) {
+    return  await esapicontroller.getGraphicalCTDCDictionary(node);
+};
+
+const getGraphicalPCDCDictionary = async (project, node) => {
+    return await esapicontroller.getGraphicalPCDCDictionary(project, node);
+    // let project = (req.query.project || '') === "" ? "AML" : req.query.project;
+    // let jsonData = shared.getGraphicalPCDCDictionary(project);
+    // let formatFlag = req.query.format || '';
+    // if (formatFlag === 'xml') {
+    //     res.setHeader('Content-Type', 'application/xml');
+    //     // xmlBuilder.buildResponse(formatFlag, res, 200, JSON.parse(JSON.stringify(jsonData)), 'data');
+    //     xmlBuilder.buildResponse(formatFlag, res, 200, { message: "Invalid data for xml format, Please select json format. " });
+    // } else {
+    //     res.json(jsonData);
+    // }
+};
+
+
+module.exports = {
+    apiEsSearch,
+    getEsModelData,
+}
