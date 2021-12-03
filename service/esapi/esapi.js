@@ -47,6 +47,7 @@ const getEsModelData = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
     const model = req.params['model'] || 'ICDC';
     const node = req.params['node'] || '';
+    const prop = req.params['prop'] || '';
     console.log(" node name ", node)
     
     let result ={};
@@ -54,17 +55,17 @@ const getEsModelData = async function (req, res) {
         
             switch (model.toLowerCase()) {
                 case 'gdc':
-                    result = await getGraphicalGDCDictionary(node);
+                    result = await getGraphicalGDCDictionary(node, prop);
                     break;
                 case 'ctdc':
-                    result =  await getGraphicalCTDCDictionary(node);
+                    result =  await getGraphicalCTDCDictionary(node, prop);
                     break;
                 case 'icdc':
-                    result =  await getGraphicalICDCDictionary(node);
+                    result =  await getGraphicalICDCDictionary(node, prop);
                     break;
                 case 'pcdc':
                     let project = (req.query.project || '') === "" ? "AML" : req.query.project;
-                    result =  await getGraphicalPCDCDictionary(project, node);
+                    result =  await getGraphicalPCDCDictionary(project, node, prop);
                     break;
                 default:
                     break;
@@ -84,8 +85,8 @@ const getEsModelData = async function (req, res) {
 };
 
 
-const getGraphicalGDCDictionary = async function (node) {
-    return await esapicontroller.getGraphicalGDCDictionary(node);
+const getGraphicalGDCDictionary = async function ( node, prop ) {
+    return await esapicontroller.getGraphicalGDCDictionary( node, prop );
     // let jsonData = await shared.getGraphicalGDCDictionary();
     // //res.json(jsonData);
     // let formatFlag = req.query.format || '';
@@ -98,16 +99,16 @@ const getGraphicalGDCDictionary = async function (node) {
     // }
 };
 
-const getGraphicalICDCDictionary = async  (node)=> 
-     await esapicontroller.getGraphicalICDCDictionary(node)
+const getGraphicalICDCDictionary = async  ( node, prop )=> 
+     await esapicontroller.getGraphicalICDCDictionary( node, prop )
 ;
 
-const getGraphicalCTDCDictionary = async function (node) {
-    return  await esapicontroller.getGraphicalCTDCDictionary(node);
+const getGraphicalCTDCDictionary = async function ( node, prop ) {
+    return  await esapicontroller.getGraphicalCTDCDictionary( node, prop );
 };
 
-const getGraphicalPCDCDictionary = async (project, node) => {
-    return await esapicontroller.getGraphicalPCDCDictionary(project, node);
+const getGraphicalPCDCDictionary = async (project, node, prop) => {
+    return await esapicontroller.getGraphicalPCDCDictionary(project, node, prop );
     // let project = (req.query.project || '') === "" ? "AML" : req.query.project;
     // let jsonData = shared.getGraphicalPCDCDictionary(project);
     // let formatFlag = req.query.format || '';

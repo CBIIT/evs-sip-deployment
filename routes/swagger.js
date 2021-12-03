@@ -14,7 +14,7 @@ module.exports = function (protocol, host, basePath) {
         'description': 'Rest APIs provide flexibilities for searching data using hierarchical patterns from Data Models.'
       },
       {
-        'name': 'DataModel Model Data',
+        'name': 'DataModel Data',
         'description': 'Rest APIs are used to retrieve data per dataset source from DataModels.'
       },
       {
@@ -70,7 +70,7 @@ module.exports = function (protocol, host, basePath) {
               'name': 'keyword',
               'in': 'query',
               'required': true,
-              'description': 'The term/phrase to be searched',
+              'description': 'The term/phrase to be searched.',
               'type': 'string'
             }, {
               'name': 'model',
@@ -88,7 +88,7 @@ module.exports = function (protocol, host, basePath) {
           ],
           'responses': {
             '200': {
-              'description': 'Success',
+              'description': 'Success.',
               'schema': {
                 '$ref': '#/definitions/Result'
               }
@@ -97,14 +97,14 @@ module.exports = function (protocol, host, basePath) {
               'description': 'Not valid data model.'
             },
             '404': {
-              'description': 'Data not found'
+              'description': 'Data not found.'
             }
           }
         }
       },
       '/datamodel/source/{model}': {
         'get': {
-          'tags': ['DataModel Model Data'],
+          'tags': ['DataModel Data'],
           'summary': 'Restful APIs Description Summary',
           'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}**. \n' +
             'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
@@ -116,7 +116,7 @@ module.exports = function (protocol, host, basePath) {
               'name': 'model',
               'in': 'path',
               'required': true,
-              'description': 'The model to be searched',
+              'description': 'The model to be searched.',
               'type': 'string',
               'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
               'value': 'icdc'
@@ -124,7 +124,7 @@ module.exports = function (protocol, host, basePath) {
           ],
           'responses': {
             '200': {
-              'description': 'Success',
+              'description': 'Success.',
               'schema': {
                 '$ref': '#/definitions/Node'
               }
@@ -133,26 +133,26 @@ module.exports = function (protocol, host, basePath) {
               'description': 'Not valid data model.'
             },
             '404': {
-              'description': 'Data not found'
+              'description': 'Data not found.'
             }
           }
         }
       },
       '/datamodel/source/{model}/{node}': {
         'get': {
-          'tags': ['DataModel Model Data'],
+          'tags': ['DataModel Data'],
           'summary': 'Restful APIs Description Summary',
           'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n' +
             'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
             '| Example | URL |\n' +
             '|---|---|\n' +
-            '| will return all nodes with properties and terms if available. | [source/icdc](' + protocol + '://' + host + basePath + '/datamodel/source/icdc)|\n',
+            '| will return all nodes with properties and terms if available. | [source/icdc/case](' + protocol + '://' + host + basePath + '/datamodel/source/icdc/case)|\n',
           'parameters': [
             {
               'name': 'model',
               'in': 'path',
               'required': true,
-              'description': 'The model to be searched',
+              'description': 'The model to be searched.',
               'type': 'string',
               'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
               'value': 'icdc'
@@ -160,7 +160,7 @@ module.exports = function (protocol, host, basePath) {
             {
               'name': 'node',
               'in': 'path',
-              'description': 'The node name to be searched',
+              'description': 'The node name to be searched. Must be a correct name..',
               'type': 'string'
             }
           ],
@@ -175,7 +175,55 @@ module.exports = function (protocol, host, basePath) {
               'description': 'Not valid data model.'
             },
             '404': {
-              'description': 'Data not found'
+              'description': 'Data not found.'
+            }
+          }
+        }
+      },
+      '/datamodel/source/{model}/{node}/{prop}': {
+        'get': {
+          'tags': ['DataModel Data'],
+          'summary': 'Restful APIs Description Summary',
+          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n' +
+            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
+            '| Example | URL |\n' +
+            '|---|---|\n' +
+            '| will return the matched property in specified model and node if available. | [source/ctdc/arm/arm_id](' + protocol + '://' + host + basePath + '/datamodel/source/ctdc/arm/arm_id)|\n',
+          'parameters': [
+            {
+              'name': 'model',
+              'in': 'path',
+              'required': true,
+              'description': 'The model to be searched.',
+              'type': 'string',
+              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
+              'value': 'icdc'
+            },
+            {
+              'name': 'node',
+              'in': 'path',
+              'description': 'The node name to be searched.',
+              'type': 'string'
+            },
+            {
+              'name': 'prop',
+              'in': 'path',
+              'description': 'The property name to be searched.',
+              'type': 'string'
+            }
+          ],
+          'responses': {
+            '200': {
+              'description': 'Success.',
+              'schema': {
+                '$ref': '#/definitions/Node'
+              }
+            },
+            '400': {
+              'description': 'Not valid data model.'
+            },
+            '404': {
+              'description': 'Data not found.'
             }
           }
         }
@@ -225,7 +273,7 @@ module.exports = function (protocol, host, basePath) {
               'name': 'keyword',
               'in': 'query',
               'required': true,
-              'description': 'The term/phrase to be searched',
+              'description': 'The term/phrase to be searched.',
               'type': 'string'
             }, {
               'name': 'options',
@@ -241,13 +289,13 @@ module.exports = function (protocol, host, basePath) {
           ],
           'responses': {
             '200': {
-              'description': 'Success',
+              'description': 'Success.',
               'schema': {
                 '$ref': '#/definitions/results'
               }
             },
             '404': {
-              'description': 'The resource you were trying to reach is not found'
+              'description': 'The resource you were trying to reach is not found.'
             }
           }
         }
@@ -256,20 +304,17 @@ module.exports = function (protocol, host, basePath) {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
             'summary': 'Restful APIs Description Summary',
-            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}?format={json,xml}**. \n'+ 
-              'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
-              '# Format\n' +
-              'The **format** parameter is specify the result data format. \n' +
-              'The **json** format is the default one and could be omitted. Valid entries for data format are: **json** or **xml**. \n' +
+            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}**. \n'+ 
+              '**model** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
               '|---|---|\n' +
-              '| will perform partial search in enums, ICDO-3 code, NCIt code and property name and return data that partially matches melanoma. | [es/source/icdc](' + protocol + '://' + host + basePath + '/es/source/icdc)|\n',
+              '| will get all nodes data from specified model disctionary files. | [es/source/icdc](' + protocol + '://' + host + basePath + '/es/source/icdc)|\n',
               'parameters': [
               {
                 'name': 'model',
                 'in': 'path',
                 'required': true,
-                'description': 'The term/phrase to be searched',
+                'description': 'The model to be searched.',
                 'type': 'string',
                 'enum': ['ctdc','gdc','icdc','pcdc'],
                 'value':'icdc'
@@ -277,13 +322,13 @@ module.exports = function (protocol, host, basePath) {
             ],
             'responses': {
               '200': {
-                'description': 'Success',
+                'description': 'Success.',
                 'schema': {
                   '$ref': '#/definitions/ESDictResults'
                 }
               },
               '404': {
-                'description': 'The resource you were trying to reach is not found'
+                'description': 'The resource you were trying to reach is not found.'
               }
             }
           }
@@ -293,19 +338,16 @@ module.exports = function (protocol, host, basePath) {
             'tags': ['Retrieve Dictionary Data'],
             'summary': 'Restful APIs Description Summary',
             'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n'+ 
-              'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
-              '# Format\n' +
-              'The **format** parameter is specify the result data format. \n' +
-              'The **json** format is the default one and could be omitted. Valid entries for data format are: **json** or **xml**. \n' +
+              ' **model** and **node** are required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
               '|---|---|\n' +
-              '| will perform partial search in enums, ICDO-3 code, NCIt code and property name and return data that partially matches melanoma. | [es/source/icdc](' + protocol + '://' + host + basePath + '/es/source/icdc)|\n',
+              '| will get node info from specified model. | [es/source/icdc/sample](' + protocol + '://' + host + basePath + '/es/source/icdc/sample)|\n',
               'parameters': [
               {
                 'name': 'model',
                 'in': 'path',
                 'required': true,
-                'description': 'The term/phrase to be searched',
+                'description': 'The term/phrase to be searched.',
                 'type': 'string',
                 'enum': ['ctdc','gdc','icdc','pcdc'],
                 'value':'icdc'
@@ -313,19 +355,64 @@ module.exports = function (protocol, host, basePath) {
               {
                 'name': 'node',
                 'in': 'path',
-                'description': 'The node name to be searched',
+                'description': 'The node name to be searched. Must be a correct name..',
                 'type': 'string'
               }
             ],
             'responses': {
               '200': {
-                'description': 'Success',
+                'description': 'Success.',
                 'schema': {
                   '$ref': '#/definitions/ESDictResults'
                 }
               },
               '404': {
-                'description': 'The resource you were trying to reach is not found'
+                'description': 'The resource you were trying to reach is not found.'
+              }
+            }
+          }
+        },
+        '/es/source/{model}/{node}/{prop}': {
+          'get': {
+            'tags': ['Retrieve Dictionary Data'],
+            'summary': 'Restful APIs Description Summary',
+            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n'+ 
+              ' **model** , **node**, and **prop** are required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
+              '| Example | URL |\n' +
+              '|---|---|\n' +
+              '| will get specified property information from specified model and node. | [es/source/ctdc/arm/arm_id](' + protocol + '://' + host + basePath + '/es/source/ctdc/arm/arm_id)|\n',
+              'parameters': [
+              {
+                'name': 'model',
+                'in': 'path',
+                'required': true,
+                'description': 'The term/phrase to be searched.',
+                'type': 'string',
+                'enum': ['ctdc','gdc','icdc','pcdc'],
+                'value':'icdc'
+              },
+              {
+                'name': 'node',
+                'in': 'path',
+                'description': 'The node name to be searched. Must be a correct name..',
+                'type': 'string'
+              },
+              {
+                'name': 'prop',
+                'in': 'path',
+                'description': 'The property name to be searched. Must be a correct name..',
+                'type': 'string'
+              }
+            ],
+            'responses': {
+              '200': {
+                'description': 'Success.',
+                'schema': {
+                  '$ref': '#/definitions/ESDictResults'
+                }
+              },
+              '404': {
+                'description': 'The resource you were trying to reach is not found.'
               }
             }
           }

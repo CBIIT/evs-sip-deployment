@@ -1,5 +1,4 @@
 const dbUtils = require('../../components/neo4jUtils');
-const User = require('../../models/neo4j/user');
 const _ = require('lodash');
 const { session } = require('neo4j-driver');
 
@@ -54,18 +53,30 @@ const getApiSearchResults = async function (keyword, model, type) {
     for await (let val of promises) {
       if (val) resultAll.push(val);
     }
-    
+
   } else {
     //resultAll = nodeinfo;
   }
-  if (resultAll.length ===0 ) {
+  if (resultAll.length === 0) {
     return { status: 400, message: " No data found. " };
   }
   return { status: 200, results: resultAll };
 }
 
+const getApiDataSource = async function (model, node, prop) {
+  if (model && node && prop) {
+    return await getApiDataSourcebyModelNodeProp(model, node, prop);
+  } else if (model && node) {
+    return await getApiDataSourcebyModelNode(model, node);
+  } else if (model) {
+    return await getApiDataSourcebyModel(model);
+  } else {
+    return ({ status: 404, message: " Wrong request format. " });
+  }
+}
+
 //
-const getApiDataSource = function (model) {
+const getApiDataSourcebyModel = function (model) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
   if (!model) model = "ICDC";
@@ -91,96 +102,99 @@ const getApiDataSource = function (model) {
       if (_.isEmpty(results.records)) {
         return { message: 'No matched data.', status: 400 };
       }
-      let props = [];
-      results.records.map(r => {
-        let prop = r.get('properties');
-        let rel_start = r.get('startnodes');
-        let rel_end = r.get('endnodes');
-        let data = {};
-        data.model = r.get('model');
-        data.category = 'category';
-        data.node_name = r.get('node_name');
-        if (prop.length > 0) {
-          let plist = [];
-          prop.map(p => {
-            if (p.value && p.value.length > 0) {
-              plist.push({
-                property_name: p.property_name,
-                value_type: p.value_domain,
-                values: p.value
-              })
-
-            } else {
-              plist.push({
-                property_name: p.property_name,
-                value_type: p.value_domain
-              })
-            }
-          });
-          data.properties = plist;
-        }
-        if (rel_start && rel_start.length > 0) {
-          let rel =
-          rel_start.reduce((acc, p) => {
-           
-            if(p.rel_name){
-            (acc[p.rel_name] = acc[p.rel_name] || []).push(
-              {source: p.start_node, destination:r.get('node_name'), type: p.rel_type}
-            );
-            }
-            return acc;
-          },{});
-       
-          if(rel && Object.keys(rel).length > 0) {
-           // rel_list.push({Incoming : rel});
-           data.relationship = {};
-           let dlist = [];
-           for (let property in rel){
-            let rel_mul= rel[property][0].type;
-            let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
-            dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
-
-          }
-           data.relationship.incoming = dlist;
-          }
-        }
-        if (rel_end && rel_end.length > 0) {
-          let rel =
-          rel_end.reduce((acc, p) => {
-         
-            if(p.rel_name){
-            (acc[p.rel_name] = acc[p.rel_name] || []).push(
-              {source: r.get('node_name'), destination: p.end_node, type: p.rel_type }
-            );
-            }
-            return acc;
-          },{});
-        
-          if(rel && Object.keys(rel).length > 0) {
-           // rel_list.push({Outing: rel});
-           if(!data.relationship)  {
-             data.relationship = {}; 
-           }
-           let dlist = [];
-           for (let property in rel){
-             let rel_mul= rel[property][0].type;
-             let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
-             dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
-           }
-           data.relationship.outgoing = dlist;
-           
-          }
-        }
-        props.push(data)
-      })
-
-      if (props.length ===0 ) {
-        return({ status: 400, message: " No data found. " });
-      }else {
+      const props = processNodePropResult(results);
+      if (props && props.length === 0) {
+        return ({ status: 400, message: " No data found. " });
+      } else {
         return { status: 200, results: props };
       }
     }).catch(function (error) {
       console.log("error in getBy Resource: " + error);
+    });
+};
+const getApiDataSourcebyModelNode = function (model, node) {
+  //console.log(typeof neo4jsession.readTransaction)
+  const neo4jsession = dbUtils.getSession()
+  if (!model) model = "ICDC";
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) and  toLower(n1.handle) = toLower($node)'
+    + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
+    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle ORDER BY p1.handle, t.value '
+    + ' WITH DISTINCT  n1, value_domain as value_type,collect(value) as value, handle ORDER BY handle '
+    + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
+    + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (n3)<-[:has_src]-(r31:relationship)-[:has_dst]->(n1:node) '
+    + ' WHERE NOT (n3._to is NOT NULL) and NOT (r31._to IS NOT NULL) '
+    + ' WITH DISTINCT n1, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
+    + ' WITH DISTINCT n1, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
+    + ' RETURN n1.handle as node_name, n1.model as model, properties, startnodes, endnodes '
+    + ' ORDER BY n1.model, n1.handle ',
+    { model: model, node: node })
+  )
+    .then(results => {
+      neo4jsession.close();
+      if (_.isEmpty(results.records)) {
+        return { message: 'No matched data.', status: 400 };
+      }
+      const props = processNodePropResult(results);
+      if (props && props.length === 0) {
+        return ({ status: 400, message: " No data found. " });
+      } else {
+        return { status: 200, results: props };
+      }
+    }).catch(function (error) {
+      console.log("error in getBy Resource by node: " + error);
+    });
+};
+
+const getApiDataSourcebyModelNodeProp = function (model, node, prop) {
+  //console.log(typeof neo4jsession.readTransaction)
+  const neo4jsession = dbUtils.getSession()
+  if (!model) model = "ICDC";
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) and toLower(n1.handle) = toLower($node)'
+    + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL) and toLower(p1.handle) = toLower($prop)'
+    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle ORDER BY p1.handle, t.value  '
+    + ' WITH DISTINCT  n1.model as model, n1.handle as node_name, value_domain as value_type,collect(value) as value, handle as prop_name '
+    + ' RETURN DISTINCT  model , node_name,  value_type, value,  prop_name '
+    + ' ORDER BY model, node_name, prop_name ',
+    { model: model, node: node, prop: prop })
+  )
+    .then(results => {
+      neo4jsession.close();
+      if (_.isEmpty(results.records)) {
+        return { message: 'No matched data.', status: 400 };
+      }
+
+      let props = [];
+      results.records.map(r => {
+        let value = r.get('value');
+        let data = {};
+        data.model = r.get('model');
+        data.category = 'category';
+        data.node_name = r.get('node_name');
+
+        if (value && value.length > 0) {
+          data.property_name = r.get('prop_name');
+          data.value_type = r.get('value_type');
+          data.values = value;
+        } else {
+          data.property_name = r.get('prop_name');
+          data.value_type = r.get('value_type');
+        }
+        props.push(data);
+      });
+
+      if (props.length === 0) {
+        return ({ status: 400, message: " No data found. " });
+      } else {
+        return { status: 200, results: props };
+      }
+    }).catch(function (error) {
+      console.log("error in getBy Resource node and prop: " + error);
     });
 };
 
@@ -194,13 +208,8 @@ const getPropWithValuesByName = function (model, keyword) {
     + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and toLower(p1.model) = toLower($model) AND p1.handle in $searchword '
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' RETURN DISTINCT '
-    + ' n1.handle as node_name,'
-    + ' p1.value_domain as value_type,'
-    + ' collect(t.value) as value,'
-    + ' p1.handle as handle,'
-    + ' p1.model as model,'
-    + ' p1.nanoid as pid'
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle , p1.nanoid as pid ORDER BY p1.handle, t.value  '
+    + ' RETURN DISTINCT  n1.model as model, n1.handle as node_name, value_domain as value_type,collect(value) as value, handle as handle, pid '
     + ' ORDER BY model,node_name, handle, value ',
     { model: model, searchword: searchword })
   )
@@ -297,88 +306,8 @@ const getNodeDetailsByName = function (model, keyword) {
       if (_.isEmpty(results.records)) {
         return { message: 'No matched data.', status: 400 };
       }
-      let props = [];
-      results.records.map(r => {
-        let prop = r.get('properties');
-        let rel_start = r.get('startnodes');
-        let rel_end = r.get('endnodes');
-        let data = {};
-        data.model = r.get('model');
-        data.node_name = r.get('node_name');
-        data.category = 'category';
-        if (prop.length > 0) {
-          let plist = [];
-          prop.map(p => {
-            if (p.value && p.value.length > 0) {
-              plist.push({
-                property_name: p.property_name,
-                value_type: p.value_domain,
-                values: p.value
-              })
-
-            } else {
-              plist.push({
-                property_name: p.property_name,
-                value_type: p.value_domain
-              })
-            }
-          });
-          data.properties = plist;
-        }
-          if (rel_start && rel_start.length > 0) {
-            let rel =
-            rel_start.reduce((acc, p) => {
-             
-              if(p.rel_name){
-              (acc[p.rel_name] = acc[p.rel_name] || []).push(
-                {source: p.start_node, destination:r.get('node_name'), type: p.rel_type}
-              );
-              }
-              return acc;
-            },{});
-         
-            if(rel && Object.keys(rel).length > 0) {
-             // rel_list.push({Incoming : rel});
-             data.relationship = {};
-             let dlist = [];
-             for (let property in rel){
-              let rel_mul= rel[property][0].type;
-              let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
-              dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
-  
-            }
-             data.relationship.incoming = dlist;
-            }
-          }
-          if (rel_end && rel_end.length > 0) {
-            let rel =
-            rel_end.reduce((acc, p) => {
-           
-              if(p.rel_name){
-              (acc[p.rel_name] = acc[p.rel_name] || []).push(
-                {source: r.get('node_name'), destination: p.end_node, type: p.rel_type }
-              );
-              }
-              return acc;
-            },{});
-          
-            if(rel && Object.keys(rel).length > 0) {
-             // rel_list.push({Outing: rel});
-             if(!data.relationship)  {
-               data.relationship = {}; 
-             }
-             let dlist = [];
-             for (let property in rel){
-               let rel_mul= rel[property][0].type;
-               let nodesList = rel[property].map(({type, ...keepAttrs}) => keepAttrs)
-               dlist.push({relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList});
-             }
-             data.relationship.outgoing = dlist;
-          }
-        }
-        props.push(data)
-      })
-
+      let props = processNodePropResult(results);
+     
       return { type: 'node', result: props };
     }).catch(function (error) {
       console.log(" error in nodebyname: " + error);
@@ -648,7 +577,7 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
   const neo4jsession = dbUtils.getSession()
 
   return neo4jsession.readTransaction(txc => txc.run(
-     ' MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
+    ' MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
     + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
     + ' WITH collect(t) as allvalues, count(distinct t.value) as total_values UNWIND allvalues as t1'
     + ' WITH t1, total_values '
@@ -679,12 +608,100 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
         })
       })
 
-      return { type: 'values',total_values:totals, result: props };
+      return { type: 'values', total_values: totals, result: props };
 
     }).catch(function (error) {
       console.log("error in getValuesList : " + error);
     });
 };
+
+const processNodePropResult = function (results) {
+  const props = [];
+  results.records.map(r => {
+    let prop = r.get('properties');
+    let rel_start = r.get('startnodes');
+    let rel_end = r.get('endnodes');
+    let data = {};
+    data.model = r.get('model');
+    data.category = 'category';
+    data.node_name = r.get('node_name');
+    if (prop.length > 0) {
+      let plist = [];
+      prop.map(p => {
+        if (p.value && p.value.length > 0) {
+          plist.push({
+            property_name: p.property_name,
+            value_type: p.value_domain,
+            values: p.value
+          })
+
+        } else {
+          plist.push({
+            property_name: p.property_name,
+            value_type: p.value_domain
+          })
+        }
+      });
+      data.properties = plist;
+    }
+    if (rel_start && rel_start.length > 0) {
+      let rel =
+        rel_start.reduce((acc, p) => {
+
+          if (p.rel_name) {
+            (acc[p.rel_name] = acc[p.rel_name] || []).push(
+              { source: p.start_node, destination: r.get('node_name'), type: p.rel_type }
+            );
+          }
+          return acc;
+        }, {});
+
+      if (rel && Object.keys(rel).length > 0) {
+        // rel_list.push({Incoming : rel});
+        data.relationship = {};
+        let dlist = [];
+        for (let property in rel) {
+          let rel_mul = rel[property][0].type;
+          let nodesList = rel[property].map(({ type, ...keepAttrs }) => keepAttrs)
+          dlist.push({ relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList });
+
+        }
+        data.relationship.incoming = dlist;
+      }
+    }
+    if (rel_end && rel_end.length > 0) {
+      let rel =
+        rel_end.reduce((acc, p) => {
+
+          if (p.rel_name) {
+            (acc[p.rel_name] = acc[p.rel_name] || []).push(
+              { source: r.get('node_name'), destination: p.end_node, type: p.rel_type }
+            );
+          }
+          return acc;
+        }, {});
+
+      if (rel && Object.keys(rel).length > 0) {
+        // rel_list.push({Outing: rel});
+        if (!data.relationship) {
+          data.relationship = {};
+        }
+        let dlist = [];
+        for (let property in rel) {
+          let rel_mul = rel[property][0].type;
+          let nodesList = rel[property].map(({ type, ...keepAttrs }) => keepAttrs)
+          dlist.push({ relationship_type: property, multiplicity: rel_mul, relationship_entity: nodesList });
+        }
+        data.relationship.outgoing = dlist;
+
+      }
+    }
+    props.push(data)
+  })
+
+ return props;
+
+}
 
 module.exports = {
   getApiDataSource,

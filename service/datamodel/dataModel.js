@@ -94,29 +94,20 @@ const getApiSearch = async function (req, res) {
 
 const getApiSource = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
-    const model = req.params['model'] || 'ICDC';
+    const model = req.params['model'] || '';
     const node = req.params['node'] || '';
-   
+    const prop = req.params['prop'] || '';
+
     if (['icdc', 'ctdc', 'gdc', 'pctc'].includes(model.toLowerCase())) {
-        if (node && node !== '') {
-            const result = await dataModelcontroller.getApiSearchResults(node, model, 'node');
 
-            if (+result.status === 200) {
-                res.json(result);
-            } else {
-                //res.json( {status: 404 ,message: 'Data not found'  });
-                return writeError(res, { detail: 'Data not found' }, 404);
-            }
-
+        const result = await dataModelcontroller.getApiDataSource(model, node, prop);
+        if (+result.status === 200) {
+            res.json(result);
         } else {
-            const result = await dataModelcontroller.getApiDataSource(model);
-            if (+result.status === 200) {
-                res.json(result);
-            } else {
-                //res.json( {status: 404 ,message: 'Data not found in :'+model  });
-                return writeError(res, { message: 'no result found' }, 404);
-            }
+            //res.json( {status: 404 ,message: 'Data not found in :'+model  });
+            return writeError(res, { message: 'no result found' }, 404);
         }
+
 
     } else {
         //res.json( {status: 400 ,message: 'Not valid data model :'+model  });

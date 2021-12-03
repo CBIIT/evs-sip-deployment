@@ -19,8 +19,6 @@ const folderPath = path.join(
   "model"
 );
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
-const dataFilesDir = path.join(__dirname, "..", "..", "data_files", "GDC");
-
 
 const searchP = (req, res, formatFlag) => {
   //let keyword = req.query.keyword.trim().replace(/\+/g, "\\+").replace(/-/g, "\\-").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
@@ -96,7 +94,7 @@ const searchP = (req, res, formatFlag) => {
   }
 };
 
-const getGraphicalGDCDictionary = async function (node) {
+const getGraphicalGDCDictionary = async function (node, prop) {
 
   let result = cache.getValue("gdc_dict_api");
   if (result == undefined || node !== '') {
@@ -111,12 +109,9 @@ const getGraphicalGDCDictionary = async function (node) {
     var termsEnumJson = yaml.load(folderPath + "/_terms_enum.yaml");
     jsonData["_terms_enum.yaml"] = termsEnumJson;
     // let bulkBody = [];
-    console.log(" gdc ", node )
+   
     fs.readdirSync(folderPath).forEach((file) => {
-      console.log(" line 116 ", file);
-      console.log(" line 116 node ", node );
       if(!node || node ==='' || file.toLowerCase().includes(node.toLowerCase())){
-        console.log(" line 118 node ", node, " file", file );
       let fileJson = yaml.load(folderPath + "/" + file);
       // Do not include annotation.yaml, metaschema.yaml
       // Only include node in the gdc_searchable_nodes
@@ -146,6 +141,7 @@ const getGraphicalGDCDictionary = async function (node) {
   delete result._terms;
   delete result._terms_enum;
   delete result._definitions;
+  result = processGDCResult(result, node, prop)
   if (result.length ===0 ) {
     return { status: 400, message: " No data found. " };
   }
@@ -251,9 +247,12 @@ const generateGDCData = async function (schema) {
 
     delete obj.systemProperties;
 
+
+
     if( !['_terms','_terms_enum','_definitions'].includes(key))filtered.push(newDict[key]);
     return filtered;
   }, []);
+
 
   return result;
 };
@@ -296,25 +295,25 @@ const excludeSystemProperties = function (node) {
   return properties;
 };
 
-const getGraphicalICDCDictionary = function (node) {
+const getGraphicalICDCDictionary = function (node, prop ) {
 
   let result = cache.getValue("icdc_dict_api");
-  if (result == undefined || node === '') {
+  if (result == undefined || node !== '') {
     let jsonData = {};
     var mpJson = yaml.load(dataFilesPath + "/ICDC/icdc-model-props.yml");
     jsonData.mpData = mpJson;
     var mJson = yaml.load(dataFilesPath + "/ICDC/icdc-model.yml");
     jsonData.mData = mJson;
-    result = generateICDCorCTDCData(jsonData, 'ICDC', node);
-    if(node === '') cache.setValue("icdc_dict_api", result, config.item_ttl);
+    result = generateICDCorCTDCData(jsonData, 'ICDC', node, prop);
+    if (node === '') cache.setValue("icdc_dict_api", result, config.item_ttl);
   }
-  if (result.length ===0 ) {
+  if (result.length === 0) {
     return { status: 400, message: " No data found. " };
   }
   return { status: 200, results: result };
 };
 
-const getGraphicalCTDCDictionary = function (node)  {
+const getGraphicalCTDCDictionary = function (node, prop )  {
   let result = cache.getValue("ctdc_dict_api");
   if (result == undefined || node !== '') {
     let jsonData = {};
@@ -324,15 +323,15 @@ const getGraphicalCTDCDictionary = function (node)  {
     jsonData.mpData = mpJson;
     var mJson = yaml.load(dataFilesPath + "/CTDC/ctdc_model_file.yaml");
     jsonData.mData = mJson;
-    result = generateICDCorCTDCData(jsonData, 'CTDC', node);
+    result = generateICDCorCTDCData(jsonData, 'CTDC', node, prop);
     /*
         for(let node in result){
           result[node].category = "clinical";
         }
         */
-    if(node === '') cache.setValue("ctdc_dict_api", result, config.item_ttl);
+    if (node === '') cache.setValue("ctdc_dict_api", result, config.item_ttl);
   }
-  if (result.length ===0 ) {
+  if (result.length === 0) {
     return { status: 400, message: " No data found. " };
   }
   return { status: 200, results: result };
@@ -395,109 +394,125 @@ const getGraphicalPCDCDictionary = (project, node) => {
   return project_result;
 };
 
-const generateICDCorCTDCData = (dc, model, node) => {
+const generateICDCorCTDCData = (dc, model, node, prop) => {
   const dcMData = dc.mData;
   const dcMPData = dc.mpData;
 
   const dataList = [];
 
   for (let [key, value] of Object.entries(dcMData.Nodes)) {
-   
-    if(!node || node ==='' || key.toLowerCase().includes(node.toLowerCase())){
-    //console.log(key);
-    //console.log(value.Category);
-    const item = {};
-    // item["$schema"] = "http://json-schema.org/draft-06/schema#";
-    // item["id"] = key;
-    // item["title"] = shared.convert2Title(key);
-    item["model"] = model;
-    if ("Category" in value) {
-      item["category"] = value.Category;
-    } else {
-      item["category"] = "Undefined";
-    }
-    item["node_name"] = key;
+    if (prop && prop !== '' && node && node !== '' && key.toLowerCase() === (node.toLowerCase())) {
+      
+      if (dcMData.Nodes[key].Props != null) {
+        //if(dcMData.Nodes[key].Props.some(item => item.toLowerCase() === prop.toLowerCase())){
+        // console.log ("find match prop ", prop );
+        // }
+        for (var i = 0; i < dcMData.Nodes[key].Props.length; i++) {
+          const nodeP = dcMData.Nodes[key].Props[i];
+          if (nodeP.toLowerCase() === prop.toLowerCase()) {
+            const propertiesItem = {};
+            for (var propertyName in dcMPData.PropDefinitions) {
+              if (propertyName === nodeP) {
+                propertiesItem["model"] = model;
+                if ("Category" in value) {
+                  propertiesItem["category"] = value.Category;
+                } else {
+                  propertiesItem["category"] = "Undefined";
+                }
+                propertiesItem["node_name"] = key;
+                propertiesItem["property_name"] = nodeP;
 
-    //item["program"] = "*";
-    // item["project"] = "*";
-    //item["additionalProperties"] = false;
-    // item["submittable"] = true;
-    // item["constraints"] = null;
-    //item["links"]=[];
+                propertiesItem["description"] = dcMPData.PropDefinitions[propertyName].Desc;
 
-    // item["type"] = "object";
-    //item["type"] = "node";
-    const link = [];
-    const properties = []; // convert to [] from {}
-    const pRequired = [];
+                propertiesItem["value_type"] = (!!dcMPData.PropDefinitions[propertyName].Type && dcMPData.PropDefinitions[propertyName].Type.constructor === Array) ?
+                  dcMPData.PropDefinitions[propertyName].Type.sort() : dcMPData.PropDefinitions[propertyName].Type;
+                propertiesItem["src"] = dcMPData.PropDefinitions[propertyName].Src;
 
-    if (dcMData.Nodes[key].Props != null) {
-      for (var i = 0; i < dcMData.Nodes[key].Props.length; i++) {
-        //console.log(icdcMData.Nodes[key].Props[i]);
-        const nodeP = dcMData.Nodes[key].Props[i];
-        const propertiesItem = {};
-        for (var propertyName in dcMPData.PropDefinitions) {
-          if (propertyName == nodeP) {
-            propertiesItem["description"] =
-              dcMPData.PropDefinitions[propertyName].Desc;
+            dataList.push(propertiesItem)
 
-            propertiesItem["value_type"] = (!!dcMPData.PropDefinitions[propertyName].Type && dcMPData.PropDefinitions[propertyName].Type.constructor === Array) ?
-              dcMPData.PropDefinitions[propertyName].Type.sort() : dcMPData.PropDefinitions[propertyName].Type;
-            propertiesItem["src"] = dcMPData.PropDefinitions[propertyName].Src;
-
-            if (dcMPData.PropDefinitions[propertyName].Req == true) {
-              pRequired.push(nodeP);
+              }
             }
           }
         }
-        //properties[nodeP] = propertiesItem;
-        properties.push({ property_name: nodeP, ...propertiesItem });
       }
+      return dataList;
+    
+    } else if (!node || node === '' || key.toLowerCase() === (node.toLowerCase())) {
+    
+      const item = {};
 
-      item["properties"] = properties;
-      item["required"] = pRequired.sort();
-    } else {
-      item["properties"] = [];
-    }
+      item["model"] = model;
+      if ("Category" in value) {
+        item["category"] = value.Category;
+      } else {
+        item["category"] = "Undefined";
+      }
+      item["node_name"] = key;
 
-    for (let propertyName in dcMData.Relationships) {
-      const linkItem = {};
-      //console.log(propertyName);
-      //console.log(icdcMData.Relationships[propertyName]);
-      //console.log(icdcMData.Relationships[propertyName].Ends);
-      const label = propertyName;
-      const multiplicity = dcMData.Relationships[propertyName].Mul;
-      linkItem["relationship_type"] = label;
-      linkItem["multiplicity"] = multiplicity;
-      //const required = false;
-      let nodeList = [];
-      for (
-        let i = 0;
-        i < dcMData.Relationships[propertyName].Ends.length;
-        i++) {
-        if (dcMData.Relationships[propertyName].Ends[i].Src == key) {
-          const backref = dcMData.Relationships[propertyName].Ends[i].Src;
-          const name = dcMData.Relationships[propertyName].Ends[i].Dst;
-          const target = dcMData.Relationships[propertyName].Ends[i].Dst;
+      const link = [];
+      const properties = []; // convert to [] from {}
+      const pRequired = [];
 
-          // linkItem["name"] = name;
-          // linkItem["backref"] = backref;
-          // linkItem["label"] = label;
-          // linkItem["target_type"] = target;
-          // linkItem["required"] = required;
-          nodeList.push({ source: backref, destination: name })
-          // link.push(linkItem);
+      if (dcMData.Nodes[key].Props != null) {
+        for (var i = 0; i < dcMData.Nodes[key].Props.length; i++) {
+          //console.log(icdcMData.Nodes[key].Props[i]);
+          const nodeP = dcMData.Nodes[key].Props[i];
+          const propertiesItem = {};
+          for (var propertyName in dcMPData.PropDefinitions) {
+            if (propertyName === nodeP) {
+              propertiesItem["description"] =
+                dcMPData.PropDefinitions[propertyName].Desc;
+
+              propertiesItem["value_type"] = (!!dcMPData.PropDefinitions[propertyName].Type && dcMPData.PropDefinitions[propertyName].Type.constructor === Array) ?
+                dcMPData.PropDefinitions[propertyName].Type.sort() : dcMPData.PropDefinitions[propertyName].Type;
+              propertiesItem["src"] = dcMPData.PropDefinitions[propertyName].Src;
+
+              if (dcMPData.PropDefinitions[propertyName].Req == true) {
+                pRequired.push(nodeP);
+              }
+            }
+          }
+          //properties[nodeP] = propertiesItem;
+          properties.push({ property_name: nodeP, ...propertiesItem });
         }
+
+        item["properties"] = properties;
+        item["required"] = pRequired.sort();
+      } else {
+        item["properties"] = [];
       }
-      linkItem["relationship_entity"] = nodeList;
-      if (nodeList.length > 0) link.push(linkItem);
+
+      for (let propertyName in dcMData.Relationships) {
+        const linkItem = {};
+
+        const label = propertyName;
+        const multiplicity = dcMData.Relationships[propertyName].Mul;
+        linkItem["relationship_type"] = label;
+        linkItem["multiplicity"] = multiplicity;
+        //const required = false;
+        let nodeList = [];
+        for (
+          let i = 0;
+          i < dcMData.Relationships[propertyName].Ends.length;
+          i++) {
+          if (dcMData.Relationships[propertyName].Ends[i].Src == key) {
+            const backref = dcMData.Relationships[propertyName].Ends[i].Src;
+            const name = dcMData.Relationships[propertyName].Ends[i].Dst;
+            const target = dcMData.Relationships[propertyName].Ends[i].Dst;
+
+            nodeList.push({ source: backref, destination: name })
+
+          }
+        }
+        linkItem["relationship_entity"] = nodeList;
+        if (nodeList.length > 0) link.push(linkItem);
+      }
+
+      //console.log(link);
+      item["relationship"] = link.sort();
+
+      dataList.push(item);
     }
-
-    //console.log(link);
-    item["relationship"] = link.sort();
-
-    dataList.push (item);
-  }
   }
 
   return dataList;
@@ -558,6 +573,61 @@ const generatePCDCData = (pcdc_data, filter) => {
     }
   }
   return dataList;
+};
+
+const processGDCResult = function (result, node, prop ) {
+  const dataList = [];
+  if(result.length > 0){
+    result.map((r) =>{
+      if(!node ||  r.id.toLowerCase() === node.toLowerCase()){
+        let item = {};
+        item["model"] = "GDC";
+        item["category"] = r.category;
+        item["node_name"] = r.id;
+        item["node_description"] = r.description;
+        if(prop && prop !== ''){
+          if(r.properties){
+            for (let propertyName in r.properties) {
+              //console.log(propertyName)
+             // console.log(r.properties[propertyName]);
+              if (propertyName.toLowerCase() === prop.toLowerCase()) {
+                //console.log("GDC prop found")
+                item["property_name"] = propertyName;
+                item["property_description"] = r.properties[propertyName].description;
+                item["values"] = r.properties[propertyName].enum;
+                item["term_def"] = r.properties[propertyName].termDef;
+                dataList.push(item);
+              }
+            }
+
+          }
+
+        }else{
+          let propList =[];
+          if(r.properties){
+            for (let propertyName in r.properties) {
+              let p ={};
+                p["property_name"] = propertyName;
+                p["property_description"] = r.properties[propertyName].description;
+                p["values"] = r.properties[propertyName].enum;
+                p["term_def"] = r.properties[propertyName].termDef;
+                propList.push(p);             
+            }
+
+          }
+          item["properties"] = propList;
+          item["required"] = r.required;     
+          item["relationship"] = r.links;
+
+          dataList.push(item);
+        }
+      }
+
+    });
+  }
+
+  return dataList
+
 };
 
 module.exports = {

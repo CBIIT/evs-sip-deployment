@@ -19,19 +19,20 @@ router.get('/', function (req, res) {
 router.use('/docs',
     swaggerUi.serve,
     function (req, res) {
-        const protocol = 'https';
+        const protocol = 'http';
         const host = req.get('host');
         const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api':'/evssip/api';
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
     }
 );
   
-// property based api
+// api search from elasticSearch
 router.get("/es/search", esapi.apiEsSearch);
 
-//source view from elasticSearch
+//source view from dict files
 router.get("/es/source/:model", esapi.getEsModelData);
 router.get("/es/source/:model/:node", esapi.getEsModelData);
+router.get("/es/source/:model/:node/:prop", esapi.getEsModelData);
 
 
 // neo4j user
@@ -45,5 +46,6 @@ router.get("/user/allusers", metauser.getAllUser);
 router.get("/datamodel/search", metamodel.getApiSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
 router.get("/datamodel/source/:model/:node", metamodel.getApiSource);
+router.get("/datamodel/source/:model/:node/:prop", metamodel.getApiSource);
 
 module.exports = router;
