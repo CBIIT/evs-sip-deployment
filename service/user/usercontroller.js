@@ -16,25 +16,37 @@ const getUserbyNciUserName = function (username) {
   )
     .then(results => {
       if (_.isEmpty(results.records)) {
-        return { message: 'invalid NCI username', status: 400 };
+        return { status: 400, user_total: 0, results:[], message: 'invalid NCI username' };
       }
-      return new User(results.records[0].get('user'));
+      return { status: 200, user_total: 1, results:[new User(results.records[0].get('user'))] };
+      
+    }).catch(function (error) {
+      console.log("error in get user: " + error);
     });
 };
 
 //
-const getAllUser = function (keyword, fromIndex, pageSize) {
+const getAllUser = function (keyword, status,fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
-  let searchword = "(?i).*" + keyword + ".*"
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User) where (any(prop in ["fisrt_name", "last_name","nci_username","email"]'
-    + ' where user[prop] =~ $searchword)) return user ORDER BY user.last_name , user.first_name '
-    + ' SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ', { searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
+  const searchword = "(?i).*" + keyword + ".*"
+  const userList =[];
+  return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User) where user.id <> 1 and user.active = $status and (any(prop in ["fisrt_name", "last_name","nci_username","email"]'
+    + ' where user[prop] =~ $searchword))  WITH collect(user) as userList, count(user) as user_cnt '
+    + ' UNWIND userList as user1 return user1, user_cnt ORDER BY user1.last_name , user1.first_name '
+    + ' SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
+     { searchword: searchword, status:status, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
       if (_.isEmpty(results.records)) {
         return { message: 'No matched user.', status: 400 };
       }
-      return results.records.map(r => new User(r.get('user')));
+       let user_cnt =+results.records[0].get('user_cnt');
+        results.records.map((r) => { 
+        userList.push(new User(r.get('user1')));
+      })
+      return {status:200, user_total: user_cnt, results: userList }
+    }).catch(function (error) {
+      console.log("error in get All users: " + error);
     });
 };
 
@@ -73,10 +85,12 @@ const updateUserbyNciUserName = function (requester, user) {
           return { message: 'requester is not an admin.', status: 400 };
         }
       }
+    }).catch(function (error) {
+      console.log("error in update user: " + error);
     });
 };
 
-const createUseWithNciUserName = function (requester, user) {
+const createUserWithNciUserName = function (requester, user) {
 
   if (!requester && !user.nci_username) {
     return { message: 'invalid NCI username for requester', status: 400 };
@@ -118,6 +132,8 @@ const createUseWithNciUserName = function (requester, user) {
           return { message: 'requester is not an admin.', status: 400 };
         }
       }
+    }).catch(function (error) {
+      console.log("error in create user: " + error);
     });
 };
 
@@ -125,5 +141,5 @@ module.exports = {
   getAllUser,
   getUserbyNciUserName,
   updateUserbyNciUserName,
-  createUseWithNciUserName,
+  createUserWithNciUserName,
 };

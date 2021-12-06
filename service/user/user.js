@@ -9,12 +9,12 @@ const getAllUser = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
      const params = req.query;
      const searchText = params.search ? params.search : "";
-     const type = params.type ? params.type : "all";
+     const status = params.status ? params.status : "Y";
      const page = parseInt(params.page ? params.page : 1);
      const pageSize = parseInt(params.pageSize ? params.pageSize : 25);
      const fromIndex = page > 1 ? (page - 1) * pageSize : 0;
  
-     const result = await usercontroller.getAllUser(searchText, fromIndex, pageSize);
+     const result = await usercontroller.getAllUser(searchText, status, fromIndex, pageSize);
      res.json(result);
  
  };
@@ -50,7 +50,7 @@ const createUser = async function (req, res) {
     let requester = body.requester ? body.requester : "";
     let user = body.user? body.user :{};
     if(user) {
-        const result = await usercontroller.createUseWithNciUserName(requester,user);
+        const result = await usercontroller.createUserWithNciUserName(requester,user);
         res.json(result)
     }else{
         res.json({detail: 'no User data provided', status: 400});
