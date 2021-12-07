@@ -59,6 +59,7 @@ const updateUserbyNciUserName = function (requester, user) {
   if (user.email && (typeof user.email) === 'string') updatedUser.email = user.email;
   if (user.last_name && (typeof user.last_name) === 'string') updatedUser.last_name = user.last_name;
   if (user.first_name && (typeof user.first_name) === 'string') updatedUser.first_name = user.first_name;
+  if (user.role && (typeof user.role) === 'string') updatedUser.role = user.role.toLowerCase().include('admin')? 'Admin' : 'User';
   if (user.organization && (typeof user.organization) === 'string') updatedUser.organization = user.organization;
   if (user.projects && (typeof user.projects) === 'string') updatedUser.projects = user.projects;
   if (user.active && (typeof user.active) === 'string') updatedUser.active = user.active.toLowerCase().includes('y') ? 'Y' : 'N';
@@ -100,6 +101,7 @@ const createUserWithNciUserName = function (requester, user) {
   if (user.email && (typeof user.email) === 'string') newUser.email = user.email;
   if (user.last_name && (typeof user.last_name) === 'string') newUser.last_name = user.last_name;
   if (user.first_name && (typeof user.first_name) === 'string') newUser.first_name = user.first_name;
+  if (user.role && (typeof user.role) === 'string') newUser.role = user.role.toLowerCase().include('admin')? 'Admin' : 'User';
   if (user.organization && (typeof user.organization) === 'string') newUser.organization = user.organization;
   if (user.projects && (typeof user.projects) === 'string') newUser.projects = user.projects;
   if (user.active && (typeof user.active) === 'string') newUser.active = user.active.toLowerCase().includes('y') ? 'Y' : 'N';
