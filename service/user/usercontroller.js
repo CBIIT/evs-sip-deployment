@@ -120,7 +120,7 @@ const createUserWithNciUserName = function (requester, user) {
             if (!_.isEmpty(results.records)) {
               return { message: 'existing NCI username', status: 400 };
             } else {
-              return neo4jsession.writeTransaction(txc => txc.run('MERGE (user:User { nci_username: toLower($username) }) SET user = $newuser RETURN user',
+              return neo4jsession.writeTransaction(txc => txc.run('MERGE (user:User { nci_username: toLower($username) }) SET user = $newuser, user.id = id(user) RETURN user',
                 { username: user.nci_username.toLowerCase(), newuser: newUser }
               )).then(results => {
                 if (_.isEmpty(results.records)) {
