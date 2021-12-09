@@ -81,19 +81,23 @@ const getApiDataSourcebyModel = function (model) {
   const neo4jsession = dbUtils.getSession()
   if (!model) model = "ICDC";
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"})  '
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
-    + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
-    + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle ORDER BY p1.handle, t.value '
-    + ' WITH DISTINCT  n1, value_domain as value_type,collect(value) as value, handle ORDER BY handle '
-    + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
+    + ' OPTIONAL MATCH (p1) -[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (vs) -[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t, t.value as value,p1.handle as handle, '
+    + ' cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt ORDER BY p1.handle, t.value '
+    + ' WITH DISTINCT  n1, value_domain as value_type,collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, handle, n_ncitcode , p_ncitcode ORDER BY handle '
+    + ' WITH n1,n_ncitcode, collect({property_name:handle, ncit_code: p_ncitcode, value_domain:value_type,value: value }) as properties '
     + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
     + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
     + ' OPTIONAL MATCH (n3)<-[:has_src]-(r31:relationship)-[:has_dst]->(n1:node) '
     + ' WHERE NOT (n3._to is NOT NULL) and NOT (r31._to IS NOT NULL) '
-    + ' WITH DISTINCT n1, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
-    + ' WITH DISTINCT n1, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
-    + ' RETURN n1.handle as node_name, n1.model as model, properties, startnodes, endnodes '
+    + ' WITH DISTINCT n1,n_ncitcode, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
+    + ' WITH DISTINCT n1,n_ncitcode, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
+    + ' RETURN n1.handle as node_name, n1.model as model,n_ncitcode, properties, startnodes, endnodes '
     + ' ORDER BY n1.model, n1.handle ',
     { model: model })
   )
@@ -117,19 +121,23 @@ const getApiDataSourcebyModelNode = function (model, node) {
   const neo4jsession = dbUtils.getSession()
   if (!model) model = "ICDC";
   return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) and  toLower(n1.handle) = toLower($node)'
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"})  '
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle ORDER BY p1.handle, t.value '
-    + ' WITH DISTINCT  n1, value_domain as value_type,collect(value) as value, handle ORDER BY handle '
-    + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t, t.value as value,p1.handle as handle, '
+    + ' cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt ORDER BY p1.handle, t.value '
+    + ' WITH DISTINCT  n1, value_domain as value_type,collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, handle, n_ncitcode , p_ncitcode ORDER BY handle '
+    + ' WITH DISTINCT n1,n_ncitcode, collect({property_name:handle, ncit_code: p_ncitcode, value_domain:value_type,value: value }) as properties '
     + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
     + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
     + ' OPTIONAL MATCH (n3)<-[:has_src]-(r31:relationship)-[:has_dst]->(n1:node) '
     + ' WHERE NOT (n3._to is NOT NULL) and NOT (r31._to IS NOT NULL) '
-    + ' WITH DISTINCT n1, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
-    + ' WITH DISTINCT n1, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
-    + ' RETURN n1.handle as node_name, n1.model as model, properties, startnodes, endnodes '
+    + ' WITH DISTINCT n1,n_ncitcode, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
+    + ' WITH DISTINCT n1,n_ncitcode, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
+    + ' RETURN n1.handle as node_name, n1.model as model,n_ncitcode, properties, startnodes, endnodes '
     + ' ORDER BY n1.model, n1.handle ',
     { model: model, node: node })
   )
@@ -153,13 +161,19 @@ const getApiDataSourcebyModelNodeProp = function (model, node, prop) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
   if (!model) model = "ICDC";
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) and toLower(n1.handle) = toLower($node)'
-    + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL) and toLower(p1.handle) = toLower($prop)'
+  return neo4jsession.readTransaction(txc => txc.run(
+    'MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) and toLower(n1.handle) = toLower($node)'
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"}) '
+    + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL) and toLower(p1.handle) = toLower($prop) '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle ORDER BY p1.handle, t.value  '
-    + ' WITH DISTINCT  n1.model as model, n1.handle as node_name, value_domain as value_type,collect(value) as value, handle as prop_name '
-    + ' RETURN DISTINCT  model , node_name,  value_type, value,  prop_name '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle, ' 
+    + ' cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt ORDER BY p1.handle, t.value  '
+    + ' WITH DISTINCT  n1.model as model, n1.handle as node_name, value_domain as value_type,n_ncitcode , p_ncitcode, ' 
+    + ' collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, handle as prop_name '
+    + ' RETURN DISTINCT  model , node_name,  value_type, value,  prop_name , n_ncitcode , p_ncitcode '
     + ' ORDER BY model, node_name, prop_name ',
     { model: model, node: node, prop: prop })
   )
@@ -176,15 +190,24 @@ const getApiDataSourcebyModelNodeProp = function (model, node, prop) {
         data.model = r.get('model');
         data.category = 'category';
         data.node_name = r.get('node_name');
+        data.node_ncitcode = r.get('n_ncitcode')||'';
+        data.property_name = r.get('prop_name');
+        data.property_ncitcode = r.get('p_ncitcode')||'';
+        data.value_type = r.get('value_type');
 
-        if (value && value.length > 0) {
-          data.property_name = r.get('prop_name');
-          data.value_type = r.get('value_type');
-          data.values = value;
-        } else {
-          data.property_name = r.get('prop_name');
-          data.value_type = r.get('value_type');
+        if (value && value.length > 0 && r.get('value_type') === 'value_set') {
+        
+          let vlist = [];
+          if (value[0] && !!value[0].term && value[0].term !== null) {
+            for (let v of value) {
+              if (v.term) {
+                vlist.push({ term: v.term, ncit_code: v.ncit_code||'', term_PT: v.termPT || '' });
+              }
+            }
+          }
+          data.values = vlist;
         }
+
         props.push(data);
       });
 
@@ -204,12 +227,18 @@ const getPropWithValuesByName = function (model, keyword) {
   const neo4jsession = dbUtils.getSession()
   let searchword = keyword;
 
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
+  return neo4jsession.readTransaction(txc => txc.run(
+    'MATCH (n1:node) WHERE n1._to IS NULL and toLower(n1.model) = toLower($model) '
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"}) '
     + ' MATCH (n1) -[:has_property]- (p1:property) WHERE p1._to IS  NULL and toLower(p1.model) = toLower($model) AND p1.handle in $searchword '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle , p1.nanoid as pid ORDER BY p1.handle, t.value  '
-    + ' RETURN DISTINCT  n1.model as model, n1.handle as node_name, value_domain as value_type,collect(value) as value, handle as handle, pid '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t.value as value,p1.handle as handle , p1.nanoid as pid, ' 
+    + ' cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt ORDER BY p1.handle, t.value  '
+    + ' RETURN DISTINCT  n1.model as model, n1.handle as node_name,n_ncitcode, p_ncitcode, value_domain as value_type, ' 
+    + ' collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, handle as prop_name, pid '
     + ' ORDER BY model,node_name, handle, value ',
     { model: model, searchword: searchword })
   )
@@ -220,24 +249,29 @@ const getPropWithValuesByName = function (model, keyword) {
       }
       let props = [];
       results.records.map(r => {
-        if (r.get('value') && r.get('value').length > 0) {
-          props.push({
-            model: r.get('model'),
-            category: 'category',
-            node_name: r.get('node_name'),
-            property_name: r.get('handle'),
-            value_type: r.get('value_type'),
-            values: r.get('value'),
-          })
-        } else {
-          props.push({
-            model: r.get('model'),
-            category: 'category',
-            node_name: r.get('node_name'),
-            property_mame: r.get('handle'),
-            value_type: r.get('value_type')
-          })
+        let value = r.get('value');
+        let data = {};
+        data.model = r.get('model');
+        data.category = 'category';
+        data.node_name = r.get('node_name');
+        data.node_ncitcode = r.get('n_ncitcode')||'';
+        data.property_name = r.get('prop_name');
+        data.property_ncitcode = r.get('p_ncitcode')||'';
+        data.value_type = r.get('value_type');
+
+        if (value && value.length > 0 && r.get('value_type') === 'value_set') {
+        
+          let vlist = [];
+          if (value[0] && !!value[0].term && value[0].term !== null) {
+            for (let v of value) {
+              if (v.term) {
+                vlist.push({ term: v.term, ncit_code: v.ncit_code||'', term_PT: v.termPT || '' });
+              }
+            }
+          }
+          data.values = vlist;
         }
+        props.push(data);
       })
 
       return { type: 'props', result: props };
@@ -251,11 +285,16 @@ const getValuesByName = function (model, keyword) {
   const neo4jsession = dbUtils.getSession()
   let searchword = keyword;
   if (!model) model = 'ICDC';
-  return neo4jsession.readTransaction(txc => txc.run('MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term)'
-    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND t.value) in $searchword'
-    + ' WITH DISTINCT  n.handle as node_name,p.value_domain as value_type, collect(t.value) as value, p.handle as handle, p.model as model,'
-    + ' p.nanoid as pid ORDER BY model, handle '
-    + ' RETURN DISTINCT model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties ',
+  return neo4jsession.readTransaction(txc => txc.run(
+    ' MATCH (n) -[:has_property]- (p)-[:has_value_set]->(vs) MATCH (vs)-[:has_term]->(t:term) '
+    + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND t.value) in $searchword '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' OPTIONAL MATCH (p) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
+    + ' OPTIONAL MATCH (n) -[:has_ncitcode]- (cn:ncitcode {type:"node"}) '
+    + ' WITH DISTINCT n, p, t, cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode,cv.name_pt as v_name_pt ORDER BY n.handle, p.handle, t.value '
+    + ' WITH DISTINCT  n.handle as node_name,p.value_domain as value_type, p.handle as handle, p.model as model,n_ncitcode,  p_ncitcode,'
+    + ' collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, p.nanoid as pid ORDER BY model, handle '
+    + ' RETURN DISTINCT model, node_name,n_ncitcode, collect({property_name:handle,ncit_code: p_ncitcode, value_domain:value_type,value: value }) as properties ',
     { model: model, searchword: searchword })
   )
     .then(results => {
@@ -289,15 +328,20 @@ const getNodeDetailsByName = function (model, keyword) {
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle '
-    + ' WITH n1, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"}) '
+    + ' WITH DISTINCT  n1, p1, t.value as value, cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode,cv.name_pt as v_name_pt ORDER BY n1.handle, p1.handle, t.value '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_type,n_ncitcode, p_ncitcode, ' 
+    + ' collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value,p1.handle as handle ORDER BY n1, p1.handle '
+    + ' WITH n1,n_ncitcode, collect({property_name:handle, ncit_code: p_ncitcode, value_domain:value_type,value: value }) as properties '
     + ' OPTIONAL MATCH (n1)<-[:has_src]-(r12:relationship)-[:has_dst]->(n2:node) '
     + ' WHERE NOT (n2._to is NOT NULL) and NOT (r12._to IS NOT NULL) '
     + ' OPTIONAL MATCH (n3)<-[:has_src]-(r31:relationship)-[:has_dst]->(n1:node) '
     + ' WHERE NOT (n3._to is NOT NULL) and NOT (r31._to IS NOT NULL) '
-    + ' WITH DISTINCT n1, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
-    + ' WITH DISTINCT n1, properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
-    + ' RETURN n1.handle as node_name, n1.model as model, properties, startnodes, endnodes '
+    + ' WITH DISTINCT n1, n_ncitcode, properties,n3, r31, collect({end_node:n2.handle,rel_name:r12.handle, rel_type:r12.multiplicity}) as endnodes '
+    + ' WITH DISTINCT n1,n_ncitcode,  properties,endnodes, collect({start_node:n3.handle,rel_name:r31.handle, rel_type:r31.multiplicity}) as startnodes '
+    + ' RETURN n1.handle as node_name, n1.model as model, n_ncitcode, properties, startnodes, endnodes '
     + ' ORDER BY n1.model, n1.handle ',
     { model: model, searchword: searchword })
   )
@@ -401,9 +445,14 @@ const getDataSource = function (model, keyword, fromIndex, pageSize) {
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
-    + ' n1.model as model ORDER BY model, node_name, handle '
-    + ' RETURN model, node_name, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"}) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t, t.value as value,p1.handle as handle, '
+    + ' cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt ORDER BY n1.handle,p1.handle, t.value '
+    + ' WITH DISTINCT  n1, value_domain as value_type,collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, handle, n_ncitcode , p_ncitcode ORDER BY handle '
+    + ' WITH n1,n_ncitcode, collect({property_name:handle, ncit_code: p_ncitcode, value_domain:value_type,value: value }) as properties '
+    + ' RETURN n1.mdoel as model, n1.handle as node_name, n_ncitcode, properties '
     + ' ORDER BY model, node_name  ',
     { model: model })
   )
@@ -419,19 +468,31 @@ const getDataSource = function (model, keyword, fromIndex, pageSize) {
         data.Model = r.get('model');
         data.Category = 'category';
         data.Node_Name = r.get('node_name');
+        data.Node_Ncitcode = r.get('n_ncitcode')||'';
         if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
-            if (p.value && p.value.length > 0) {
+            if (p.value && p.value.length > 0 && p.value_domain && p.value_domain === 'value_set') {
+              let vlist = [];
+              if (p.value[0] && !!p.value[0].term && p.value[0].term !== null) {
+                for (let v of p.value) {
+                  if (v.term) {
+                    vlist.push({ term: v.term, ncit_code: v.ncit_code||'', term_PT: v.termPT || '' });
+                  }
+                }
+              }
+    
               plist.push({
                 property_name: p.property_name,
+                ncit_code: p.ncit_code || '',
                 value_type: p.value_domain,
-                values: p.value
+                values: vlist
               })
-
+    
             } else {
               plist.push({
                 property_name: p.property_name,
+                ncit_code: p.ncit_code ||'',
                 value_type: p.value_domain
               })
             }
@@ -458,9 +519,14 @@ const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
     + ' OPTIONAL MATCH (n1) -[:has_property]- (p1:property) WHERE NOT (p1._to IS NOT NULL)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
-    + ' WITH DISTINCT  n1.nanoid as id, n1.handle as node_name, p1.value_domain as value_type,collect(t.value) as value,p1.handle as handle, '
-    + ' n1.model as model, total_nodes ORDER BY model, node_name, handle '
-    + ' RETURN model, node_name, id, total_nodes, collect({property_name:handle, value_domain:value_type,value: value }) as properties '
+    + ' OPTIONAL MATCH (t) -[:has_ncitcode]- (cv:ncitcode {type :"term"}) '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
+    + ' OPTIONAL MATCH (n1) -[:has_ncitcode]- (cn:ncitcode {type:"node"}) '
+    + ' WITH DISTINCT  n1, p1.value_domain as value_domain,t, t.value as value,p1.handle as handle,total_nodes, '
+    + ' cn.ncit_code as n_ncitcode, cp.ncit_code as p_ncitcode, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt ORDER BY n1.handle,p1.handle, t.value '
+    + ' WITH DISTINCT  n1, total_nodes, value_domain as value_type,collect({term:value, ncit_code: v_ncitcode, termPT: v_name_pt}) as value, handle, n_ncitcode , p_ncitcode ORDER BY handle '
+    + ' WITH n1,n_ncitcode,total_nodes, collect({property_name:handle, ncit_code: p_ncitcode, value_domain:value_type,value: value }) as properties '
+    + ' RETURN n1.nanoid as id, n1.handle as node_name,n1.model as model,n_ncitcode, total_nodes, properties '
     + ' ORDER BY model, node_name  ',
     { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
@@ -478,27 +544,40 @@ const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
         data.Model = r.get('model');
         data.Category = 'category';
         data.Node_Name = r.get('node_name');
+        data.Node_Ncitcode = r.get('n_ncitcode')||'';
         data.Nanoid = r.get("id");
-        //data.total_nodes = r.get('total_nodes').toNumber();
+      /*
         if (prop.length > 0) {
           let plist = [];
           prop.map(p => {
-            if (p.value && p.value.length > 0) {
+            if (p.value && p.value.length > 0 && p.value_domain && p.value_domain === 'value_set') {
+              let vlist = [];
+              if (p.value[0] && !!p.value[0].term && p.value[0].term !== null) {
+                for (let v of p.value) {
+                  if (v.term) {
+                    vlist.push({ term: v.term, ncit_code: v.ncit_code||'', term_PT: v.termPT || '' });
+                  }
+                }
+              }
+    
               plist.push({
                 property_name: p.property_name,
+                ncit_code: p.ncit_code || '',
                 value_type: p.value_domain,
-                values: p.value
+                values: vlist
               })
-
+    
             } else {
               plist.push({
                 property_name: p.property_name,
+                ncit_code: p.ncit_code ||'',
                 value_type: p.value_domain
               })
             }
           });
           data.properties = plist;
         }
+        */
         props.push(data)
       })
 
@@ -518,13 +597,15 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
     + ' WITH collect(p) as allprops, count(p.handle) as total_props UNWIND allprops as p1'
     + ' WITH p1, total_props '
     + ' MATCH (n1:node) -[:has_property]- (p1) WHERE n1._to IS  NULL and toLower(n1.model) = toLower($model) '
-    + ' WITH n1, p1 , total_props ORDER BY p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
+    + ' WITH n1, p1 , total_props ORDER BY n1.handle, p1.handle SKIP toInteger($fromIndex) LIMIT toInteger($pageSize)'
     + ' OPTIONAL MATCH (p1)-[:has_value_set]->(vs) WHERE NOT (vs._to IS NOT NULL) '
     + ' OPTIONAL MATCH (vs)-[:has_term]->(t:term) WHERE NOT (t._to IS NOT NULL) '
+    + ' OPTIONAL MATCH (p1) -[:has_ncitcode]- (cp:ncitcode {type :"prop"}) '
     + ' RETURN DISTINCT '
     + ' n1.handle as node_name,'
     + ' p1.value_domain as value_type,'
     + ' collect(t.value) as value,'
+    + ' cp.ncitcode as p_ncitcode,'
     + ' p1.handle as handle,'
     + ' p1.model as model,'
     + ' p1.nanoid as pid,'
@@ -547,9 +628,10 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
             Category: 'category',
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
+            Property_Ncitcode: r.get('p_ncitcode')||'',
             Nanoid: r.get('pid'),
             // Total_Prop: r.get('total_props').toNumber(),
-            Value_Type: r.get('value_type'),
+          //  Value_Type: r.get('value_type'),
             Value: r.get('value'),
           })
         } else {
@@ -558,9 +640,10 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
             Category: 'category',
             Node_Name: r.get('node_name'),
             Property_Name: r.get('handle'),
+            Property_Ncitcode: r.get('p_ncitcode')||'',
             Nanoid: r.get('pid'),
             // Total_Prop: r.get('total_props').toNumber(),
-            Value_Type: r.get('value_type')
+           // Value_Type: r.get('value_type')
           })
         }
       })
@@ -581,11 +664,13 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
     + ' WHERE n._to IS NULL and p._to IS NULL and vs._to IS NULL and t._to IS NULL and toLower(p.model) = toLower($model) AND toLower(t.value) =~ toLower($searchword)'
     + ' WITH collect(t) as allvalues, count(distinct t.value) as total_values UNWIND allvalues as t1'
     + ' WITH t1, total_values '
-    + ' MATCH (n1) -[:has_property]- (p1)-[:has_value_set]->(vs1) MATCH (vs1)-[:has_term]->(t1)'
+    + ' MATCH (n1) -[:has_property]- (p1)-[:has_value_set]->(vs1) ' 
+    + ' MATCH (vs1)-[:has_term]->(t1) '
     + ' WHERE n1._to IS NULL and p1._to IS NULL and vs1._to IS NULL and t1._to IS NULL and toLower(p1.model) = toLower($model) AND toLower(t1.value) =~ toLower($searchword)'
+    + ' OPTIONAL MATCH (t1) -[:has_ncitcode]- (cv:ncitcode {type :"term"})'
     + ' RETURN DISTINCT  n1.handle as node_name,p1.value_domain as value_type, t1.value as value, p1.handle as handle, p1.model as model,'
-    + ' t1.nanoid as tid, total_values as total_values '
-    + ' ORDER BY t1.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
+    + ' t1.nanoid as tid, cv.ncit_code as v_ncitcode ,cv.name_pt as v_name_pt , total_values as total_values '
+    + ' ORDER BY n1.handle, p1.handle, t1.value SKIP toInteger($fromIndex) LIMIT toInteger($pageSize) ',
     { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
@@ -605,6 +690,8 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
           Value_Type: r.get('value_type'),
           Nanoid: r.get('tid'),
           Value: r.get('value'),
+          Term_Ncitcode: r.get('v_ncitcode')||'',
+          Term_PT: r.get('v_name_pt')||'',
         })
       })
 
@@ -625,19 +712,31 @@ const processNodePropResult = function (results) {
     data.model = r.get('model');
     data.category = 'category';
     data.node_name = r.get('node_name');
+    data.ncit_code = r.get('n_ncitcode')||'';
     if (prop.length > 0) {
       let plist = [];
       prop.map(p => {
-        if (p.value && p.value.length > 0) {
+        if (p.value && p.value.length > 0 && p.value_domain && p.value_domain === 'value_set') {
+          let vlist = [];
+          if (p.value[0] && !!p.value[0].term && p.value[0].term !== null) {
+            for (let v of p.value) {
+              if (v.term) {
+                vlist.push({ term: v.term, ncit_code: v.ncit_code||'', term_PT: v.termPT || '' });
+              }
+            }
+          }
+
           plist.push({
             property_name: p.property_name,
+            ncit_code: p.ncit_code || '',
             value_type: p.value_domain,
-            values: p.value
+            values: vlist
           })
 
         } else {
           plist.push({
             property_name: p.property_name,
+            ncit_code: p.ncit_code ||'',
             value_type: p.value_domain
           })
         }

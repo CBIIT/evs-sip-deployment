@@ -59,7 +59,6 @@ const getSource = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
     const params = req.query;
     const searchText = params.search ? params.search : "";
-    const type = params.type ? params.type : "all";
     const page = parseInt(params.page ? params.page : 1);
     const pageSize = parseInt(params.pageSize ? params.pageSize : 25);
     const fromIndex = page > 1 ? (page - 1) * pageSize : 0;

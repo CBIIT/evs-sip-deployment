@@ -458,6 +458,9 @@ module.exports = function (protocol, host, basePath) {
           'node_name': {
             'type': 'string'
           },
+          'ncit_code': {
+            'type': 'string'
+          },
           'properties': {
             'type': 'array',
             'items': {
@@ -492,13 +495,16 @@ module.exports = function (protocol, host, basePath) {
           'property_name': {
             'type': 'string'
           },
+          'ncit_code': {
+            'type': 'string'
+          },
           'value_Type': {
             'type': 'string'
           },
           'values': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/Term'
+              '$ref': '#/definitions/TermWithNCIt'
             }
           }
         },
@@ -510,6 +516,23 @@ module.exports = function (protocol, host, basePath) {
         'type': 'object',
         'properties': {
           'values': {
+            'type': 'string'
+          }
+        },
+        'xml': {
+          'name': 'Value'
+        }
+      },
+      'TermWithNCIt': {
+        'type': 'object',
+        'properties': {
+          'term': {
+            'type': 'string'
+          },
+          'ncit_code': {
+            'type': 'string'
+          },
+          'term_PT': {
             'type': 'string'
           }
         },
