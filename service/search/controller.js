@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const shared = require("./shared");
 // const git = require('nodegit');
-//const Excel = require("exceljs");
+const Excel = require("exceljs");
 const export_excel = require('node-excel-export');
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
 var syns = {};
@@ -806,14 +806,14 @@ const preloadGDCDataMappings = async (req, res) => {
 };
 
 const updateGDCDataMappings = async (req, res) => {
-  /*
+  
   let file_path = path.join(
     __dirname,
     "..",
     "..",
     "data_files",
     "GDC",
-    "New Mapping.xlsx"
+    "GDC_value_newMapping.xlsx"
   );
   let output_file_path = path.join(
     __dirname,
@@ -892,7 +892,7 @@ const updateGDCDataMappings = async (req, res) => {
       if (err) return logger.error(err);
     }
   );
-  */
+  
   res.json({ result: "success" });
 };
 
@@ -1398,7 +1398,7 @@ const generateProperties = async function (req, res) {
 }
 
 const updateGDCPropertyMappings = async function (req, res) {
-  /*
+  
   let file_path = path.join(
     __dirname,
     "..",
@@ -1408,7 +1408,7 @@ const updateGDCPropertyMappings = async function (req, res) {
     "GDC_Property.xlsx"
   );
 
-  let output_file_path = path.join(__dirname, '..', '..', 'data_files', 'GDC', 'gdc_props.js');
+  let output_file_path = path.join(__dirname, '..', '..', 'data_files', 'GDC', 'gdc_props_new.js');
   
   const workbook = new Excel.Workbook();
   await workbook.xlsx.readFile(file_path.replace(/\\/g, "/"));
@@ -1444,7 +1444,7 @@ const updateGDCPropertyMappings = async function (req, res) {
   const mapped_props = [];
   const dataset = {};
   const dataoutput = [];
-  let GDCDict = await shared.getGDCDictionaryByVersion("2.3.0");
+  let GDCDict = await shared.getGDCDictionaryByVersion("2.4.1");
 	
   for(let node in GDCDict){
     let entry = GDCDict[node];
@@ -1551,7 +1551,7 @@ const updateGDCPropertyMappings = async function (req, res) {
     // You can then return this straight
     res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
     res.send(report);
-    */
+    
 }
 
 
