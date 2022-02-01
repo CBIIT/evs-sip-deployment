@@ -610,7 +610,7 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
     + ' p1.model as model,'
     + ' p1.nanoid as pid,'
     + ' total_props as total_props '
-    + ' ORDER BY model, handle, value ',
+    + ' ORDER BY model,node_name, handle, value ',
     { model: model, searchword: searchword, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
