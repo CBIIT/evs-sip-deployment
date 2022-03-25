@@ -1,7 +1,7 @@
 {
 "adverse_event": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C41331", 
 		"n_PT": "adverse_event", 
 		"properties": [
 			{"p_name": "adverse_event_description", "p_n_code": "C78541", "p_PT": "", "values": []}, 
@@ -25,7 +25,7 @@
 	},
 "agent": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C1708", 
 		"n_PT": "agent", 
 		"properties": [
 			{"p_name": "medication", "p_n_code": "C459", "p_PT": "", "values": []}, 
@@ -34,7 +34,7 @@
 	},
 "agent_administration": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C70962", 
 		"n_PT": "agent_administration", 
 		"properties": [
 			{"p_name": "date_of_missed_dose", "p_n_code": "C166253", "p_PT": "", "values": []}, 
@@ -60,9 +60,32 @@
 			{"p_name": "document_number", "p_n_code": "C93399", "p_PT": "", "values": []}
 		]
 	},
-"case": 
+"assay": 
+	{
+		"n_n_code": "C60819", 
+		"n_PT": "assay", 
+		"properties": []
+	},
+"canine_individual": 
+	{
+		"n_n_code": "C183326", 
+		"n_PT": "canine_individual", 
+		"properties": [
+			{"p_name": "canine_individual_id", "p_n_code": "C183330", "p_PT": "", "values": []}
+		]
+	},
+"biospecimen_source": 
 	{
 		"n_n_code": "", 
+		"n_PT": "biospecimen_source", 
+		"properties": [
+			{"p_name": "biospecimen_repository_acronym", "p_n_code": "C184811", "p_PT": "", "values": []}, 
+			{"p_name": "biospecimen_repository_full_name", "p_n_code": "C184810", "p_PT": "", "values": []}
+		]
+	},
+"case": 
+	{
+		"n_n_code": "C49152", 
 		"n_PT": "case", 
 		"properties": [
 			{"p_name": "case_id", "p_n_code": "C164324", "p_PT": "", "values": []}, 
@@ -73,16 +96,17 @@
 	},
 "cohort": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C61512", 
 		"n_PT": "cohort", 
 		"properties": [
 			{"p_name": "cohort_dose", "p_n_code": "C166210", "p_PT": "", "values": []}, 
-			{"p_name": "cohort_description", "p_n_code": "C166209", "p_PT": "", "values": []}
+			{"p_name": "cohort_description", "p_n_code": "C166209", "p_PT": "", "values": []},
+			{"p_name": "cohort_id", "p_n_code": "C183331", "p_PT": "", "values": []}
 		]
 	}, 
 "cycle": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C25472", 
 		"n_PT": "cycle", 
 		"properties": [
 			{"p_name": "cycle_number", "p_n_code": "C166208", "p_PT": "", "values": []}, 
@@ -92,32 +116,59 @@
 	}, 
 "demographic": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C142508", 
 		"n_PT": "demographic", 
 		"properties": [
 			{"p_name": "breed", "p_n_code": "C53693", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_birth", "p_n_code": "C94173", "p_PT": "", "values": []}, 
-			{"p_name": "neutered_indicator", "p_n_code": "C158349", "p_PT": "", "values": []}, 
+			{"p_name": "neutered_indicator", "p_n_code": "C158349", "p_PT": "", "values": [
+				{ "v_name": "Yes", "v_n_code": "C49488", "v_PT": "Yes" },
+				{ "v_name": "No", "v_n_code": "C49487", "v_PT": "No" },
+				{ "v_name": "Unknown", "v_n_code": "C17998", "v_PT": "Unknown" }
+			]}, 
 			{"p_name": "patient_age_at_enrollment", "p_n_code": "C164338", "p_PT": "", "values": []}, 
-			{"p_name": "sex", "p_n_code": "C28421", "p_PT": "", "values": []}, 
+			{"p_name": "sex", "p_n_code": "C28421", "p_PT": "", "values": [
+				{ "v_name": "Male", "v_n_code": "C46112", "v_PT": "Male Phenotype" },
+				{ "v_name": "Female", "v_n_code": "C46113", "v_PT": "Female Phenotype" },
+				{ "v_name": "Unknown", "v_n_code": "C17998", "v_PT": "Unknown" }
+			]}, 
 			{"p_name": "weight", "p_n_code": "C81328", "p_PT": "", "values": []}, 
 			{"p_name": "crf_id", "p_n_code": "C164327", "p_PT": "", "values": []} 
 		]
 	},
 "diagnosis": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C15220", 
 		"n_PT": "diagnosis", 
 		"properties": [
-			{"p_name": "concurrent_disease", "p_n_code": "C161320", "p_PT": "", "values": []}, 
+			{"p_name": "best_response", "p_n_code": "C94536", "p_PT": "", "values": [
+				{ "v_name": "Complete Response", "v_n_code": "C4870", "v_PT": "Complete Remission" },
+				{ "v_name": "Partial Response", "v_n_code": "C18058", "v_PT": "Partial Remission" },
+				{ "v_name": "Stable Disease", "v_n_code": "C18213", "v_PT": "Stable Disease" },
+				{ "v_name": "Progressive Disease", "v_n_code": "C35571", "v_PT": "Progressive Disease" },
+				{ "v_name": "Not Determined", "v_n_code": "C67119", "v_PT": "Not Ascertained" },
+				{ "v_name": "Not Applicable", "v_n_code": "C48660", "v_PT": "Not Applicable" },
+				{ "v_name": "Unknown", "v_n_code": "C17998", "v_PT": "Unknown" }
+			]},
+			{"p_name": "concurrent_disease", "p_n_code": "C161320", "p_PT": "", "values": [
+				{ "v_name": "Yes", "v_n_code": "C49488", "v_PT": "Yes" },
+				{ "v_name": "No", "v_n_code": "C49487", "v_PT": "No" },
+				{ "v_name": "Unknown", "v_n_code": "C17998", "v_PT": "Unknown" }
+			]}, 
 			{"p_name": "concurrent_disease_type", "p_n_code": "C164326", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_diagnosis", "p_n_code": "C164339", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_histology_confirmation", "p_n_code": "C166265", "p_PT": "", "values": []}, 
 			{"p_name": "disease_term", "p_n_code": "C2991", "p_PT": "", "values": []}, 
-			{"p_name": "follow_up_data", "p_n_code": "C156846", "p_PT": "", "values": []}, 
+			{"p_name": "follow_up_data", "p_n_code": "C156846", "p_PT": "", "values": [
+				{ "v_name": "Yes", "v_n_code": "C49488", "v_PT": "Yes" },
+				{ "v_name": "No", "v_n_code": "C49487", "v_PT": "No" }
+			]}, 
 			{"p_name": "histological_grade", "p_n_code": "C18000", "p_PT": "", "values": []}, 
 			{"p_name": "histology_cytopathology", "p_n_code": "C166230", "p_PT": "", "values": []}, 
-			{"p_name": "pathology_report", "p_n_code": "C28277", "p_PT": "", "values": []}, 
+			{"p_name": "pathology_report", "p_n_code": "C28277", "p_PT": "", "values": [
+				{ "v_name": "Yes", "v_n_code": "C49488", "v_PT": "Yes" },
+				{ "v_name": "No", "v_n_code": "C49487", "v_PT": "No" }
+			]}, 
 			{"p_name": "primary_disease_site", "p_n_code": "C158874", "p_PT": "", "values": []}, 
 			{"p_name": "stage_of_disease", "p_n_code": "C28108", "p_PT": "", "values": [
 				{ "v_name": "I", "v_n_code": "C27966", "v_PT": "Stage I" },
@@ -137,15 +188,15 @@
 				{ "v_name": "V", "v_n_code": "C27973", "v_PT": "Stage V" }
 			]}, 
 			{"p_name": "treatment_data", "p_n_code": "C164335", "p_PT": "", "values": [
-				{ "v_name": "N", "v_n_code": "C49487", "v_PT": "No" },
-				{ "v_name": "Y", "v_n_code": "C49488", "v_PT": "Yes" }
+				{ "v_name": "Yes", "v_n_code": "C49488", "v_PT": "Yes" },
+				{ "v_name": "No", "v_n_code": "C49487", "v_PT": "No" }
 			]}, 
 			{"p_name": "crf_id", "p_n_code": "C164327", "p_PT": "", "values": []}
 		]
 	},
 "disease_extent": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C174125", 
 		"n_PT": "disease_extent", 
 		"properties": [
 			{"p_name": "date_of_evaluation", "p_n_code": "C164340", "p_PT": "", "values": []}, 
@@ -165,13 +216,13 @@
 	},
 "enrollment": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C37948", 
 		"n_PT": "enrollment", 
 		"properties": [
 			{"p_name": "date_of_informed_consent", "p_n_code": "C93579", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_registration", "p_n_code": "C93681", "p_PT": "", "values": []}, 
 			{"p_name": "enrollment_document_number", "p_n_code": "C166224", "p_PT": "", "values": []}, 
-			{"p_name": "initials", "p_n_code": "C94272", "p_PT": "", "values": []}, 
+			{"p_name": "initials", "p_n_code": "C183325", "p_PT": "", "values": []}, 
 			{"p_name": "patient_subgroup", "p_n_code": "C70730", "p_PT": "", "values": []}, 
 			{"p_name": "registering_institution", "p_n_code": "C41206", "p_PT": "", "values": []}, 
 			{"p_name": "site_short_name", "p_n_code": "C166277", "p_PT": "", "values": []}, 
@@ -181,23 +232,52 @@
 	},
 "file": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C42883", 
 		"n_PT": "file", 
 		"properties": [
 			{"p_name": "file_description", "p_n_code": "C171190", "p_PT": "", "values": []},
 			{"p_name": "file_format", "p_n_code": "C171252", "p_PT": "", "values": []}, 
-			{"p_name": "file_location", "p_n_code": "", "p_PT": "", "values": []}, 
+			{"p_name": "file_location", "p_n_code": "C47922", "p_PT": "", "values": []}, 
 			{"p_name": "file_name", "p_n_code": "C171191", "p_PT": "", "values": []}, 
 			{"p_name": "file_size", "p_n_code": "C171192", "p_PT": "", "values": []}, 
-			{"p_name": "file_status", "p_n_code": "C171193", "p_PT": "", "values": []}, 
-			{"p_name": "file_type", "p_n_code": "C172272", "p_PT": "", "values": []}, 
+			{"p_name": "file_status", "p_n_code": "C171193", "p_PT": "", "values": [
+				{ "v_name": "uploading", "v_n_code": "C172861", "v_PT": "File Uploading" },
+				{ "v_name": "uploaded", "v_n_code": "C172862", "v_PT": "File Uploaded" },
+				{ "v_name": "md5summing", "v_n_code": "C172863", "v_PT": "Md5 Checksumming" },
+				{ "v_name": "md5summed", "v_n_code": "C172864", "v_PT": "Md5 Checksum Completed" },
+				{ "v_name": "validating", "v_n_code": "C172865", "v_PT": "File Being Validated" },
+				{ "v_name": "error", "v_n_code": "C172866", "v_PT": "File in Error" },
+				{ "v_name": "invalid", "v_n_code": "C172867", "v_PT": "Invalid File" },
+				{ "v_name": "suppressed", "v_n_code": "C172868", "v_PT": "File Suppressed" },
+				{ "v_name": "redacted", "v_n_code": "C172869", "v_PT": "File Redacted" },
+				{ "v_name": "live", "v_n_code": "C172870", "v_PT": "Live File" },
+				{ "v_name": "validated", "v_n_code": "C172871", "v_PT": "File Validated" },
+				{ "v_name": "submitted", "v_n_code": "C172872", "v_PT": "File Submitted" },
+				{ "v_name": "released", "v_n_code": "C172876", "v_PT": "Released File" }
+			]}, 
+			{"p_name": "file_type", "p_n_code": "C172272", "p_PT": "", "values": [
+				{ "v_name": "Study Protocol", "v_n_code": "C70817", "v_PT": "Study Protocol" },
+				{ "v_name": "Supplemental Data File", "v_n_code": "C175247", "v_PT": "Supplemental Data File" },
+				{ "v_name": "Pathology Report", "v_n_code": "C28277", "v_PT": "Pathology Report" },
+				{ "v_name": "Image File", "v_n_code": "C175246", "v_PT": "Image File" },
+				{ "v_name": "RNA Sequence File", "v_n_code": "C175233", "v_PT": "RNA Sequencing Data File" },
+				{ "v_name": "Whole Genome Sequence File", "v_n_code": "C175239", "v_PT": "Whole Genome Sequencing Data File" },
+				{ "v_name": "Whole Exome Sequence File", "v_n_code": "C175234", "v_PT": "Whole Exome Sequencing Data File" },
+				{ "v_name": "DNA Methylation Analysis File", "v_n_code": "C175245", "v_PT": "DNA Methylation Analysis Data File" },
+				{ "v_name": "Index File", "v_n_code": "C172880", "v_PT": "Index File" },
+				{ "v_name": "Array CGH Analysis File", "v_n_code": "C183341", "v_PT": "Comparative Genomic Hybridization Array Data Analysis File" },
+				{ "v_name": "Variant Call File", "v_n_code": "C172216", "v_PT": "Variant Call File Format" },
+				{ "v_name": "Mutation Annotation File", "v_n_code": "C172215", "v_PT": "Mutation Annotation Format" },
+				{ "v_name": "Variant Report", "v_n_code": "C171178", "v_PT": "Sequence Variant Report" },
+				{ "v_name": "Data Analysis Whitepaper", "v_n_code": "C183342", "v_PT": "Data Analysis Whitepaper" }
+			]}, 
 			{"p_name": "md5sum", "p_n_code": "C171276", "p_PT": "", "values": []}, 
 			{"p_name": "uuid", "p_n_code": "C54100", "p_PT": "", "values": []}
 		]
 	},
 "follow_up": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C16033", 
 		"n_PT": "follow_up", 
 		"properties": [
 			{"p_name": "contact_type", "p_n_code": "C166228", "p_PT": "", "values": []}, 
@@ -211,9 +291,36 @@
 			{"p_name": "document_number", "p_n_code": "C93399", "p_PT": "", "values": []}
 		]
 	},
+"image": 
+	{
+		"n_n_code": "C48179", 
+		"n_PT": "image", 
+		"properties": []
+	},
+"image_collection": 
+	{
+		"n_n_code": "C183327", 
+		"n_PT": "image_collection", 
+		"properties": [
+			{"p_name": "image_collection_name", "p_n_code": "C183332", "p_PT": "", "values": []}, 
+			{"p_name": "image_type_included", "p_n_code": "C69268", "p_PT": "", "values": []}, 
+			{"p_name": "image_collection_url", "p_n_code": "C183334", "p_PT": "", "values": []}, 
+			{"p_name": "repository_name", "p_n_code": "C183338", "p_PT": "", "values": []}, 
+			{"p_name": "collection_access", "p_n_code": "C183333", "p_PT": "", "values": [
+				{ "v_name": "Download", "v_n_code": "C183344", "v_PT": "Available by Download" },
+				{ "v_name": "Cloud", "v_n_code": "C183343", "v_PT": "Available on the Cloud" }
+			]}
+		]
+	},
+"lab_exam": 
+	{
+		"n_n_code": "C25294", 
+		"n_PT": "lab_exam", 
+		"properties": []
+	},
 "off_study": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C29851", 
 		"n_PT": "off_study", 
 		"properties": [
 			{"p_name": "date_off_study", "p_n_code": "C93610", "p_PT": "", "values": []}, 
@@ -229,7 +336,7 @@
 	},
 "off_treatment": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C25601", 
 		"n_PT": "off_treatment", 
 		"properties": [
 			{"p_name": "reason_off_treatment", "p_n_code": "C166276", "p_PT": "", "values": []}, 
@@ -244,7 +351,7 @@
 	},
 "physical_exam": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C20989", 
 		"n_PT": "physical_exam", 
 		"properties": [
 			{"p_name": "body_system", "p_n_code": "C12919", "p_PT": "", "values": [
@@ -272,7 +379,7 @@
 	},
 "principal_investigator": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C19924", 
 		"n_PT": "principal_investigator", 
 		"properties": [
 			{"p_name": "pi_first_name", "p_n_code": "C40974", "p_PT": "", "values": []}, 
@@ -282,7 +389,7 @@
 	},
 "prior_surgery": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C16169", 
 		"n_PT": "prior_surgery", 
 		"properties": [
 			{"p_name": "anatomical_site_of_surgery", "p_n_code": "C164323", "p_PT": "", "values": []}, 
@@ -296,13 +403,12 @@
 	},
 "prior_therapy": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C16124", 
 		"n_PT": "prior_therapy", 
 		"properties": [
 			{"p_name": "agent_name", "p_n_code": "C164322", "p_PT": "", "values": []}, 
 			{"p_name": "agent_units_of_measure", "p_n_code": "C166199", "p_PT": "", "values": []}, 
-			{"p_name": "any_therapy", "p_n_code": "C49236", "p_PT": "", "values": []}, 
-			{"p_name": "best_response", "p_n_code": "C94536", "p_PT": "", "values": []}, 
+			{"p_name": "any_therapy", "p_n_code": "C49236", "p_PT": "", "values": []},  
 			{"p_name": "date_of_first_dose", "p_n_code": "C164328", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_last_dose", "p_n_code": "C164329", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_last_dose_any_therapy", "p_n_code": "C156814", "p_PT": "", "values": []}, 
@@ -342,7 +448,7 @@
 	},	
 "sample": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C70699", 
 		"n_PT": "sample", 
 		"properties": [
 			{"p_name": "analysis_area", "p_n_code": "C166205", "p_PT": "", "values": []}, 
@@ -352,21 +458,31 @@
 			{"p_name": "analysis_area_percentage_tumor", "p_n_code": "C166204", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_sample_collection", "p_n_code": "C81286", "p_PT": "", "values": []}, 
 			{"p_name": "general_sample_pathology", "p_n_code": "C166229", "p_PT": "", "values": [
-				{ "v_name": "Benign", "v_n_code": "C14172", "v_PT": "Benign" },
+				{ "v_name": "Normal", "v_n_code": "C12801", "v_PT": "Tissue" },
 				{ "v_name": "Malignant", "v_n_code": "C14143", "v_PT": "Malignant" },
+				{ "v_name": "Benign", "v_n_code": "C14172", "v_PT": "Benign" },
+				{ "v_name": "Hyperplastic", "v_n_code": "C3113", "v_PT": "Hyperplasia" },
+				{ "v_name": "Diseased", "v_n_code": "C175249", "v_PT": "Diseased" },
 				{ "v_name": "Not Applicable", "v_n_code": "C48660", "v_PT": "Not Applicable" }
 			]}, 
-			{"p_name": "length_of_tumor", "p_n_code": "C25334", "p_PT": "", "values": []}, 
+			{"p_name": "length_of_tumor", "p_n_code": "C158773", "p_PT": "", "values": []}, 
 			{"p_name": "molecular_subtype", "p_n_code": "", "p_PT": "", "values": []}, 
 			{"p_name": "necropsy_sample", "p_n_code": "C166270", "p_PT": "", "values": [
-				{ "v_name": "N", "v_n_code": "C49487", "v_PT": "No" },
-				{ "v_name": "U", "v_n_code": "C17998", "v_PT": "Unknown" },
-				{ "v_name": "Y", "v_n_code": "C49488", "v_PT": "Yes" }
+				{ "v_name": "Yes", "v_n_code": "C49488", "v_PT": "Yes" },
+				{ "v_name": "No", "v_n_code": "C49487", "v_PT": "No" },
+				{ "v_name": "Unknown", "v_n_code": "C17998", "v_PT": "Unknown" },
+				{ "v_name": "Not Applicable", "v_n_code": "C48660", "v_PT": "Not Applicable" }
 			]}, 
 			{"p_name": "non_tumor_tissue_area", "p_n_code": "C166238", "p_PT": "", "values": []}, 
 			{"p_name": "percentage_stroma", "p_n_code": "C166245", "p_PT": "", "values": []}, 
 			{"p_name": "percentage_tumor", "p_n_code": "C166246", "p_PT": "", "values": []}, 
-			{"p_name": "sample_chronology", "p_n_code": "", "p_PT": "", "values": [
+			{"p_name": "sample_chronology", "p_n_code": "C175250", "p_PT": "", "values": [
+				{ "v_name": "Before Treatment", "v_n_code": "C54734", "v_PT": "Pre-Therapy" },
+				{ "v_name": "During Treatment", "v_n_code": "C175242", "v_PT": "During Treatment" },
+				{ "v_name": "After Treatment", "v_n_code": "C54735", "v_PT": "Post-Therapy" },
+				{ "v_name": "Upon Progression", "v_n_code": "C175243", "v_PT": "Upon Progression" },
+				{ "v_name": "Upon Relapse", "v_n_code": "C175244", "v_PT": "Upon Relapse" },
+				{ "v_name": "Upon Death", "v_n_code": "C94193", "v_PT": "Upon Death" },
 				{ "v_name": "Not Applicable", "v_n_code": "C48660", "v_PT": "Not Applicable" },
 				{ "v_name": "Unknown", "v_n_code": "C17998", "v_PT": "Unknown" }
 			]}, 
@@ -376,9 +492,10 @@
 				{ "v_name": "Snap Frozen", "v_n_code": "C63521", "v_PT": "Quick Freeze" }
 			]}, 
 			{"p_name": "sample_site", "p_n_code": "C171435", "p_PT": "", "values": []}, 
-			{"p_name": "sample_type", "p_n_code": "C70713", "p_PT": "", "values": [
+			{"p_name": "physical_sample_type", "p_n_code": "C70713", "p_PT": "", "values": [
 				{ "v_name": "Blood", "v_n_code": "C17610", "v_PT": "Blood Sample" },
-				{ "v_name": "Tissue", "v_n_code": "C19697", "v_PT": "Tissue Sample" }
+				{ "v_name": "Tissue", "v_n_code": "C19697", "v_PT": "Tissue Sample" },
+				{ "v_name": "Cell Line", "v_n_code": "C16403", "v_PT": "Cell Line" }
 			]}, 
 			{"p_name": "specific_sample_pathology", "p_n_code": "C171436", "p_PT": "", "values": []}, 
 			{"p_name": "summarized_sample_type", "p_n_code": "C171437", "p_PT": "", "values": []}, 
@@ -398,7 +515,7 @@
 	},
 "study": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C15206", 
 		"n_PT": "study", 
 		"properties": [
 			{"p_name": "clinical_study_description", "p_n_code": "C142704", "p_PT": "", "values": []}, 
@@ -407,22 +524,29 @@
 			{"p_name": "clinical_study_name", "p_n_code": "C68631", "p_PT": "", "values": []}, 
 			{"p_name": "clinical_study_type", "p_n_code": "C142175", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_iacuc_approval", "p_n_code": "C166266", "p_PT": "", "values": []}, 
-			{"p_name": "dates_of_conduct", "p_n_code": "C166251", "p_PT": "", "values": []}
+			{"p_name": "dates_of_conduct", "p_n_code": "C166251", "p_PT": "", "values": []},
+			{"p_name": "accession_id", "p_n_code": "C183328", "p_PT": "", "values": []}, 
+			{"p_name": "study_disposition", "p_n_code": "C183339", "p_PT": "", "values": [
+				{ "v_name": "Unrestricted", "v_n_code": "C183346", "v_PT": "Unrestricted Access" },
+				{ "v_name": "Pending", "v_n_code": "C53470", "v_PT": "Pending" },
+				{ "v_name": "Under Embargo", "v_n_code": "C183345", "v_PT": "Under Embargo" }
+			]}
 		]
 	},
 "study_arm": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C15538", 
 		"n_PT": "study_arm", 
 		"properties": [
-			{"p_name": "arm", "p_n_code": "C142701", "p_PT": "", "values": []}, 
+			{"p_name": "arm", "p_n_code": "C174266", "p_PT": "", "values": []}, 
 			{"p_name": "arm_description", "p_n_code": "C93728", "p_PT": "", "values": []}, 
-			{"p_name": "ctep_treatment_assignment_code", "p_n_code": "C165236", "p_PT": "", "values": []}
+			{"p_name": "ctep_treatment_assignment_code", "p_n_code": "C165236", "p_PT": "", "values": []},
+			{"p_name": "arm_id", "p_n_code": "C171181", "p_PT": "", "values": []}
 		]
 	},
 "study_site": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C70777", 
 		"n_PT": "study_site", 
 		"properties": [
 			{"p_name": "registering_institution", "p_n_code": "C41206", "p_PT": "", "values": []}, 
@@ -432,7 +556,7 @@
 	},
 "visit": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C39564", 
 		"n_PT": "visit", 
 		"properties": [
 			{"p_name": "visit_date", "p_n_code": "C83031", "p_PT": "", "values": []}, 
@@ -441,11 +565,11 @@
 	},
 "vital_signs": 
 	{
-		"n_n_code": "", 
+		"n_n_code": "C154628", 
 		"n_PT": "vital_signs", 
 		"properties": [
 			{"p_name": "body_surface_area", "p_n_code": "C25157", "p_PT": "", "values": []}, 
-			{"p_name": "body_temperature", "p_n_code": "C25206", "p_PT": "", "values": []}, 
+			{"p_name": "body_temperature", "p_n_code": "C174446", "p_PT": "", "values": []}, 
 			{"p_name": "date_of_vital_signs", "p_n_code": "C83032", "p_PT": "", "values": []}, 
 			{"p_name": "ecg", "p_n_code": "C41328", "p_PT": "", "values": []}, 
 			{"p_name": "modified_ecog", "p_n_code": "C164330", "p_PT": "", "values": []}, 
@@ -458,6 +582,28 @@
 			{"p_name": "crf_id", "p_n_code": "C164327", "p_PT": "", "values": []}, 
 			{"p_name": "assessment_timepoint", "p_n_code": "C81297", "p_PT": "", "values": []}, 
 			{"p_name": "phase", "p_n_code": "C25257", "p_PT": "", "values": []}
+		]
+	},
+"publication": 
+	{
+		"n_n_code": "C48471", 
+		"n_PT": "publication", 
+		"properties": [
+			{"p_name": "publication_title", "p_n_code": "C183337", "p_PT": "", "values": []}, 
+			{"p_name": "authorship", "p_n_code": "C183329", "p_PT": "", "values": []}, 
+			{"p_name": "year_of_publication", "p_n_code": "C183340", "p_PT": "", "values": []}, 
+			{"p_name": "journal_citation", "p_n_code": "C183336", "p_PT": "", "values": []}, 
+			{"p_name": "digital_object_id", "p_n_code": "C71462", "p_PT": "", "values": []}, 
+			{"p_name": "pubmed_id", "p_n_code": "C127797", "p_PT": "", "values": []}
+		]
+	},
+"registration": 
+	{
+		"n_n_code": "C25646", 
+		"n_PT": "registration", 
+		"properties": [
+			{"p_name": "registration_origin", "p_n_code": "C175531", "p_PT": "", "values": []}, 
+			{"p_name": "registration_id", "p_n_code": "C83083", "p_PT": "", "values": []}
 		]
 	}
 }
