@@ -51,32 +51,30 @@ const getEsModelData = async function (req, res) {
     console.log(" node name ", node)
     
     let result ={};
-    if (['icdc', 'ctdc', 'gdc', 'pctc'].includes(model.toLowerCase())) {
-        
-            switch (model.toLowerCase()) {
-                case 'gdc':
-                    result = await getGraphicalGDCDictionary(node, prop);
-                    break;
-                case 'ctdc':
-                    result =  await getGraphicalCTDCDictionary(node, prop);
-                    break;
-                case 'icdc':
-                    result =  await getGraphicalICDCDictionary(node, prop);
-                    break;
-                case 'pcdc':
-                    let project = (req.query.project || '') === "" ? "AML" : req.query.project;
-                    result =  await getGraphicalPCDCDictionary(project, node, prop);
-                    break;
-                default:
-                    break;
-            };
-            if (+result.status === 200) {
-                res.json(result);
-            } else {
-                //res.json( {status: 404 ,message: 'Data not found'  });
-                return writeError(res, { detail: 'Data not found' }, 404);
-            }
-       
+    if (['icdc', 'ctdc', 'gdc', 'pcdc'].includes(model.toLowerCase())) {
+        switch (model.toLowerCase()) {
+            case 'gdc':
+                result = await getGraphicalGDCDictionary(node, prop);
+                break;
+            case 'ctdc':
+                result =  await getGraphicalCTDCDictionary(node, prop);
+                break;
+            case 'icdc':
+                result =  await getGraphicalICDCDictionary(node, prop);
+                break;
+            case 'pcdc':
+                let project = (req.query.project || '') === "" ? "AML" : req.query.project;
+                result =  await getGraphicalPCDCDictionary(project, node, prop);
+                break;
+            default:
+                break;
+        };
+        if (+result.status === 200) {
+            res.json(result);
+        } else {
+            //res.json( {status: 404 ,message: 'Data not found'  });
+            return writeError(res, { detail: 'Data not found' }, 404);
+        }
     } else {
         //res.json( {status: 400 ,message: 'Not valid data model :'+model  });
         return writeError(res, { message: 'Not valid data model' }, 400);
@@ -100,7 +98,7 @@ const getGraphicalGDCDictionary = async function ( node, prop ) {
 };
 
 const getGraphicalICDCDictionary = async  ( node, prop )=> 
-     await esapicontroller.getGraphicalICDCDictionary( node, prop )
+    await esapicontroller.getGraphicalICDCDictionary( node, prop )
 ;
 
 const getGraphicalCTDCDictionary = async function ( node, prop ) {
