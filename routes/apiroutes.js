@@ -25,15 +25,14 @@ router.use('/docs',
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
     }
 );
-  
+
 // api search from elasticSearch
-router.get("/es/search", esapi.apiEsSearch);
+router.get("/search", esapi.apiEsSearch);
 
 //source view from dict files
-router.get("/es/source/:model", esapi.getEsModelData);
-router.get("/es/source/:model/:node", esapi.getEsModelData);
-router.get("/es/source/:model/:node/:prop", esapi.getEsModelData);
-
+router.get("/data_dictionary/source/:model", esapi.getEsModelData);
+router.get("/data_dictionary/source/:model/:node", esapi.getEsModelData);
+router.get("/data_dictionary/source/:model/:node/:prop", esapi.getEsModelData);
 
 // neo4j user
 router.get("/user/userprofile", metauser.getUserProfile);
@@ -43,9 +42,11 @@ router.get("/user/allusers", metauser.getAllUser);
 //router.get("/admin/createuser", metauser.createUser);
 
 // neo4j datamodel
+/*
 router.get("/datamodel/search", metamodel.getApiSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
 router.get("/datamodel/source/:model/:node", metamodel.getApiSource);
 router.get("/datamodel/source/:model/:node/:prop", metamodel.getApiSource);
+*/
 
 module.exports = router;

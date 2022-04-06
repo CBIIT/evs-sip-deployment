@@ -9,6 +9,7 @@ module.exports = function (protocol, host, basePath) {
     'host': host,
     'basePath': basePath,
     'tags': [
+      /*
       {
         'name': 'DataModel Search',
         'description': 'Rest APIs provide flexibilities for searching data using hierarchical patterns from Data Models.'
@@ -17,6 +18,7 @@ module.exports = function (protocol, host, basePath) {
         'name': 'DataModel Data',
         'description': 'Rest APIs are used to retrieve data per dataset source from DataModels.'
       },
+      */
       {
         'name': 'ES Search',
         'description': 'Rest APIs provide flexibilities for searching data using hierarchical patterns from ElasticSearch DB.'
@@ -36,203 +38,203 @@ module.exports = function (protocol, host, basePath) {
       'application/json', 'application/xml'
     ],
     'paths': {
-      '/datamodel/search': {
-        'get': {
-          'tags': ['DataModel Search'],
-          'summary': 'Search data with specified keywords and additional conditions. The syntax needed to perform api calls is described below. API calls can be tested interactively using the embedded interface before accessing the api programmatically. Output is returned in JSON format except when specifically indicated. ',
-          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/search?keyword={keywords}&model={ctdc,gdc,icdc,pcdc}&type={node,prop,value}**. \n' +
-            ' \n' +
-            'The **keyword** parameter is required to specify the term or phrase to be searched.\n' +
-            '# \n' +
-            'The **model** parameter is specify one or more data model to perform a custom search.\n' +
-            'Valid entries for options specifications are: **gdc** or **CTDC**, **ICDC**, **PCDC**. \n' +
-            '\n' +
-            '# \n' +
-            'The **type** parameter is used to perform a custom search at specified entity level.\n' +
-            'Valid entries for options specifications are: **node** or **prop**, **value**. \n' +
-            '\n' +
-            '  The **node** is **default** search option, It is not necessary to specify it \n' +
-            '  The **prop** is used to perform search properties for term or phrase specified in keyword. \n' +
-            '  The **value** is used to perform search terms values for term or phrase specified in keyword. \n' +
-            '\n' +
-            '| Example | URL |\n' +
-            '|---|---|\n' +
-            '| **keyword** only | |\n' +
-            '| - perform search in node name in all data models. <br> return data node name including **diagnosis**. | [datamodel/search?keyword=diagnosis](' + protocol + '://' + host + basePath + '/datamodel/search?keyword=diagnosis)|\n' +
-            '| | |\n' +
-            '| **keyword & model** | |\n' +
-            '| - perform search in node name in specified data model<br> return data node name including **diagnosis** in **ICDC**. | [datamodel/search?keyword=diagnosis&model=icdc](' + protocol + '://' + host + basePath + '/datamodel/search?keyword=diagnosis&model=icdc)|\n' +
-            '| | |\n' +
-            '| **keyword & model & type**  | |\n' +
-            '| - perform search in specified data entities in data model <br> return data with properties name including **diagnosis** in **ICDC**. | [datamodel/search?keyword=diagnosis&model=icdc&type=prop](' + protocol + '://' + host + basePath + '/datamodel/search?keyword=diagnosis&model=icdc&type=prop)|\n',
-          'parameters': [
-            {
-              'name': 'keyword',
-              'in': 'query',
-              'required': true,
-              'description': 'The term/phrase to be searched.',
-              'type': 'string'
-            }, {
-              'name': 'model',
-              'in': 'query',
-              'description': 'The sources specifications are: GDC, CTDC, ICDC or PCDC.',
-              'type': 'string',
-              'default': 'ICDC'
-            }, {
-              'name': 'type',
-              'in': 'query',
-              'description': 'The options specifications are: node or prop, value.',
-              'type': 'string',
-              'default': 'node'
-            }
-          ],
-          'responses': {
-            '200': {
-              'description': 'Success.',
-              'schema': {
-                '$ref': '#/definitions/Result'
-              }
-            },
-            '400': {
-              'description': 'Not valid data model.'
-            },
-            '404': {
-              'description': 'Data not found.'
-            }
-          }
-        }
-      },
-      '/datamodel/source/{model}': {
-        'get': {
-          'tags': ['DataModel Data'],
-          'summary': 'Restful APIs Description Summary',
-          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}**. \n' +
-            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
-            '| Example | URL |\n' +
-            '|---|---|\n' +
-            '| will return all nodes with properties and terms if available. | [source/icdc](' + protocol + '://' + host + basePath + '/datamodel/source/icdc)|\n',
-          'parameters': [
-            {
-              'name': 'model',
-              'in': 'path',
-              'required': true,
-              'description': 'The model to be searched.',
-              'type': 'string',
-              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
-              'value': 'icdc'
-            }
-          ],
-          'responses': {
-            '200': {
-              'description': 'Success.',
-              'schema': {
-                '$ref': '#/definitions/Node'
-              }
-            },
-            '400': {
-              'description': 'Not valid data model.'
-            },
-            '404': {
-              'description': 'Data not found.'
-            }
-          }
-        }
-      },
-      '/datamodel/source/{model}/{node}': {
-        'get': {
-          'tags': ['DataModel Data'],
-          'summary': 'Restful APIs Description Summary',
-          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n' +
-            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
-            '| Example | URL |\n' +
-            '|---|---|\n' +
-            '| will return all nodes with properties and terms if available. | [source/icdc/case](' + protocol + '://' + host + basePath + '/datamodel/source/icdc/case)|\n',
-          'parameters': [
-            {
-              'name': 'model',
-              'in': 'path',
-              'required': true,
-              'description': 'The model to be searched.',
-              'type': 'string',
-              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
-              'value': 'icdc'
-            },
-            {
-              'name': 'node',
-              'in': 'path',
-              'description': 'The node name to be searched. Must be a correct name..',
-              'type': 'string'
-            }
-          ],
-          'responses': {
-            '200': {
-              'description': 'Success',
-              'schema': {
-                '$ref': '#/definitions/Node'
-              }
-            },
-            '400': {
-              'description': 'Not valid data model.'
-            },
-            '404': {
-              'description': 'Data not found.'
-            }
-          }
-        }
-      },
-      '/datamodel/source/{model}/{node}/{prop}': {
-        'get': {
-          'tags': ['DataModel Data'],
-          'summary': 'Restful APIs Description Summary',
-          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n' +
-            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
-            '| Example | URL |\n' +
-            '|---|---|\n' +
-            '| will return the matched property in specified model and node if available. | [source/ctdc/arm/arm_id](' + protocol + '://' + host + basePath + '/datamodel/source/ctdc/arm/arm_id)|\n',
-          'parameters': [
-            {
-              'name': 'model',
-              'in': 'path',
-              'required': true,
-              'description': 'The model to be searched.',
-              'type': 'string',
-              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
-              'value': 'icdc'
-            },
-            {
-              'name': 'node',
-              'in': 'path',
-              'description': 'The node name to be searched.',
-              'type': 'string'
-            },
-            {
-              'name': 'prop',
-              'in': 'path',
-              'description': 'The property name to be searched.',
-              'type': 'string'
-            }
-          ],
-          'responses': {
-            '200': {
-              'description': 'Success.',
-              'schema': {
-                '$ref': '#/definitions/Node'
-              }
-            },
-            '400': {
-              'description': 'Not valid data model.'
-            },
-            '404': {
-              'description': 'Data not found.'
-            }
-          }
-        }
-      },
-      '/es/search': {
+//      '/datamodel/search': {
+//        'get': {
+//          'tags': ['DataModel Search'],
+//          'summary': 'Search data with specified keywords and additional conditions. The syntax needed to perform api calls is described below. API calls can be tested interactively using the embedded interface before accessing the api programmatically. Output is returned in JSON format except when specifically indicated. ',
+//          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/search?keyword={keywords}&model={ctdc,gdc,icdc,pcdc}&type={node,prop,value}**. \n' +
+//            ' \n' +
+//            'The **keyword** parameter is required to specify the term or phrase to be searched.\n' +
+//            '# \n' +
+//            'The **model** parameter is specify one or more data model to perform a custom search.\n' +
+//            'Valid entries for options specifications are: **gdc** or **CTDC**, **ICDC**, **PCDC**. \n' +
+//            '\n' +
+//            '# \n' +
+//            'The **type** parameter is used to perform a custom search at specified entity level.\n' +
+//            'Valid entries for options specifications are: **node** or **prop**, **value**. \n' +
+//            '\n' +
+//            '  The **node** is **default** search option, It is not necessary to specify it \n' +
+//            '  The **prop** is used to perform search properties for term or phrase specified in keyword. \n' +
+//            '  The **value** is used to perform search terms values for term or phrase specified in keyword. \n' +
+//            '\n' +
+//            '| Example | URL |\n' +
+//            '|---|---|\n' +
+//            '| **keyword** only | |\n' +
+//            '| - perform search in node name in all data models. <br> return data node name including **diagnosis**. | [datamodel/search?keyword=diagnosis](' + protocol + '://' + host + basePath + '/datamodel/search?keyword=diagnosis)|\n' +
+//            '| | |\n' +
+//            '| **keyword & model** | |\n' +
+//            '| - perform search in node name in specified data model<br> return data node name including **diagnosis** in **ICDC**. | [datamodel/search?keyword=diagnosis&model=icdc](' + protocol + '://' + host + basePath + '/datamodel/search?keyword=diagnosis&model=icdc)|\n' +
+//            '| | |\n' +
+//            '| **keyword & model & type**  | |\n' +
+//            '| - perform search in specified data entities in data model <br> return data with properties name including **diagnosis** in **ICDC**. | [datamodel/search?keyword=diagnosis&model=icdc&type=prop](' + protocol + '://' + host + basePath + '/datamodel/search?keyword=diagnosis&model=icdc&type=prop)|\n',
+//          'parameters': [
+//            {
+//              'name': 'keyword',
+//              'in': 'query',
+//              'required': true,
+//              'description': 'The term/phrase to be searched.',
+//              'type': 'string'
+//            }, {
+//              'name': 'model',
+//              'in': 'query',
+//              'description': 'The sources specifications are: GDC, CTDC, ICDC or PCDC.',
+//              'type': 'string',
+//              'default': 'ICDC'
+//            }, {
+//              'name': 'type',
+//              'in': 'query',
+//              'description': 'The options specifications are: node or prop, value.',
+//              'type': 'string',
+//              'default': 'node'
+//            }
+//          ],
+//          'responses': {
+//            '200': {
+//              'description': 'Success.',
+//              'schema': {
+//                '$ref': '#/definitions/Result'
+//              }
+//            },
+//            '400': {
+//              'description': 'Not valid data model.'
+//            },
+//            '404': {
+//              'description': 'Data not found.'
+//            }
+//          }
+//        }
+//      },
+//      '/datamodel/source/{model}': {
+//        'get': {
+//          'tags': ['DataModel Data'],
+//          'summary': 'Restful APIs Description Summary',
+//          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}**. \n' +
+//            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
+//            '| Example | URL |\n' +
+//            '|---|---|\n' +
+//            '| will return all nodes with properties and terms if available. | [source/icdc](' + protocol + '://' + host + basePath + '/datamodel/source/icdc)|\n',
+//          'parameters': [
+//            {
+//              'name': 'model',
+//              'in': 'path',
+//              'required': true,
+//              'description': 'The model to be searched.',
+//              'type': 'string',
+//              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
+//              'value': 'icdc'
+//            }
+//          ],
+//          'responses': {
+//            '200': {
+//              'description': 'Success.',
+//              'schema': {
+//                '$ref': '#/definitions/Node'
+//              }
+//            },
+//            '400': {
+//              'description': 'Not valid data model.'
+//            },
+//            '404': {
+//              'description': 'Data not found.'
+//            }
+//          }
+//        }
+//      },
+//      '/datamodel/source/{model}/{node}': {
+//        'get': {
+//          'tags': ['DataModel Data'],
+//          'summary': 'Restful APIs Description Summary',
+//          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n' +
+//            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
+//            '| Example | URL |\n' +
+//            '|---|---|\n' +
+//            '| will return all nodes with properties and terms if available. | [source/icdc/case](' + protocol + '://' + host + basePath + '/datamodel/source/icdc/case)|\n',
+//          'parameters': [
+//            {
+//              'name': 'model',
+//              'in': 'path',
+//              'required': true,
+//              'description': 'The model to be searched.',
+//              'type': 'string',
+//              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
+//              'value': 'icdc'
+//            },
+//            {
+//              'name': 'node',
+//              'in': 'path',
+//              'description': 'The node name to be searched. Must be a correct name..',
+//              'type': 'string'
+//            }
+//          ],
+//          'responses': {
+//            '200': {
+//              'description': 'Success',
+//              'schema': {
+//                '$ref': '#/definitions/Node'
+//              }
+//            },
+//            '400': {
+//              'description': 'Not valid data model.'
+//            },
+//            '404': {
+//              'description': 'Data not found.'
+//            }
+//          }
+//        }
+//      },
+//      '/datamodel/source/{model}/{node}/{prop}': {
+//        'get': {
+//          'tags': ['DataModel Data'],
+//          'summary': 'Restful APIs Description Summary',
+//          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n' +
+//            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
+//            '| Example | URL |\n' +
+//            '|---|---|\n' +
+//            '| will return the matched property in specified model and node if available. | [source/ctdc/arm/arm_id](' + protocol + '://' + host + basePath + '/datamodel/source/ctdc/arm/arm_id)|\n',
+//          'parameters': [
+//            {
+//              'name': 'model',
+//              'in': 'path',
+//              'required': true,
+//              'description': 'The model to be searched.',
+//              'type': 'string',
+//              'enum': ['ctdc', 'gdc', 'icdc', 'pcdc'],
+//              'value': 'icdc'
+//            },
+//            {
+//              'name': 'node',
+//              'in': 'path',
+//              'description': 'The node name to be searched.',
+//              'type': 'string'
+//            },
+//            {
+//              'name': 'prop',
+//              'in': 'path',
+//              'description': 'The property name to be searched.',
+//              'type': 'string'
+//            }
+//          ],
+//          'responses': {
+//            '200': {
+//              'description': 'Success.',
+//              'schema': {
+//                '$ref': '#/definitions/Node'
+//              }
+//            },
+//            '400': {
+//              'description': 'Not valid data model.'
+//            },
+//            '404': {
+//              'description': 'Data not found.'
+//            }
+//          }
+//        }
+//      },
+      '/search': {
         'get': {
           'tags': ['ES Search'],
           'summary': 'Search data with specified keywords and additional conditions. The syntax needed to perform api calls is described below. API calls can be tested interactively using the embedded interface before accessing the api programmatically. Output is returned in JSON format except when specifically indicated. ',
-          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/search?keyword={keywords}&options={partial,syn,desc}&sources={ctdc,gdc,icdc,pcdc}**. \n'+ 
+          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/search?keyword={keywords}&options={partial,syn,desc}&sources={ctdc,gdc,icdc,pcdc}**. \n'+ 
             '# Keyword\n' +
             'The **keyword** parameter is required to specify the term or phrase to be searched.\n' +
             '# Options\n' +
@@ -251,23 +253,23 @@ module.exports = function (protocol, host, basePath) {
             '| Example | URL |\n' +
             '|---|---|\n' +
             '| **keyword** only | |\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches **melanoma**. | [es/search?keyword=melanoma](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma)|\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data associated with ICDO-3 code **8000/6**. | [es/search?keyword=8000/6](' + protocol + '://' + host + basePath + '/es/search?keyword=8000/6)|\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data associated with NCIt concept code **C12434**. | [es/search?keyword=c12434](' + protocol + '://' + host + basePath + '/es/search?keyword=c12434)|\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches **primary_diagnosis**. | [es/search?keyword=primary_diagnosis](' + protocol + '://' + host + basePath + '/es/search?keyword=primary_diagnosis)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches **melanoma**. | [search?keyword=melanoma](' + protocol + '://' + host + basePath + '/search?keyword=melanoma)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data associated with ICDO-3 code **8000/6**. | [search?keyword=8000/6](' + protocol + '://' + host + basePath + '/search?keyword=8000/6)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data associated with NCIt concept code **C12434**. | [search?keyword=c12434](' + protocol + '://' + host + basePath + '/search?keyword=c12434)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches **primary_diagnosis**. | [search?keyword=primary_diagnosis](' + protocol + '://' + host + basePath + '/search?keyword=primary_diagnosis)|\n' +
             '| | |\n' +
             '| **keyword & options** | |\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches melanoma. | [es/search?keyword=melanoma&options=partial](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=partial)|\n' +
-            '| - perform exact search in enums, ICDO-3 code, NCIt code and property name <br> return data that exactly matches melanoma.  | [es/search?keyword=melanoma&options=exact](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=exact)|\n' +
-            '| - perform exact search in enums, ICDO-3 code, NCIt code, property name and Synonyms <br> return data that exactly matches melanoma. | [es/search?keyword=melanoma&options=exact,syn](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=exact,syn)|\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code, property name and Synonyms and property description <br> return data that partially matches melanoma in property description. | [es/search?keyword=melanoma&options=syn,desc](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=syn,desc)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches melanoma. | [search?keyword=melanoma&options=partial](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=partial)|\n' +
+            '| - perform exact search in enums, ICDO-3 code, NCIt code and property name <br> return data that exactly matches melanoma.  | [search?keyword=melanoma&options=exact](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=exact)|\n' +
+            '| - perform exact search in enums, ICDO-3 code, NCIt code, property name and Synonyms <br> return data that exactly matches melanoma. | [search?keyword=melanoma&options=exact,syn](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=exact,syn)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code, property name and Synonyms and property description <br> return data that partially matches melanoma in property description. | [search?keyword=melanoma&options=syn,desc](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=syn,desc)|\n' +
             '| | |\n' +
             '| **keyword & options & sources**  | |\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches melanoma from **gdc** data. | [es/search?keyword=melanoma&options=partial&sources=gdc](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=partial&sources=gdc)|\n' +
-            '| - perform exact search in enums, ICDO-3 code, NCIt code and property name <br> return data that exactly matches melanoma from **gdc** and **icdc** data.  | [es/search?keyword=melanoma&options=exact&sources=gdc,icdc](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=exact&sources=gdc,icdc)|\n' +
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches melanoma from **gdc** data. | [search?keyword=melanoma&options=partial&sources=gdc](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=partial&sources=gdc)|\n' +
+            '| - perform exact search in enums, ICDO-3 code, NCIt code and property name <br> return data that exactly matches melanoma from **gdc** and **icdc** data.  | [search?keyword=melanoma&options=exact&sources=gdc,icdc](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=exact&sources=gdc,icdc)|\n' +
             '| | |\n' +
             '| with **format** | |\n' +
-            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches melanoma in **json** format. | [es/search?keyword=melanoma&options=partial&format=json](' + protocol + '://' + host + basePath + '/es/search?keyword=melanoma&options=partial)|\n' ,
+            '| - perform partial search in enums, ICDO-3 code, NCIt code and property name <br> return data that partially matches melanoma in **json** format. | [search?keyword=melanoma&options=partial&format=json](' + protocol + '://' + host + basePath + '/search?keyword=melanoma&options=partial)|\n' ,
           'parameters': [
             {
               'name': 'keyword',
@@ -300,15 +302,15 @@ module.exports = function (protocol, host, basePath) {
           }
         }
       },
-      '/es/source/{model}': {
+      '/data_dictionary/source/{model}': {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
             'summary': 'Restful APIs Description Summary',
-            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}**. \n'+ 
+            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/data_dictionary/source/{ctdc,gdc,icdc,pcdc}**. \n'+ 
               '**model** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
               '|---|---|\n' +
-              '| will get all nodes data from specified model disctionary files. | [es/source/icdc](' + protocol + '://' + host + basePath + '/es/source/icdc)|\n',
+              '| will get all nodes data from specified model disctionary files. | [data_dictionary/source/icdc](' + protocol + '://' + host + basePath + '/data_dictionary/source/icdc)|\n',
               'parameters': [
               {
                 'name': 'model',
@@ -333,15 +335,15 @@ module.exports = function (protocol, host, basePath) {
             }
           }
         },
-      '/es/source/{model}/{node}': {
+      '/data_dictionary/source/{model}/{node}': {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
             'summary': 'Restful APIs Description Summary',
-            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n'+ 
+            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/data_dictionary/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n'+ 
               ' **model** and **node** are required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
               '|---|---|\n' +
-              '| will get node info from specified model. | [es/source/icdc/sample](' + protocol + '://' + host + basePath + '/es/source/icdc/sample)|\n',
+              '| will get node info from specified model. | [data_dictionary/source/icdc/sample](' + protocol + '://' + host + basePath + '/data_dictionary/source/icdc/sample)|\n',
               'parameters': [
               {
                 'name': 'model',
@@ -372,15 +374,15 @@ module.exports = function (protocol, host, basePath) {
             }
           }
         },
-        '/es/source/{model}/{node}/{prop}': {
+        '/data_dictionary/source/{model}/{node}/{prop}': {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
             'summary': 'Restful APIs Description Summary',
-            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/es/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n'+ 
+            'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/data_dictionary/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n'+ 
               ' **model** , **node**, and **prop** are required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
               '|---|---|\n' +
-              '| will get specified property information from specified model and node. | [es/source/ctdc/arm/arm_id](' + protocol + '://' + host + basePath + '/es/source/ctdc/arm/arm_id)|\n',
+              '| will get specified property information from specified model and node. | [data_dictionary/source/ctdc/arm/arm_id](' + protocol + '://' + host + basePath + '/data_dictionary/source/ctdc/arm/arm_id)|\n',
               'parameters': [
               {
                 'name': 'model',

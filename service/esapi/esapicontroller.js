@@ -49,7 +49,7 @@ const searchP = (req, res, formatFlag) => {
       let query = shared.generateQuery(keyword, option);
       logger.debug("keyword: " + keyword)
       logger.debug("------ query ------  %o ", query)
-     let highlight = shared.generateHighlight();
+      let highlight = shared.generateHighlight();
       elastic.query(config.index_p, query, "enum", highlight,(result) => {
         if (result.hits === undefined) {
           res.json({ total: 0, returnList: [], timedOut: true });
@@ -361,7 +361,7 @@ const processGDCDictionaryEnumData = (prop) => {
   return result;
 };
 
-const getGraphicalPCDCDictionary = (project, node) => {
+const getGraphicalPCDCDictionary = (project, node, prop) => {
   let project_result = cache.getValue("pcdc_dict_" + project);
   if (project_result == undefined) {
     let result = cache.getValue("pcdc_dict");
@@ -391,6 +391,7 @@ const getGraphicalPCDCDictionary = (project, node) => {
     cache.setValue("pcdc_dict_" + project, project_result, config.item_ttl);
   }
 
+  project_result.status = 200;
   return project_result;
 };
 
@@ -572,6 +573,7 @@ const generatePCDCData = (pcdc_data, filter) => {
       dataList[project][key] = item;
     }
   }
+
   return dataList;
 };
 
