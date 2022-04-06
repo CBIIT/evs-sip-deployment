@@ -42,9 +42,11 @@ router.get("/user/allusers", metauser.getAllUser);
 //router.get("/admin/createuser", metauser.createUser);
 
 // neo4j datamodel
+/*
 router.get("/datamodel/search", metamodel.getApiSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
 router.get("/datamodel/source/:model/:node", metamodel.getApiSource);
 router.get("/datamodel/source/:model/:node/:prop", metamodel.getApiSource);
+*/
 
 module.exports = router;
