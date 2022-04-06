@@ -1342,6 +1342,7 @@ const getPCDCProjectsFullName = () => {
 };
 
 module.exports = {
+  convert2Title,
   generateHighlight,
   generateQuery,
   readNCItDetails,
