@@ -25,15 +25,14 @@ router.use('/docs',
         swaggerUi.setup(swaggerDocument(protocol, host, baseUrl))(req, res);
     }
 );
-  
+
 // api search from elasticSearch
-router.get("/es/search", esapi.apiEsSearch);
+router.get("/search", esapi.apiEsSearch);
 
 //source view from dict files
-router.get("/es/source/:model", esapi.getEsModelData);
-router.get("/es/source/:model/:node", esapi.getEsModelData);
-router.get("/es/source/:model/:node/:prop", esapi.getEsModelData);
-
+router.get("/data_dictionary/source/:model", esapi.getEsModelData);
+router.get("/data_dictionary/source/:model/:node", esapi.getEsModelData);
+router.get("/data_dictionary/source/:model/:node/:prop", esapi.getEsModelData);
 
 // neo4j user
 router.get("/user/userprofile", metauser.getUserProfile);
