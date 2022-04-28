@@ -26,6 +26,16 @@ router.use('/docs',
     }
 );
 
+router.use('/swaggerjson',
+    function (req, res) {
+        const protocol = req.get('host').includes('gov')?'https':'http';
+        const host = req.get('host');
+        const baseUrl = [':300',':80'].some((e) => host.includes(e))?'/api':'/evssip/api';
+        const swaggerdoc = swaggerDocument(protocol, host, baseUrl);
+        res.json(swaggerdoc);
+    }
+);
+
 // api search from elasticSearch
 router.get("/search", esapi.apiEsSearch);
 
