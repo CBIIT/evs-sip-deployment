@@ -3,8 +3,8 @@ module.exports = function (protocol, host, basePath) {
     'swagger': '2.0',
     'info': {
       'version': '1.0.0',
-      'title': 'EVSSIP Restful API',
-      'description': 'EVSSIP Restful API.'
+      'title': 'EVSSIP RESTful API',
+      'description': 'EVSSIP RESTful API.'
     },
     'host': host,
     'basePath': basePath,
@@ -12,20 +12,20 @@ module.exports = function (protocol, host, basePath) {
       /*
       {
         'name': 'DataModel Search',
-        'description': 'Rest APIs provide flexibilities for searching data using hierarchical patterns from Data Models.'
+        'description': 'RESTful APIs provide flexibilities for searching data using hierarchical patterns from Data Models.'
       },
       {
         'name': 'DataModel Data',
-        'description': 'Rest APIs are used to retrieve data per dataset source from DataModels.'
+        'description': 'RESTful APIs are used to retrieve data per dataset source from DataModels.'
       },
       */
       {
         'name': 'ES Search',
-        'description': 'Rest APIs provide flexibilities for searching data using hierarchical patterns from ElasticSearch DB.'
+        'description': 'RESTful APIs provide flexibilities for searching data using hierarchical patterns from ElasticSearch DB.'
       },
       {
         'name': 'Retrieve Dictionary Data',
-        'description': 'Rest APIs are used to retrieve data per dictionary source.'
+        'description': 'RESTful APIs are used to retrieve data per dictionary source.'
       },
     ],
     'schemes': [
@@ -107,7 +107,7 @@ module.exports = function (protocol, host, basePath) {
 //      '/datamodel/source/{model}': {
 //        'get': {
 //          'tags': ['DataModel Data'],
-//          'summary': 'Restful APIs Description Summary',
+//          'summary': 'RESTful APIs Description Summary',
 //          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}**. \n' +
 //            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
 //            '| Example | URL |\n' +
@@ -143,7 +143,7 @@ module.exports = function (protocol, host, basePath) {
 //      '/datamodel/source/{model}/{node}': {
 //        'get': {
 //          'tags': ['DataModel Data'],
-//          'summary': 'Restful APIs Description Summary',
+//          'summary': 'RESTful APIs Description Summary',
 //          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n' +
 //            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
 //            '| Example | URL |\n' +
@@ -185,7 +185,7 @@ module.exports = function (protocol, host, basePath) {
 //      '/datamodel/source/{model}/{node}/{prop}': {
 //        'get': {
 //          'tags': ['DataModel Data'],
-//          'summary': 'Restful APIs Description Summary',
+//          'summary': 'RESTful APIs Description Summary',
 //          'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/datamodel/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n' +
 //            'One **endpoint(path)** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
 //            '| Example | URL |\n' +
@@ -305,7 +305,7 @@ module.exports = function (protocol, host, basePath) {
       '/data_dictionary/source/{model}': {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
-            'summary': 'Restful APIs Description Summary',
+            'summary': 'RESTful APIs Description Summary',
             'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/data_dictionary/source/{ctdc,gdc,icdc,pcdc}**. \n'+ 
               '**model** is required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
@@ -338,7 +338,7 @@ module.exports = function (protocol, host, basePath) {
       '/data_dictionary/source/{model}/{node}': {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
-            'summary': 'Restful APIs Description Summary',
+            'summary': 'RESTful APIs Description Summary',
             'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/data_dictionary/source/{ctdc,gdc,icdc,pcdc}/{node}**. \n'+ 
               ' **model** and **node** are required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
@@ -377,7 +377,7 @@ module.exports = function (protocol, host, basePath) {
         '/data_dictionary/source/{model}/{node}/{prop}': {
           'get': {
             'tags': ['Retrieve Dictionary Data'],
-            'summary': 'Restful APIs Description Summary',
+            'summary': 'RESTful APIs Description Summary',
             'description': ' Query Patterns is: ' + protocol + '://' + host + basePath + '**/data_dictionary/source/{ctdc,gdc,icdc,pcdc}/{node}/{prop}**. \n'+ 
               ' **model** , **node**, and **prop** are required from (**ctdc,gdc,icdc,pcdc**) datasets.\n' +
               '| Example | URL |\n' +
