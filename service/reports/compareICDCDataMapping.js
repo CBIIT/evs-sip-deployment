@@ -4,7 +4,7 @@ const yaml = require("yamljs");
 const _ = require('lodash');
 // const Excel = require("exceljs");
 // const export_excel = require('node-excel-export');
-const logger = require('./components/logger');
+const logger = require('../../components/logger');
 //const ICDCdata = require('./dataprocess/ICDCdata');
 //const shared = require('./service/search/shared.js');
 

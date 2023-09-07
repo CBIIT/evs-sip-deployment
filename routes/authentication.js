@@ -132,7 +132,6 @@ async function updateSession(request, response) {
     request.session.user = { ...user };
     response.json(user || null);
 }
-var request2 = require('request');
 // note: both federated NIH Auth use siteminder under the hood to authenticate users
 // so we can use the global siteminder agent logout route to invalidate our current session
 function logout(request, response) {
