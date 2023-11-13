@@ -11,12 +11,18 @@ const logger = require('../components/logger');
 const config = require('./index');
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require('swagger-ui-express');
-const { login, logout, getUserSession, updateSession } = require('./authentication');
+const passport = require("passport");
 
+// const { login, logout, getUserSession, updateSession } = require('./authentication');
 
+const {
+  createUserSerializer,
+  createUserDeserializer,
+  createOAuth2Strategy,
+} = require('../service/auth/passportUtils.js');
 
 // const indexRouter = require('./routes/index')
-module.exports = function (app) {
+module.exports = async function (app) {
   // if (config.env !== 'prod') { 
   //   app.use(logger('dev')) 
   // };
@@ -38,7 +44,7 @@ module.exports = function (app) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(express.static(path.resolve(config.root, 'build')));
+  // app.use(express.static(path.resolve(config.root, 'build')));
   //  app.use(require('./session'));
   app.use(compression());
 
@@ -142,9 +148,36 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(express.static(path.resolve(config.root, 'build')));
+  // app.use(express.static(path.resolve(config.root, 'build')));
   app.use(compression());
   app.use(neo4jSessionCleanup);
+
+
+  // const connection = mysql.getConnectionPool(config.mysql);
+	// const logger = createLogger("cedcd", config.log_level ? config.log_level : "debug");
+	// app.locals.logger = logger;
+	
+	// app.locals.connection = connection;
+	// app.locals.mysql = {
+	// 	connection,
+	// 	query: promisify(connection.query).bind(connection),
+	// 	upsert: mysql.upsert,
+	// }
+	// const userManager = new UserManager(app.locals.mysql);
+
+	// app.locals.userManager = userManager;
+
+  // configure passport
+	logger.debug("Configuring passport");
+	passport.serializeUser(createUserSerializer());
+	passport.deserializeUser(createUserDeserializer());
+	passport.use("default", await createOAuth2Strategy());
+
+	// configure session
+	logger.debug("Configuring session");
+	// app.use(session);
+	app.use(passport.initialize());
+	app.use(passport.session());
 
 
   // app.use('/session-test', function (req, res, next) {
@@ -157,20 +190,25 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     res.status(200).json('true');
   });
 
+  app.get('/', (req, res) => {
+    res.status(200).json('hello');
+  });
+
   //Routers
   //app.use('/api', indexRouter)
   app.use('/api', require('./apiroutes'));
   app.use('/service/search', require('./guiroutes'));
-  app.use('/dashboard/login', login);
-  app.use('/dashboard/logout', logout);
-  app.use('/service/user-session', getUserSession);
-  app.use('/service/update-session', updateSession);
+  app.use('/auth', require('./authroutes'));
+  // app.use('/dashboard/login', login);
+  // app.use('/dashboard/logout', logout);
+  // app.use('/service/user-session', getUserSession);
+  // app.use('/service/update-session', updateSession);
 
 
 
-  app.get('*', (req, res) => {
-    res.sendFile('build/index.html', { root: config.root });
-  });
+  // app.get('*', (req, res) => {
+  //   res.sendFile('build/index.html', { root: config.root });
+  // });
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
