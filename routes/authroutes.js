@@ -22,27 +22,13 @@ router.get("/login", (request, response, next) => {
   },
   async (request, response) => {
     request.session.expires = request.session.cookie.expires;
-    // const destination = await getDestLink(request);
-    console.log(JSON.stringify(request.session.passport.user, null, 4));
-
-    // let userid = requestequest.session.passport.user.userid;
-
-    // let user = await usercontroller.getUserbyNciUserName(userid);
-
-    // console.log(JSON.stringify(user, null, 4));
-
     const destination = request.query.state || "/sip";
     response.redirect(destination);
   }
 );
 
 router.get("/logout", (request, response) => {
-  // request.logout(() => response.redirect("/sip"));
-
-  request.session.destroy(error => {
-    //response.json(request.query.destination || '/sip');
-    response.redirect("/sip");
-  });
+  request.logout(() => response.redirect("/sip"));
 });
 
 router.get("/session", (request, response) => {
