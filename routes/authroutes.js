@@ -9,26 +9,22 @@ const nconf = require('../config');
 // const router = express.Router();
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.status(200).json('auth');
-});
-
 router.get("/login", (request, response, next) => {
-    const destination = request.query.destination || "/sip";
+    const destination = request.query.destination || "/evssip";
     passport.authenticate("default", {
-      failureRedirect: "/sip",
+      failureRedirect: "/evssip",
       state: destination,
     })(request, response, next);
   },
   async (request, response) => {
     request.session.expires = request.session.cookie.expires;
-    const destination = request.query.state || "/sip";
+    const destination = request.query.state || "/evssip";
     response.redirect(destination);
   }
 );
 
 router.get("/logout", (request, response) => {
-  request.logout(() => response.redirect("/sip"));
+  request.logout(() => response.redirect("/evssip"));
 });
 
 router.get("/session", (request, response) => {
