@@ -1,14 +1,20 @@
-const cache = require("../../components/cache");
-const elastic = require('../../components/elasticsearch');
-const config = require("../../config");
-const fs = require("fs");
-const path = require("path");
-const yaml = require("yamljs");
-const Datastore = require('nedb-promises');
+import * as cache from '../../components/cache.js';
+import * as elastic from '../../components/elasticsearch.js';
+import config from '../../config.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import yaml from 'yamljs';
+import Datastore from 'nedb-promises';
+import * as _ from 'lodash';
+import handleError from '../../components/handleError.js';
+import $RefParser from '@apidevtools/json-schema-ref-parser';
+
 let db = Datastore.create();
-const _ = require("lodash");
-const handleError = require("../../components/handleError");
-const $RefParser = require("@apidevtools/json-schema-ref-parser");
+
+// Get the directory of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const folderPath = path.join(
   __dirname,
@@ -74,7 +80,7 @@ const generateHighlightInnerHits_prop = () => {
   return highlight;
 }
 
-const generateHighlight = () => {
+export const generateHighlight = () => {
   let highlight = {
     pre_tags: ["<b>"],
     post_tags: ["</b>"],
@@ -89,7 +95,7 @@ const generateHighlight = () => {
   return highlight;
 };
 
-const generateQuery = (keyword, option) => {
+export const generateQuery = (keyword, option) => {
   let query = {};
   query.bool = {};
   query.bool.must = [];
@@ -419,34 +425,34 @@ const preProcess = (searchable_nodes, data) => {
   return data;
 };
 
-const readNCItDetails = () => {
+export const readNCItDetails = () => {
   let content = fs.readFileSync(dataFilesDir + "/ncit_details.js").toString();
   content = content.replace(/}{/g, ",");
   return JSON.parse(content);
 };
 
-const readGDCValues = () => {
+export const readGDCValues = () => {
   let content = fs.readFileSync(dataFilesDir + "/gdc_values.js").toString();
   return JSON.parse(content);
 };
 
-const readGDCProps = () => {
+export const readGDCProps = () => {
   let content = fs.readFileSync(dataFilesDir + "/gdc_props.js").toString();
   return JSON.parse(content);
 };
 
-const readGDCNodes = () => {
+export const readGDCNodes = () => {
   let content = fs.readFileSync(dataFilesDir + "/gdc_nodes.js").toString();
 return JSON.parse(content);
 }
 
-const readCDEData = () => {
+export const readCDEData = () => {
   let content = fs.readFileSync(dataFilesDir + "/cdeData.js").toString();
   content = content.replace(/}{/g, ",");
   return JSON.parse(content);
 };
 
-const readCTDCMapping = () => {
+export const readCTDCMapping = () => {
   let content = fs
     .readFileSync(dataFilesPath + "/CTDC/CTDC_Mappings.json")
     .toString();
@@ -454,7 +460,7 @@ const readCTDCMapping = () => {
   return JSON.parse(content);
 };
 
-const readICDCMapping = () => {
+export const readICDCMapping = () => {
   let content = fs
     .readFileSync(dataFilesPath + "/ICDC/ICDC_Mappings.json")
     .toString();
@@ -462,7 +468,7 @@ const readICDCMapping = () => {
   return JSON.parse(content);
 };
 
-const readPCDCMapping = () => {
+export const readPCDCMapping = () => {
   let content = fs
     .readFileSync(dataFilesPath + "/PCDC/pcdc-model-all.json")
     .toString();
@@ -476,7 +482,7 @@ const readPCDCProjects = () => {
   return JSON.parse(content);
 };
 
-const getICDOMapping = () => {
+export const getICDOMapping = () => {
   let data = readGDCValues();
   let result = {};
   for (let key in data) {
@@ -520,7 +526,7 @@ const getICDOMapping = () => {
   return result;
 };
 
-const getParentICDO = () => {
+export const getParentICDO = () => {
   let data = readGDCValues();
   let result = [];
   for (let key in data) {
@@ -537,7 +543,7 @@ const getParentICDO = () => {
   return result;
 };
 
-const generateICDOHaveWords = (code) => {
+export const generateICDOHaveWords = (code) => {
   let ts = [];
 
   if (code.indexOf("C") >= 0) {
@@ -735,7 +741,7 @@ const generateGDCData = async function (schema) {
   return result;
 };
 
-const convert2Title = (name) => {
+export const convert2Title = (name) => {
   let tmp = name.split("_");
   let result = [];
   tmp.forEach((term) => {
@@ -745,7 +751,7 @@ const convert2Title = (name) => {
   return result.join(" ");
 };
 
-const convert2Key = (name) => {
+export const convert2Key = (name) => {
   let tmp = name.split(" ");
   let result = [];
   tmp.forEach((term) => {
@@ -910,7 +916,7 @@ const generatePCDCData = (pcdc_data, filter) => {
   return dataList;
 };
 
-const getGraphicalGDCDictionary = async function () {
+export const getGraphicalGDCDictionary = async function () {
   let result = cache.getValue("gdc_dict");
   if (result == undefined) {
     console.log(
@@ -954,7 +960,7 @@ const getGraphicalGDCDictionary = async function () {
   return result;
 };
 
-const getGDCDictionaryByVersion = async function(version) {
+export const getGDCDictionaryByVersion = async function(version) {
   let result = cache.getValue("gdc_dict_"+version);
   const DictionaryPath = path.join(__dirname, '..', '..', 'data_files','GDC', 'model-'+version);
   if(result == undefined){
@@ -1000,7 +1006,7 @@ const getGDCDictionaryByVersion = async function(version) {
   return result;
 }
 
-const getGraphicalICDCDictionary = () => {
+export const getGraphicalICDCDictionary = () => {
   let result = cache.getValue("icdc_dict");
   if (result == undefined) {
     let jsonData = {};
@@ -1014,7 +1020,7 @@ const getGraphicalICDCDictionary = () => {
   return result;
 };
 
-const getGraphicalCTDCDictionary = () => {
+export const getGraphicalCTDCDictionary = () => {
   let result = cache.getValue("ctdc_dict");
   if (result == undefined) {
     let jsonData = {};
@@ -1170,7 +1176,7 @@ const genearteCompareResult = async function(){
 		cache.setValue("compareWith_2.3.0", true, config.item_ttl/3);
 }
 
-const getCompareResult = async function(searchText, from , limit){
+export const getCompareResult = async function(searchText, from , limit){
 	let compared = cache.getValue("compareWith_2.3.0");
   if(compared == undefined){
     await genearteCompareResult();
@@ -1201,7 +1207,7 @@ const getCompareResult = async function(searchText, from , limit){
   return result;
 };
 
-const getCompareResult_unmapped = async function(searchText, from , limit) {
+export const getCompareResult_unmapped = async function(searchText, from , limit) {
   let compared = cache.getValue("compareWith_2.3.0");
   if(compared == undefined){
     await genearteCompareResult();
@@ -1236,7 +1242,7 @@ const getCompareResult_unmapped = async function(searchText, from , limit) {
   return result;
 }
 
-const getCompareResult_mapped = async function(searchText, from , limit) {
+export const getCompareResult_mapped = async function(searchText, from , limit) {
   let compared = cache.getValue("compareWith_2.3.0");
   if(compared == undefined){
     await genearteCompareResult();
@@ -1268,7 +1274,7 @@ const getCompareResult_mapped = async function(searchText, from , limit) {
   return result;
 }
 
-const getCompareResult_conflict = async function(searchText, from , limit) {
+export const getCompareResult_conflict = async function(searchText, from , limit) {
   let compared = cache.getValue("compareWith_2.3.0");
   if(compared == undefined){
     await genearteCompareResult();
@@ -1299,7 +1305,7 @@ const getCompareResult_conflict = async function(searchText, from , limit) {
   return result;
 }
 
-const getGraphicalPCDCDictionary = (project) => {
+export const getGraphicalPCDCDictionary = (project) => {
   let project_result = cache.getValue("pcdc_dict_" + project);
   if (project_result == undefined) {
     let result = cache.getValue("pcdc_dict");
@@ -1332,40 +1338,11 @@ const getGraphicalPCDCDictionary = (project) => {
   return project_result;
 };
 
-const getPCDCProjectsFullName = () => {
+export const getPCDCProjectsFullName = () => {
   let result = cache.getValue("pcdc_projects");
   if (result == undefined) {
     result = readPCDCProjects();
     cache.setValue("pcdc_projects", result, config.item_ttl);
   }
   return result;
-};
-
-module.exports = {
-  convert2Title,
-  generateHighlight,
-  generateQuery,
-  readNCItDetails,
-  preProcess,
-  readGDCValues,
-  readGDCProps,
-  readGDCNodes,
-  readCDEData,
-  readCTDCMapping,
-  readICDCMapping,
-  readPCDCMapping,
-  getICDOMapping,
-  getParentICDO,
-  generateICDOHaveWords,
-  getGraphicalGDCDictionary,
-  getGraphicalICDCDictionary,
-  getGraphicalCTDCDictionary,
-  getGraphicalPCDCDictionary,
-  convert2Key,
-  getPCDCProjectsFullName,
-  getCompareResult,
-  getCompareResult_unmapped,
-  getCompareResult_mapped,
-  getCompareResult_conflict,
-  getGDCDictionaryByVersion
 };

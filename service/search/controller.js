@@ -1,21 +1,23 @@
-//const writeError = require("../../components/response").writeError;
-const elastic = require("../../components/elasticsearch");
-const handleError = require("../../components/handleError");
-const logger = require("../../components/logger");
-const cache = require("../../components/cache");
-const config = require("../../routes");
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const shared = require("./shared");
-// const git = require('nodegit');
+import * as elastic from '../../components/elasticsearch.js';
+import handleError from '../../components/handleError.js';
+import logger from '../../components/logger.js';
+import * as cache from '../../components/cache.js';
+import config from '../../routes/index.js';
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import * as shared from './shared.js';
 //const Excel = require("exceljs");
-const export_excel = require('node-excel-export');
-const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
-var syns = {};
-const xmlBuilder = require("../tools/xmlBuilder")
+import export_excel from 'node-excel-export';
+import * as xmlBuilder from '../tools/xmlBuilder.js';
 
-const indexing = (req, res) => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
+
+export const indexing = (req, res) => {
   let configs = [];
   //config property index
   let config_property = {};
@@ -361,7 +363,7 @@ const indexing = (req, res) => {
   });
 };
 
-const suggestion = (req, res) => {
+export const suggestion = (req, res) => {
   let term = req.query.keyword;
   let suggest = {
     term_suggest: {
@@ -385,7 +387,7 @@ const suggestion = (req, res) => {
   });
 };
 
-const searchP = (req, res, formatFlag) => {
+export const searchP = (req, res, formatFlag) => {
   //let keyword = req.query.keyword.trim().replace(/\+/g, "\\+").replace(/-/g, "\\-").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
   if (req.query.keyword) {
     let keyword = req.query.keyword.trim();
@@ -459,7 +461,7 @@ const searchP = (req, res, formatFlag) => {
   }
 };
 
-const getGDCData = (req, res) => {
+export const getGDCData = (req, res) => {
   let uid = req.query.id;
   let query = {};
   query.terms = {};
@@ -474,28 +476,28 @@ const getGDCData = (req, res) => {
   });
 };
 
-const getGraphicalGDCDictionary = async function (req, res) {
+export const getGraphicalGDCDictionary = async function (req, res) {
   let jsonData = await shared.getGraphicalGDCDictionary();
   res.json(jsonData);
 };
 
-const getGraphicalICDCDictionary = (req, res) => {
+export const getGraphicalICDCDictionary = (req, res) => {
   let jsonData = shared.getGraphicalICDCDictionary();
   res.json(jsonData);
 };
 
-const getGraphicalCTDCDictionary = (req, res) => {
+export const getGraphicalCTDCDictionary = (req, res) => {
   let jsonData = shared.getGraphicalCTDCDictionary();
   res.json(jsonData);
 };
 
-const getGraphicalPCDCDictionary = (req, res) => {
+export const getGraphicalPCDCDictionary = (req, res) => {
   let project = req.query.project == "" ? "AML" : req.query.project;
   let jsonData = shared.getGraphicalPCDCDictionary(project);
   res.json(jsonData);
 };
 
-const getValuesForGraphicalView = async function (req, res) {
+export const getValuesForGraphicalView = async function (req, res) {
   let uid = req.query.id;
   let result = cache.getValue("values:" + uid);
   if (result == undefined) {
@@ -722,7 +724,7 @@ const synchronziedLoadSynonmysfromNCIT = (ncitids, idx, next) => {
     });
 };
 
-const preloadNCItSynonyms_old = (req, res) => {
+export const preloadNCItSynonyms_old = (req, res) => {
   let unloaded_ncits = cache.getValue("unloaded_ncits");
   if (unloaded_ncits && unloaded_ncits.length > 0) {
     synchronziedLoadSynonmysfromNCIT_old(unloaded_ncits, 0, (data) => {
@@ -738,7 +740,7 @@ const preloadNCItSynonyms_old = (req, res) => {
   }
 };
 
-const preloadNCItSynonyms = (req, res) => {
+export const preloadNCItSynonyms = (req, res) => {
   let unloaded_ncits = cache.getValue("unloaded_ncits");
   if (unloaded_ncits && unloaded_ncits.length > 0) {
     synchronziedLoadSynonmysfromNCIT(unloaded_ncits, 0, (data) => {
@@ -754,7 +756,7 @@ const preloadNCItSynonyms = (req, res) => {
   }
 };
 
-const preloadGDCDataMappings = async (req, res) => {
+export const preloadGDCDataMappings = async (req, res) => {
   /*
   let file_path = path.join(__dirname, '..', '..', 'data_files', 'GDC', 'GDC_Data_Mappings.xlsx');
   let output_file_path = path.join(__dirname, '..', '..', 'data_files', 'GDC', 'gdc_values_updated.js');
@@ -805,7 +807,7 @@ const preloadGDCDataMappings = async (req, res) => {
   res.json({ result: "success" });
 };
 
-const updateGDCDataMappings = async (req, res) => {
+export const updateGDCDataMappings = async (req, res) => {
   
   let file_path = path.join(
     __dirname,
@@ -896,7 +898,7 @@ const updateGDCDataMappings = async (req, res) => {
   res.json({ result: "success" });
 };
 
-const preloadPCDCDataMappings = async (req, res) => {
+export const preloadPCDCDataMappings = async (req, res) => {
   /*
   let file_path = path.join(
     __dirname,
@@ -1017,7 +1019,7 @@ const preloadPCDCDataMappings = async (req, res) => {
   res.json({ result: "success" });
 };
 
-const compareAllWithGDCDictionary = async function (req, res) {
+export const compareAllWithGDCDictionary = async function (req, res) {
   const params = req.query;
   const searchText = params.searchText ? params.searchText : "";
   const type = params.type ? params.type : "all";
@@ -1063,7 +1065,7 @@ const compareAllWithGDCDictionary = async function (req, res) {
   }
 }
 
-const exportCompareResult = async function (req, res) {
+export const exportCompareResult = async function (req, res) {
   const params = req.query;
   const searchText = params.searchText ? params.searchText : "";
   const type = params.type ? params.type : "all";
@@ -1185,7 +1187,7 @@ const exportCompareResult = async function (req, res) {
   res.send(report);
 }
 
-const exportAllCompareResult = async function (req, res) {
+export const exportAllCompareResult = async function (req, res) {
   const searchText = "";
 
   let result = {};
@@ -1312,7 +1314,7 @@ const exportAllCompareResult = async function (req, res) {
   res.send(report);
 }
 
-const generateProperties = async function (req, res) {
+export const generateProperties = async function (req, res) {
   const dataset = [];
   let output_file_path = path.join(__dirname, '..', '..', 'data_files', 'GDC', 'gdc_values_updated.js');
   let GDCDict = await shared.getGDCDictionaryByVersion("2.3.0");
@@ -1397,7 +1399,7 @@ const generateProperties = async function (req, res) {
   res.send(report);
 }
 
-const updateGDCPropertyMappings = async function (req, res) {
+export const updateGDCPropertyMappings = async function (req, res) {
   
   let file_path = path.join(
     __dirname,
@@ -1553,27 +1555,3 @@ const updateGDCPropertyMappings = async function (req, res) {
     res.send(report);
     
 }
-
-
-
-module.exports = {
-  indexing,
-  suggestion,
-  searchP,
-  getGDCData,
-  getGraphicalGDCDictionary,
-  getGraphicalICDCDictionary,
-  getGraphicalCTDCDictionary,
-  getGraphicalPCDCDictionary,
-  getValuesForGraphicalView,
-  preloadNCItSynonyms_old,
-  preloadNCItSynonyms,
-  preloadGDCDataMappings,
-  updateGDCDataMappings,
-  preloadPCDCDataMappings,
-  compareAllWithGDCDictionary,
-  exportCompareResult,
-  exportAllCompareResult,
-  generateProperties,
-  updateGDCPropertyMappings
-};

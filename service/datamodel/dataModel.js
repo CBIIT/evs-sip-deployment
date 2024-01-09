@@ -1,7 +1,7 @@
 
-const { writeResponse, writeError } = require('../../components/response');
-const dataModelcontroller = require('./dataModelcontroller');
-const _ = require('lodash');
+import { writeResponse, writeError } from '../../components/response.js';
+import * as dataModelcontroller from './dataModelcontroller.js';
+
 /**
  * @swagger
  * definition:
@@ -36,7 +36,7 @@ const _ = require('lodash');
  */
 
 // expect NCI_USERNAME as parameter
-const getSearch = async function (req, res) {
+export const getSearch = async function (req, res) {
 
     //return controller.searchP(req, res, formatFlag);
     const params = req.query;
@@ -55,7 +55,7 @@ const getSearch = async function (req, res) {
 
 };
 
-const getSource = async function (req, res) {
+export const getSource = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
     const params = req.query;
     const searchText = params.search ? params.search : "";
@@ -68,7 +68,7 @@ const getSource = async function (req, res) {
 
 };
 
-const getApiSearch = async function (req, res) {
+export const getApiSearch = async function (req, res) {
 
     //return controller.searchP(req, res, formatFlag);
     const params = req.query;
@@ -91,7 +91,7 @@ const getApiSearch = async function (req, res) {
     }
 };
 
-const getApiSource = async function (req, res) {
+export const getApiSource = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
     const model = req.params['model'] || '';
     const node = req.params['node'] || '';
@@ -112,13 +112,5 @@ const getApiSource = async function (req, res) {
         //res.json( {status: 400 ,message: 'Not valid data model :'+model  });
         return writeError(res, { message: 'Not valid data model' }, 400);
     }
-
-};
-
-module.exports = {
-    getSearch,
-    getSource,
-    getApiSource,
-    getApiSearch,
 
 };

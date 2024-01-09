@@ -1,31 +1,31 @@
 /**
  * Client for elasticsearch
  */
-const fs = require('fs');
-const path = require('path');
-const elasticsearch = require('elasticsearch');
-const yaml = require('yamljs');
-const config = require('../routes');
-const config_dev = require('../routes/dev');
-const logger = require('./logger');
-const cache = require('./cache');
-const extend = require('util')._extend;
-const _ = require('lodash');
-const shared = require('../service/search/shared');
-const folderPath = path.join(__dirname, '..', 'data_files', 'GDC', 'model');
-var allTerm = {};
-var icdo_mapping = shared.getICDOMapping();
-var icdo2Exclude = shared.getParentICDO();
-var gdc_values = {};
-var gdc_props = {};
-var gdc_nodes = {};
-var allProperties = [];
-var unloaded_ncits = [];
 
-var esClient = new elasticsearch.Client({
-  host: config_dev.elasticsearch.host,
-  log: config_dev.elasticsearch.log,
-  requestTimeout: config_dev.elasticsearch.requestTimeout
+import fs from 'fs';
+import path from 'path';
+import elasticsearch from 'elasticsearch';
+import yaml from 'yamljs';
+import config from '../routes/index.js';
+import logger from './logger.js';
+import * as cache from './cache.js';
+import { _extend as extend } from 'util';
+import * as _ from 'lodash';
+import * as shared from '../service/search/shared.js';
+
+const allTerm = {};
+const icdo_mapping = shared.getICDOMapping();
+const icdo2Exclude = shared.getParentICDO();
+const  gdc_values = {};
+const gdc_props = {};
+const gdc_nodes = {};
+const allProperties = [];
+const unloaded_ncits = [];
+
+const esClient = new elasticsearch.Client({
+  host: config.elasticsearch.host,
+  log: config.elasticsearch.log,
+  requestTimeout: config.elasticsearch.requestTimeout
 });
  
 const helper_gdc = (fileJson, syns) => {
@@ -1099,7 +1099,7 @@ const helper_gdc = (fileJson, syns) => {
    }
  };
  
- const bulkIndex = async function(next){
+ export const bulkIndex = async (next) => {
  
    gdc_values = shared.readGDCValues();
    gdc_props = shared.readGDCProps();
@@ -1200,9 +1200,8 @@ const helper_gdc = (fileJson, syns) => {
      });
    });
  }
- exports.bulkIndex = bulkIndex;
  
- const query = (index, dsl, source_excludes, highlight, next) => {
+ export const query = (index, dsl, source_excludes, highlight, next) => {
    var body = {
      size: config.search_result_limit,
      from: 0
@@ -1241,9 +1240,7 @@ const helper_gdc = (fileJson, syns) => {
    
  }
  
- exports.query = query;
- 
- const query_all = async function(index, dsl, source_excludes, highlight) {
+ export const query_all = async function(index, dsl, source_excludes, highlight) {
    var body = {
      size: 10000,
      from: 0
@@ -1290,9 +1287,7 @@ const helper_gdc = (fileJson, syns) => {
    }
  }
  
- exports.query_all = query_all;
- 
- const suggest = (index, suggest, next) => {
+ export const suggest = (index, suggest, next) => {
    let body = {};
    body.suggest = suggest;
    esClient.search({index: index, "_source": true, body: body}, (err, data) => {
@@ -1305,9 +1300,7 @@ const helper_gdc = (fileJson, syns) => {
    });
  }
  
- exports.suggest = suggest;
- 
- const createIndexes = (params, next) => {
+ export const createIndexes = (params, next) => {
    esClient.indices.create(params[0], (err_2, result_2) => {
      if (err_2) {
        logger.error(err_2);
@@ -1325,6 +1318,4 @@ const helper_gdc = (fileJson, syns) => {
      }
    });
  }
- 
- exports.createIndexes = createIndexes;
  

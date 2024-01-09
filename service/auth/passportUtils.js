@@ -1,23 +1,20 @@
-const { createOAuthStrategy } = require("./passportStrategies.js");
-const cedcd_settings = require("../../config/cedcd_settings.js");
-// import { Issuer, Strategy } from "openid-client";
-//const usercontroller = require('../ ../service/user/usercontroller');
-const usercontroller = require("../user/usercontroller.js");
-
-const openidClient = require("openid-client");
+// const { createOAuthStrategy } = require("./passportStrategies.js");
+// const cedcd_settings = require("../../config/cedcd_settings.js");
+import { Issuer, Strategy } from "openid-client"
+import { getUserbyNciUserName } from '../user/usercontroller.js';
 
 // function getAccountType({ preferred_username }) {
 //   const loginDomain = (preferred_username || "").split("@").pop();
 //   return loginDomain.endsWith("login.gov") ? "Login.gov" : "NIH";
 // }
 
-function createUserSerializer() {
+export function createUserSerializer() {
   return (user, done) => done(null, user);
 }
 
-function createUserDeserializer() {
+export function createUserDeserializer() {
   return async (nciUser, done) => {
-    const userData = await usercontroller.getUserbyNciUserName(nciUser.userid);
+    const userData = await getUserbyNciUserName(nciUser.userid);
 
     let user = {};
 
@@ -45,8 +42,8 @@ function createUserDeserializer() {
 //   return (user, done) => done(null, user);
 // }
 
-async function createOAuth2Strategy(env = process.env) {
-  const { Client } = await openidClient.Issuer.discover(env.OAUTH2_BASE_URL);
+export async function createOAuth2Strategy(env = process.env) {
+  const { Client } = await Issuer.discover(env.OAUTH2_BASE_URL);
 
   const client = new Client({
     client_id: env.OAUTH2_CLIENT_ID,
@@ -60,7 +57,7 @@ async function createOAuth2Strategy(env = process.env) {
     prompt: "login",
   };
 
-  return new openidClient.Strategy(
+  return new Strategy(
     { client, params },
     async (tokenSet, done) => {
       const user = await client.userinfo(tokenSet);
@@ -68,9 +65,3 @@ async function createOAuth2Strategy(env = process.env) {
     }
   );
 }
-
-module.exports = {
-  createUserSerializer,
-  createUserDeserializer,
-  createOAuth2Strategy,
-};

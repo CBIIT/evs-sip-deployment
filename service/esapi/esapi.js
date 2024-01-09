@@ -1,7 +1,7 @@
-const esapicontroller = require("./esapicontroller");
-const shared = require("../search/shared");
-const xmlBuilder = require("../tools/xmlBuilder");
-const { writeResponse, writeError } = require('../../components/response');
+import * as esapicontroller from './esapicontroller.js';
+import * as shared from '../search/shared.js';
+import * as xmlBuilder from '../tools/xmlBuilder.js'
+import { writeResponse, writeError } from '../../components/response.js';
 
 /**
  * @swagger
@@ -38,12 +38,12 @@ const { writeResponse, writeError } = require('../../components/response');
 
 
 
-const apiEsSearch = async (req, res) => {
+export const apiEsSearch = async (req, res) => {
     let formatFlag = req.query.format;
     return await esapicontroller.searchP(req, res, formatFlag);
 };
 
-const getEsModelData = async function (req, res) {
+export const getEsModelData = async function (req, res) {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
     const model = req.params['model'] || 'ICDC';
     const node = req.params['node'] || '';
@@ -118,9 +118,3 @@ const getGraphicalPCDCDictionary = async (project, node, prop) => {
     //     res.json(jsonData);
     // }
 };
-
-
-module.exports = {
-    apiEsSearch,
-    getEsModelData,
-}

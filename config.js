@@ -1,8 +1,7 @@
-'use strict';
+import dotenv from 'dotenv';
+import nconf from 'nconf';
 
-require('dotenv').config();
-
-const nconf = require('nconf');
+dotenv.config();
 
 nconf.env(['PORT', 'NODE_ENV'])
   .argv({
@@ -42,4 +41,4 @@ nconf.env(['PORT', 'NODE_ENV'])
     'maxSessionAge':process.env.SESSION_MAX_AGE||360000, // convert minutes to ms
   });
 
-  module.exports =  nconf ;
+  export default nconf ;

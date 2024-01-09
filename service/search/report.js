@@ -1,11 +1,11 @@
 // pre-build report in mysql DB
 //const mysql = require("../../components/mysql");
 
-const xmlBuilder = require('../tools/xmlBuilder')
+import * as xmlBuilder from '../tools/xmlBuilder.js';
 
 //const connection = mysql.pool;
 
-const getReportDiff = (req, res) => {
+export const getReportDiff = (req, res) => {
 //     let queryReport = "SELECT * from evssip.gdc_report_diff LIMIT 100";
 //    let formatFlag = req.query.format||'';
 //     if (formatFlag === 'xml' ) {
@@ -29,8 +29,4 @@ const getReportDiff1 = (req, res) => {
     //     res.header('Content-Type','text/xml').send(xmlBuilder.buildObject(JSON.parse(JSON.stringify(rows))));
     //     connection.end();
     // });
-};
-
-module.exports = {
-    getReportDiff
 };

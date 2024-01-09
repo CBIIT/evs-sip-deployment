@@ -1,28 +1,30 @@
-// import { neo4jSessionCleanup } from '../middlewares/neo4jSessionCleanup'
-const nconf = require('../config');
-const neo4jSessionCleanup = require("../middlewares/neo4jSessionCleanup");
-const express = require('express');
-const session = require('express-session');
-const compression = require('compression');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const createError = require('http-errors');
-const logger = require('../components/logger');
-const config = require('./index');
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require('swagger-ui-express');
-const passport = require("passport");
+import express from 'express';
+import session from 'express-session';
+import compression from 'compression';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import createError from 'http-errors';
+import logger from '../components/logger.js';
+import config from './index.js';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import passport from 'passport';
 
+import neo4jSessionCleanup from '../middlewares/neo4jSessionCleanup.js';
 // const { login, logout, getUserSession, updateSession } = require('./authentication');
 
-const {
+import  {
   createUserSerializer,
   createUserDeserializer,
   createOAuth2Strategy,
-} = require('../service/auth/passportUtils.js');
+} from '../service/auth/passportUtils.js';
+
+import apiRoutes from './apiroutes.js';
+import guiRoutes from './guiroutes.js';
+import authRoutes from './authroutes.js';
 
 // const indexRouter = require('./routes/index')
-module.exports = async function (app) {
+const configureRoutes = async (app) =>  {
   // if (config.env !== 'prod') { 
   //   app.use(logger('dev')) 
   // };
@@ -92,7 +94,7 @@ var swaggerDefinition = {
 
 
 // options for the swagger docs
-var options = {
+const options = {
   // import swaggerDefinitions
   swaggerDefinition: swaggerDefinition,
   // path to the API docs
@@ -100,7 +102,7 @@ var options = {
 };
 
 // initialize swagger-jsdoc
-var swaggerSpec = swaggerJsdoc(options);
+const swaggerSpec = swaggerJsDoc(options);
 
 // serve swagger
 // api.get("/swagger.json", function (req, res) {
@@ -196,9 +198,9 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   //Routers
   //app.use('/api', indexRouter)
-  app.use('/api', require('./apiroutes'));
-  app.use('/service/search', require('./guiroutes'));
-  app.use('/auth', require('./authroutes'));
+  app.use('/api', apiRoutes);
+  app.use('/service/search', guiRoutes);
+  app.use('/auth', authRoutes);
   // app.use('/dashboard/login', login);
   // app.use('/dashboard/logout', logout);
   // app.use('/service/user-session', getUserSession);
@@ -232,3 +234,5 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     });
   }
 }
+
+export default configureRoutes;

@@ -2,15 +2,16 @@
  * back-end logger for application
  */
 
-const winston = require('winston');
-const config = require('../routes');
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import config from '../routes/index.js';
 winston.emitErrs = true;
 
 const tsFormat = () => (new Date()).toLocaleTimeString();
 
-var logger = new winston.Logger({
+const logger = new winston.Logger({
   transports: [
-    new (require('winston-daily-rotate-file'))({
+    new DailyRotateFile({
       filename: config.logDir + '/-warning.log',
       timestamp: tsFormat,
       datePattern: 'yyyy-MM-dd',
@@ -27,4 +28,4 @@ var logger = new winston.Logger({
   exitOnError: false
 });
 
-module.exports = logger;
+export default logger;

@@ -1,15 +1,19 @@
-const elastic = require("../../components/elasticsearch");
-const handleError = require("../../components/handleError");
-const logger = require("../../components/logger");
-const cache = require("../../components/cache");
-const config = require("../../routes");
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const shared = require("../search/shared");
-const xmlBuilder = require("../tools/xmlBuilder");
-const yaml = require("yamljs");
-const $RefParser = require("@apidevtools/json-schema-ref-parser");
+import * as elastic from '../../components/elasticsearch.js';
+import logger from '../../components/logger.js';
+import * as cache from '../../components/cache.js';
+import config from '../../routes/index.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import * as shared from '../search/shared.js';
+import * as xmlBuilder from '../tools/xmlBuilder.js';
+import yaml from 'yamljs';
+import $RefParser from '@apidevtools/json-schema-ref-parser';
+
+// Get the directory of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const folderPath = path.join(
   __dirname,
   "..",
@@ -20,7 +24,7 @@ const folderPath = path.join(
 );
 const dataFilesPath = path.join(__dirname, "..", "..", "data_files");
 
-const searchP = (req, res, formatFlag) => {
+export const searchP = (req, res, formatFlag) => {
   //let keyword = req.query.keyword.trim().replace(/\+/g, "\\+").replace(/-/g, "\\-").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
   if (req.query.keyword) {
     let keyword = req.query.keyword.trim();
@@ -94,7 +98,7 @@ const searchP = (req, res, formatFlag) => {
   }
 };
 
-const getGraphicalGDCDictionary = async function (node, prop) {
+export const getGraphicalGDCDictionary = async function (node, prop) {
 
   let result = cache.getValue("gdc_dict_api");
   if (result == undefined || node !== '') {
@@ -295,7 +299,7 @@ const excludeSystemProperties = function (node) {
   return properties;
 };
 
-const getGraphicalICDCDictionary = function (node, prop ) {
+export const getGraphicalICDCDictionary = (node, prop) => {
 
   let result = cache.getValue("icdc_dict_api");
   if (result == undefined || node !== '') {
@@ -313,7 +317,7 @@ const getGraphicalICDCDictionary = function (node, prop ) {
   return { status: 200, results: result };
 };
 
-const getGraphicalCTDCDictionary = function (node, prop )  {
+export const getGraphicalCTDCDictionary = (node, prop) => {
   let result = cache.getValue("ctdc_dict_api");
   if (result == undefined || node !== '') {
     let jsonData = {};
@@ -361,7 +365,7 @@ const processGDCDictionaryEnumData = (prop) => {
   return result;
 };
 
-const getGraphicalPCDCDictionary = (project, node, prop) => {
+export const getGraphicalPCDCDictionary = (project, node, prop) => {
   let project_result = cache.getValue("pcdc_dict_" + project);
   if (project_result == undefined) {
     let result = cache.getValue("pcdc_dict");
@@ -630,12 +634,4 @@ const processGDCResult = function (result, node, prop ) {
 
   return dataList
 
-};
-
-module.exports = {
-  searchP,
-  getGraphicalICDCDictionary,
-  getGraphicalCTDCDictionary,
-  getGraphicalPCDCDictionary,
-  getGraphicalGDCDictionary
 };

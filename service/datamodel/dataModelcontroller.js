@@ -1,10 +1,9 @@
-const dbUtils = require('../../components/neo4jUtils');
-const _ = require('lodash');
-const { session } = require('neo4j-driver');
+import * as dbUtils from '../../components/neo4jUtils.js';
+import { session } from 'neo4j-driver';
 
 //const neo4jsession = dbUtils.getSession()
 
-const getApiSearchResults = async function (keyword, model, type) {
+export const getApiSearchResults = async function (keyword, model, type) {
   let nodeinfo = [];
   let resultAll = [];
   let typeList = [];
@@ -63,7 +62,7 @@ const getApiSearchResults = async function (keyword, model, type) {
   return { status: 200, results: resultAll };
 }
 
-const getApiDataSource = async function (model, node, prop) {
+export const getApiDataSource = async function (model, node, prop) {
   if (model && node && prop) {
     return await getApiDataSourcebyModelNodeProp(model, node, prop);
   } else if (model && node) {
@@ -103,7 +102,7 @@ const getApiDataSourcebyModel = function (model) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data.', status: 400 };
       }
       const props = processNodePropResult(results);
@@ -143,7 +142,7 @@ const getApiDataSourcebyModelNode = function (model, node) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data.', status: 400 };
       }
       const props = processNodePropResult(results);
@@ -179,7 +178,7 @@ const getApiDataSourcebyModelNodeProp = function (model, node, prop) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data.', status: 400 };
       }
 
@@ -244,7 +243,7 @@ const getPropWithValuesByName = function (model, keyword) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data in properties.', status: 400 };
       }
       let props = [];
@@ -299,7 +298,7 @@ const getValuesByName = function (model, keyword) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data.', status: 400 };
       }
       let props = [];
@@ -347,7 +346,7 @@ const getNodeDetailsByName = function (model, keyword) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data.', status: 400 };
       }
       let props = processNodePropResult(results);
@@ -370,7 +369,7 @@ const getNodebykeyword = function (keyword) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return 'Not Found with keyword ' + keyword;
       }
       return results.records.map(r => { return { name: r.get('name'), model: r.get('model'), type: r.get('type') } });
@@ -390,7 +389,7 @@ const getNodebykeywordAndModel = function (keyword, model) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return 'Not Found with keyword: ' + keyword + ' in data model :' + model;
       }
       return results.records.map(r => { return { name: r.get('name'), model: r.get('model'), type: r.get('type') } });
@@ -398,7 +397,7 @@ const getNodebykeywordAndModel = function (keyword, model) {
       console.log("error in getNodeByKeyword and model: " + error);
     });
 };
-const getSearchResults = async function (keyword, model, type, fromIndex, pageSize) {
+export const getSearchResults = async function (keyword, model, type, fromIndex, pageSize) {
   // this support GUI, assume model is NOT NULL and single
   // keyword could be null
   let resultAll = [];
@@ -437,7 +436,7 @@ const getSearchResults = async function (keyword, model, type, fromIndex, pageSi
   return resultAll;
 }
 
-const getDataSource = function (model, keyword, fromIndex, pageSize) {
+export const getDataSource = function (model, keyword, fromIndex, pageSize) {
   //console.log(typeof neo4jsession.readTransaction)
   const neo4jsession = dbUtils.getSession()
   if (!model) model = "ICDC";
@@ -458,7 +457,7 @@ const getDataSource = function (model, keyword, fromIndex, pageSize) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched data.', status: 400 };
       }
       let props = [];
@@ -532,7 +531,7 @@ const getNodeListWithPaging = function (model, keyword, fromIndex, pageSize) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { type: 'node', message: 'No matched data in nodes.' };
       }
       let props = [];
@@ -615,7 +614,7 @@ const getPropListWithPaging = function (model, keyword, fromIndex, pageSize) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { type: 'props', message: 'No matched data in properties.' };
       }
       let props = [];
@@ -675,7 +674,7 @@ const getValueListWithPaging = function (model, keyword, fromIndex, pageSize) {
   )
     .then(results => {
       neo4jsession.close();
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { type: 'values', message: 'No matched data in values' };
       }
       let props = [];
@@ -801,10 +800,3 @@ const processNodePropResult = function (results) {
  return props;
 
 }
-
-module.exports = {
-  getApiDataSource,
-  getApiSearchResults,
-  getDataSource,
-  getSearchResults,
-};

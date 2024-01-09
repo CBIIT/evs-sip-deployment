@@ -1,14 +1,13 @@
-const express = require("express");
-const controller = require("../service/search/controller");
-const metauser = require("../service/user/user");
-const metamodel = require("../service/datamodel/dataModel");
-const report = require("../service/search/report");
+import express from 'express';
+import * as controller from '../service/search/controller.js';
+import * as metauser from '../service/user/user.js';
+import * as metamodel from '../service/datamodel/dataModel.js';
+// import report from '../service/search/report.js';
 
 const router = express.Router();
 
 router.get("/buildIndex", controller.indexing);
 router.get("/suggest", controller.suggestion);
-
 
 // property based api
 router.get("/all/p", controller.searchP);
@@ -45,6 +44,6 @@ router.get("/datamodel/search", metamodel.getSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
 
 //get report Diff from mysql table
-router.get('/report/reportDiff', report.getReportDiff);
+//router.get('/report/reportDiff', report.getReportDiff);
 
-module.exports = router;
+export default router;

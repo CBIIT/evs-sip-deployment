@@ -1,6 +1,6 @@
-import { writeError} from '../components/response';
-import * as dbUtils  from '../neo4jUtils';
-import { Users } from '../models/users';
+import { writeError} from '../components/response.js';
+import * as dbUtils  from '../components/neo4jUtils.js';
+import { Users } from '../models/users.js';
 
 
 export default function setAuthUser(req, res, next) {

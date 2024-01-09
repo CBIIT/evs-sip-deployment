@@ -1,21 +1,18 @@
-const dbUtils = require('../../components/neo4jUtils');
-const User = require('../../models/neo4j/user');
-const { writeResponse, writeError } = require('../../components/response');
-const _ = require('lodash');
+import * as dbUtils from '../../components/neo4jUtils.js';
+import User from '../../models/neo4j/user.js';
+// import { writeResponse, writeError } from '../../components/response.js';
 
-
-const crypto = require('crypto');
-
+// import crypto from 'crypto';
 
 const neo4jsession = dbUtils.getSession()
 // expect NCI_USERNAME as parameter
-const getUserbyNciUserName = function (username) {
+export const getUserbyNciUserName = (username) => {
   // console.log(typeof neo4jsession.readTransaction)
   return neo4jsession.readTransaction(txc =>
     txc.run('MATCH (user:User {nci_username: $username}) RETURN user', { username: username })
   )
     .then(results => {
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { status: 400, user_total: 0, results:[], message: 'invalid NCI username' };
       }
       return { status: 200, user_total: 1, results:[new User(results.records[0].get('user'))] };
@@ -26,7 +23,7 @@ const getUserbyNciUserName = function (username) {
 };
 
 //
-const getAllUser = function (keyword, status,fromIndex, pageSize) {
+export const getAllUser = (keyword, status,fromIndex, pageSize) => {
   //console.log(typeof neo4jsession.readTransaction)
   const searchword = "(?i).*" + keyword + ".*"
   const userList =[];
@@ -37,7 +34,7 @@ const getAllUser = function (keyword, status,fromIndex, pageSize) {
      { searchword: searchword, status:status, fromIndex: fromIndex, pageSize: pageSize })
   )
     .then(results => {
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'No matched user.', status: 400 };
       }
        let user_cnt =+results.records[0].get('user_cnt');
@@ -50,7 +47,7 @@ const getAllUser = function (keyword, status,fromIndex, pageSize) {
     });
 };
 
-const updateUserbyNciUserName = function (requester, user) {
+export const updateUserbyNciUserName = (requester, user) => {
 
   if (!requester && !user.nci_username) {
     return { message: 'invalid NCI username for requester', status: 400 };
@@ -66,7 +63,7 @@ const updateUserbyNciUserName = function (requester, user) {
 
   return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User {nci_username: toLower($username)}) RETURN user', { username: requester.toLowerCase() }))
     .then(results => {
-      if (_.isEmpty(results.records)) {
+      if (Object.keys(results.records).length === 0) {
         return { message: 'requester is not valid.', status: 400 }
       }
       else {
@@ -75,7 +72,7 @@ const updateUserbyNciUserName = function (requester, user) {
           return neo4jsession.writeTransaction(txc => txc.run('MATCH (user:User {nci_username: toLower($username)}) SET user += $updateduser RETURN user',
             { username: user.nci_username.toLowerCase(), updateduser: updatedUser }
           )).then(results => {
-            if (_.isEmpty(results.records)) {
+            if (Object.keys(results.records).length === 0) {
               return { message: 'invalid NCI username', status: 400 };
             }
             return { status: 200, user: new User(results.records[0].get('user')) };
@@ -91,7 +88,7 @@ const updateUserbyNciUserName = function (requester, user) {
     });
 };
 
-const createUserWithNciUserName = function (requester, user) {
+export const createUserWithNciUserName = (requester, user) => {
 
   if (!requester && !user.nci_username) {
     return { message: 'invalid NCI username for requester', status: 400 };
@@ -117,13 +114,13 @@ const createUserWithNciUserName = function (requester, user) {
           return neo4jsession.readTransaction(txc => txc.run('MATCH (user:User {nci_username: toLower($username)}) RETURN user',
             { username: user.nci_username.toLowerCase() }
           )).then(results => {
-            if (!_.isEmpty(results.records)) {
+            if (Object.keys(results.records).length !== 0) {
               return { message: 'existing NCI username', status: 400 };
             } else {
               return neo4jsession.writeTransaction(txc => txc.run('MERGE (user:User { nci_username: toLower($username) }) SET user = $newuser, user.id = id(user) RETURN user',
                 { username: user.nci_username.toLowerCase(), newuser: newUser }
               )).then(results => {
-                if (_.isEmpty(results.records)) {
+                if (Object.keys(results.records).length === 0) {
                   return { message: 'failed to create user', status: 400 };
                 }
                 return { status: 200, user: new User(results.records[0].get('user')) };
@@ -137,11 +134,4 @@ const createUserWithNciUserName = function (requester, user) {
     }).catch(function (error) {
       console.log("error in create user: " + error);
     });
-};
-
-module.exports = {
-  getAllUser,
-  getUserbyNciUserName,
-  updateUserbyNciUserName,
-  createUserWithNciUserName,
 };

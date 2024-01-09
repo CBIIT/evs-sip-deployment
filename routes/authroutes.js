@@ -1,7 +1,7 @@
 // const express = require("express");
-const Router = require('express-promise-router');
-const passport = require('passport');
-const nconf = require('../config');
+import Router from 'express-promise-router';
+import passport from 'passport';
+// const nconf = require('../config');
 // import cedcd_settings from "../config/cedcd_settings.js";
 
 // nconf.get('neo4j-local')
@@ -130,5 +130,5 @@ router.get("/user-session", (request, response) => {
 //   return destination;
 // }
 
-module.exports = router;
+export default router;
 

@@ -1,8 +1,8 @@
-var path = require("path");
-var _ = require("lodash");
+import path from 'path';
+import dotenv from 'dotenv';
 
-if (process.env.NODE_ENV !== "prod") {
-  const cfg = require("dotenv").config();
+if (process.env.NODE_ENV !== "prod") {;
+  const cfg = dotenv.config();
   if (!cfg.error) {
     let tmp = cfg.parsed;
     process.env = {
@@ -19,9 +19,9 @@ if (process.env.NODE_ENV !== "prod") {
 
 // All configurations will extend these options
 // ============================================
-var all = {
+const all = {
   // Root path of server
-  root: path.resolve(__dirname, "../"),
+  root: process.cwd(),
 
   // Server port
   port: process.env.PORT || 3001,
@@ -106,4 +106,11 @@ var all = {
 
 // Export the config object based on the NODE_ENV
 // ==============================================
-module.exports = _.merge(all, require("./" + all.env + ".js") || {});
+
+import { default as envConfigModule } from './dev.js';
+
+const envConfig = envConfigModule || {};
+
+const mergedConfig = { ...all, ...envConfig };
+
+export default mergedConfig;

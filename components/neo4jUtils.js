@@ -1,18 +1,17 @@
-"use strict";
-
 // neo4j cypher helper module
-const nconf = require('../config');
-const _ = require('lodash');
-const neo4j = require('neo4j-driver');
+import nconf from '../config.js';
+import * as _ from 'lodash';
+import * as neo4j from 'neo4j-driver';
 const driver = neo4j.driver(nconf.get('neo4j-local'), neo4j.auth.basic(nconf.get('neo4jUSERNAME'), nconf.get('neo4jPASSWORD')));
 
-exports.getSession = function(){
+// neo4j cypher helper module
+export const getSession = () => {
   console.log(nconf.get('neo4jUSERNAME'), nconf.get('neo4jPASSWORD'))
 
   return driver.session();
-
 }
-exports.getneo4jSession = function (context) {
+
+export const getneo4jSession = (context) => {
   if(context.neo4jSession) {
     return context.neo4jSession;
   }
@@ -23,7 +22,7 @@ exports.getneo4jSession = function (context) {
   }
 };
 
-exports.neo4jdbWhere = function (name, keys) {
+export const neo4jdbWhere = (name, keys) => {
   if (_.isArray(name)) {
     _.map(name, (obj) => {
       return _neo4jwhereTemplate(obj.name, obj.key, obj.paramKey);
@@ -35,6 +34,6 @@ exports.neo4jdbWhere = function (name, keys) {
   }
 };
 
-function _neo4jwhereTemplate(name, key, paramKey) {
+const _neo4jwhereTemplate =(name, key, paramKey) => {
   return name + '.' + key + '={' + (paramKey || key) + '}';
 }

@@ -1,19 +1,11 @@
-const logger = require("../components/logger");
-const usercontroller = require( '../service/user/usercontroller');
+import logger from '../components/logger.js';
+import usercontroller from '../service/user/usercontroller.js';
 
 const timeoutMinutes = 150;
 const maxSessionAge = timeoutMinutes * 60 * 1000; // convert minutes to ms
 const logoutUrl= 'https://authdev.nih.gov/siteminderagent/smlogoutredirector.asp';
 
-module.exports = {
-    login,
-    logout,
-    getUserSession,
-    updateSession,
-}
-
-//const baseURL = "http://localhost:3001/evssip"
-async function login(request, response) {
+export async function login(request, response) {
     const { headers, session, app, params, query } = request;
   
     logger.debug(headers)
@@ -45,15 +37,15 @@ async function login(request, response) {
             let user = await usercontroller.getUserbyNciUserName('zhangchao');
             console.log(user)
             session.user = {
-                        id: 0,
-                        name: 'zhangchao',
+                id: 0,
+                name: 'zhangchao',
                 firstName: user.first_name,
                 role: user.role,
                 project:user.projects,
                 active: user.active,
                 email: user.email,
-                        expires,
-                        // headers,
+                expires,
+                // headers,
             };
         } else {
    
@@ -100,7 +92,7 @@ async function login(request, response) {
     }
 }
 
-async function updateSession(request, response) {
+export async function updateSession(request, response) {
     if (!request.session || !request.session.user) {
         response.json(null);
     }
@@ -134,14 +126,14 @@ async function updateSession(request, response) {
 }
 // note: both federated NIH Auth use siteminder under the hood to authenticate users
 // so we can use the global siteminder agent logout route to invalidate our current session
-function logout(request, response) {
+export function logout(request, response) {
 
      request.session.destroy(error => {
          response.json(logoutUrl || '/');
      });  
 }
 
-function getUserSession(request, response) {
+export function getUserSession(request, response) {
     logger.info("request.session")
     logger.info(request.session)
     response.json(request.session.user || null);

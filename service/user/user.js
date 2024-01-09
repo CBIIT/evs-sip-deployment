@@ -1,11 +1,10 @@
-const neo4jUtils  = require( '../../components/neo4jUtils');
-const {writeResponse,writeError} = require( '../../components/response');
-const usercontroller = require( './usercontroller');
-const _ = require('lodash');
+import * as dbUtils from '../../components/neo4jUtils.js';
+import { writeResponse, writeError } from '../../components/response.js';
+import * as usercontroller from './usercontroller.js';
 
+import crypto from 'crypto';
 
-const crypto = require('crypto');
-const getAllUser = async function (req, res) {
+export const getAllUser = async (req, res) => {
     //const result = await usercontroller.getAllUser(neo4jUtils.getneo4jSession(req));
      const params = req.query;
      const searchText = params.search ? params.search : "";
@@ -20,7 +19,7 @@ const getAllUser = async function (req, res) {
  };
 
 // expect NCI_USERNAME as parameter
-const getUserProfile = async function (req, res) {
+export const getUserProfile = async (req, res) => {
     const params = req.query;
     const userName = params.username ? params.username : "";
     if(userName) {
@@ -32,7 +31,7 @@ const getUserProfile = async function (req, res) {
   
 };
 
-const updateUser = async function (req, res) {
+export const updateUser = async (req, res) => {
     let body = req.body;
     let requester = body.requester ? body.requester : "";
     let user = body.user? body.user :{};
@@ -45,7 +44,7 @@ const updateUser = async function (req, res) {
   
 };
 
-const createUser = async function (req, res) {
+export const createUser = async (req, res) => {
     let body = req.body;
     let requester = body.requester ? body.requester : "";
     let user = body.user? body.user :{};
@@ -56,11 +55,4 @@ const createUser = async function (req, res) {
         res.json({detail: 'no User data provided', status: 400});
     }
   
-};
-
-module.exports= {
-    getUserProfile,
-    getAllUser,
-    updateUser,
-    createUser,
 };
