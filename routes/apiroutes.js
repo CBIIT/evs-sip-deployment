@@ -3,7 +3,7 @@ import * as esapi from "../service/esapi/esapi.js";
 import * as metauser from "../service/user/user.js";
 // import metamodel from '../service/datamodel/dataModel.js';
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger.js";
+import swaggerDocument from "./swaggerDoc.js";
 
 const router = express.Router();
 

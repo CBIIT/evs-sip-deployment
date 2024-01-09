@@ -107,10 +107,10 @@ const all = {
 // Export the config object based on the NODE_ENV
 // ==============================================
 
-import { default as envConfigModule } from './dev.js';
+import { default as esConfigModule } from './esconfig.js';
 
-const envConfig = envConfigModule || {};
+const esConfig = esConfigModule || {};
 
-const mergedConfig = { ...all, ...envConfig };
+const mergedConfig = { ...all, ...esConfig };
 
 export default mergedConfig;

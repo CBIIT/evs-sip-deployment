@@ -9,6 +9,7 @@ import config from './index.js';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import passport from 'passport';
+import createSession from '../components/session.js';
 
 import neo4jSessionCleanup from '../middlewares/neo4jSessionCleanup.js';
 // const { login, logout, getUserSession, updateSession } = require('./authentication');
@@ -23,114 +24,13 @@ import apiRoutes from './apiroutes.js';
 import guiRoutes from './guiroutes.js';
 import authRoutes from './authroutes.js';
 
-// const indexRouter = require('./routes/index')
 const configureRoutes = async (app) =>  {
-  // if (config.env !== 'prod') { 
-  //   app.use(logger('dev')) 
-  // };
-  if (config.env !== 'dev') {
-    app.set('trust proxy', 1);
-    app.use(session({
-      secret: 'keyboard cat', 
-      name: 'cookieName',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: false, httpOnly: true, maxAge: 600000 }
-    }))
-  } else {
-    app.use(session({
-      secret: 'keyboard cat',
-      cookie: {}
-    }))
-  };
+
+  app.set('trust proxy', 1);
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  // app.use(express.static(path.resolve(config.root, 'build')));
-  //  app.use(require('./session'));
   app.use(compression());
-
-
-var swaggerDefinition = {
-  info: {
-    title: "EVS-SIP Restful API",
-    version: "1.0.1",
-    description: "EVS-SIP Restful API",
-  },
-  servers: ["http://localhost:3000"],
-  basePath: "/api",
-  schemes: [
-      'http',
-      'https'
-  ],
-};
-
-
-/**
- * @swagger
- * definition:
- *   Node:
- *     type: object
- *     properties:
- *       model:
- *         type: string
- *       node_name:
- *         type: string
- */
-
-/**
- * @swagger
- * /api/datamodel/source/{model}:
- *   get:
- *     description: Find all nodes in requested model
- *     summary: Find all nodes in requested model
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: A list of nodes
- */
-
-
-
-// options for the swagger docs
-const options = {
-  // import swaggerDefinitions
-  swaggerDefinition: swaggerDefinition,
-  // path to the API docs
-  apis: ["*.js"],
-};
-
-// initialize swagger-jsdoc
-const swaggerSpec = swaggerJsDoc(options);
-
-// serve swagger
-// api.get("/swagger.json", function (req, res) {
-//   res.setHeader("Content-Type", "application/json");
-//   res.send(swaggerSpec);
-// });
-
-app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-
-  // app.use('/session-test', function (req, res, next) {
-  //   const { session } = req;
-  //   res.status(200).json(session);
-  // });
-
-  // app.use('/session-view', function (req, res, next) {
-  //   var sess = req.session;
-  //   if (sess.views) {
-  //     sess.views++;
-  //     res.setHeader('Content-Type', 'text/html');
-  //     res.write('<p>views: ' + sess.views + '</p>');
-  //     res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>');
-  //     res.end();
-  //   } else {
-  //     sess.views = 1;
-  //     res.end('welcome to the session demo. refresh!');
-  //   }
-  // });
 
   app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -145,29 +45,12 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     }
   });
 
-
-
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   // app.use(express.static(path.resolve(config.root, 'build')));
   app.use(compression());
   app.use(neo4jSessionCleanup);
-
-
-  // const connection = mysql.getConnectionPool(config.mysql);
-	// const logger = createLogger("cedcd", config.log_level ? config.log_level : "debug");
-	// app.locals.logger = logger;
-	
-	// app.locals.connection = connection;
-	// app.locals.mysql = {
-	// 	connection,
-	// 	query: promisify(connection.query).bind(connection),
-	// 	upsert: mysql.upsert,
-	// }
-	// const userManager = new UserManager(app.locals.mysql);
-
-	// app.locals.userManager = userManager;
 
   // configure passport
 	logger.debug("Configuring passport");
@@ -177,23 +60,13 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 	// configure session
 	logger.debug("Configuring session");
-	// app.use(session);
+  app.use(createSession());
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-
-  // app.use('/session-test', function (req, res, next) {
-  //   const { session } = req;
-  //   res.status(200).json(session);
-  // });
-
   // healthcheck route
-  app.get('/api/ping', (req, res) => {
-    res.status(200).json('true');
-  });
-
   app.get('/', (req, res) => {
-    res.status(200).json('hello');
+    res.status(200).json('true');
   });
 
   //Routers
@@ -205,8 +78,6 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   // app.use('/dashboard/logout', logout);
   // app.use('/service/user-session', getUserSession);
   // app.use('/service/update-session', updateSession);
-
-
 
   // app.get('*', (req, res) => {
   //   res.sendFile('build/index.html', { root: config.root });
