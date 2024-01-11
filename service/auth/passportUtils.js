@@ -1,6 +1,6 @@
 // const { createOAuthStrategy } = require("./passportStrategies.js");
 // const cedcd_settings = require("../../config/cedcd_settings.js");
-import { Issuer, Strategy } from "openid-client"
+import { Issuer, Strategy } from 'openid-client';
 import { getUserbyNciUserName } from '../user/usercontroller.js';
 
 // function getAccountType({ preferred_username }) {
@@ -8,11 +8,11 @@ import { getUserbyNciUserName } from '../user/usercontroller.js';
 //   return loginDomain.endsWith("login.gov") ? "Login.gov" : "NIH";
 // }
 
-export function createUserSerializer() {
+export const createUserSerializer = () => {
   return (user, done) => done(null, user);
-}
+};
 
-export function createUserDeserializer() {
+export const createUserDeserializer = () => {
   return async (nciUser, done) => {
     const userData = await getUserbyNciUserName(nciUser.userid);
 
@@ -28,40 +28,37 @@ export function createUserDeserializer() {
         role: userResult.role,
         project: userResult.projects,
         active: userResult.active,
-        email: userResult.email
+        email: userResult.email,
         // expires: expires,
       };
     }
 
     done(null, user || {});
   };
-}
+};
 
 //This is where we would retrieve user information from the database
 // function createUserDeserializer() {
 //   return (user, done) => done(null, user);
 // }
 
-export async function createOAuth2Strategy(env = process.env) {
+export const createOAuth2Strategy = async (env = process.env) => {
   const { Client } = await Issuer.discover(env.OAUTH2_BASE_URL);
 
   const client = new Client({
     client_id: env.OAUTH2_CLIENT_ID,
     client_secret: env.OAUTH2_CLIENT_SECRET,
     redirect_uris: [env.OAUTH2_REDIRECT_URI],
-    response_types: ["code"],
+    response_types: ['code'],
   });
 
   const params = {
-    scope: "openid profile email",
-    prompt: "login",
+    scope: 'openid profile email',
+    prompt: 'login',
   };
 
-  return new Strategy(
-    { client, params },
-    async (tokenSet, done) => {
-      const user = await client.userinfo(tokenSet);
-      done(null, user);
-    }
-  );
-}
+  return new Strategy({ client, params }, async (tokenSet, done) => {
+    const user = await client.userinfo(tokenSet);
+    done(null, user);
+  });
+};
