@@ -1,6 +1,6 @@
 // neo4j cypher helper module
 import nconf from '../config.js';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import * as neo4j from 'neo4j-driver';
 const driver = neo4j.driver(nconf.get('neo4j-local'), neo4j.auth.basic(nconf.get('neo4jUSERNAME'), nconf.get('neo4jPASSWORD')));
 

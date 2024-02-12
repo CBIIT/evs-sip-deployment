@@ -3,7 +3,7 @@ import { User } from './neo4j/user.js';
 
 import uuid from 'node-uuid';
 import randomstring from 'randomstring';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import crypto from 'crypto';
 

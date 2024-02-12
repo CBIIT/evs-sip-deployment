@@ -4,30 +4,30 @@
 
 import fs from 'fs';
 import path from 'path';
-import elasticsearch from 'elasticsearch';
 import yaml from 'yamljs';
 import config from '../routes/index.js';
 import logger from './logger.js';
+import { Client } from "@opensearch-project/opensearch";
 import * as cache from './cache.js';
 import { _extend as extend } from 'util';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import * as shared from '../service/search/shared.js';
 
-const allTerm = {};
+let allTerm = {};
 const icdo_mapping = shared.getICDOMapping();
 const icdo2Exclude = shared.getParentICDO();
-const  gdc_values = {};
-const gdc_props = {};
-const gdc_nodes = {};
-const allProperties = [];
-const unloaded_ncits = [];
+let gdc_values = {};
+let gdc_props = {};
+let gdc_nodes = {};
+let allProperties = [];
+let unloaded_ncits = [];
 
-const esClient = new elasticsearch.Client({
-  host: config.elasticsearch.host,
-  log: config.elasticsearch.log,
+const esClient = new Client({
+  node: config.elasticsearch.host,
   requestTimeout: config.elasticsearch.requestTimeout
 });
- 
+
+
 const helper_gdc = (fileJson, syns) => {
    let properties = fileJson.properties;
  
@@ -1111,7 +1111,7 @@ const helper_gdc = (fileJson, syns) => {
    let jsonData = await shared.getGraphicalGDCDictionary();
  
    for(let node in jsonData){
-     if(node !== '_terms' || node !== '_definitions' ){
+     if(node !== '_terms' && node !== '_definitions' && node !== '_terms_enum' ){
        helper_gdc(jsonData[node], syns);
      }
    }
@@ -1144,7 +1144,6 @@ const helper_gdc = (fileJson, syns) => {
        suggestionBody.push({
          index: {
            _index: config.suggestionName,
-           _type: '_doc',
            _id: doc.id
          }
        });
@@ -1164,7 +1163,6 @@ const helper_gdc = (fileJson, syns) => {
      propertyBody.push({
        index: {
          _index: config.index_p,
-         _type: '_doc',
          _id: doc.id
        }
      });
@@ -1176,7 +1174,7 @@ const helper_gdc = (fileJson, syns) => {
        return next(err_p);
      }
      let errorCount_p = 0;
-     data_p.items.forEach(item => {
+     data_p.body.items.forEach(item => {
        if (item.index && item.index.error) {
          logger.error(++errorCount_p, item.index.error);
        }
@@ -1186,7 +1184,7 @@ const helper_gdc = (fileJson, syns) => {
          return next(err_s);
        }
        let errorCount_s = 0;
-       data_s.items.forEach(itm => {
+       data_s.body.items.forEach(itm => {
          if (itm.index && itm.index.error) {
            logger.error(++errorCount_s, itm.index.error);
          }

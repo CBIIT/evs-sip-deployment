@@ -6,8 +6,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import yaml from 'yamljs';
 import Datastore from 'nedb-promises';
-import * as _ from 'lodash';
-import handleError from '../../components/handleError.js';
+import _ from 'lodash';
+import * as handleError from '../../components/handleError.js';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
 
 let db = Datastore.create();
@@ -443,7 +443,7 @@ export const readGDCProps = () => {
 
 export const readGDCNodes = () => {
   let content = fs.readFileSync(dataFilesDir + "/gdc_nodes.js").toString();
-return JSON.parse(content);
+  return JSON.parse(content);
 }
 
 export const readCDEData = () => {

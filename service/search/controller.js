@@ -1,5 +1,5 @@
 import * as elastic from '../../components/elasticsearch.js';
-import handleError from '../../components/handleError.js';
+import * as handleError from '../../components/handleError.js';
 import logger from '../../components/logger.js';
 import * as cache from '../../components/cache.js';
 import config from '../../routes/index.js';
@@ -351,7 +351,7 @@ export const indexing = (req, res) => {
   };
   configs.push(config_suggestion);
   elastic.createIndexes(configs, (result) => {
-    if (result.acknowledged === undefined) {
+    if (result?.body?.acknowledged === undefined) {
       return handleError.error(res, result);
     }
     elastic.bulkIndex((data) => {
@@ -375,10 +375,10 @@ export const suggestion = (req, res) => {
     },
   };
   elastic.suggest(config.suggestionName, suggest, (result) => {
-    if (result.suggest === undefined) {
+    if (result.body.suggest === undefined) {
       return handleError.error(res, result);
     }
-    let dt = result.suggest.term_suggest;
+    let dt = result.body.suggest.term_suggest;
     let data = [];
     dt[0].options.forEach((opt) => {
       data.push(opt._source);
@@ -414,16 +414,14 @@ export const searchP = (req, res, formatFlag) => {
     }
     if (keyword && keyword.trim() !== "") {
       let query = shared.generateQuery(keyword, option);
-     logger.debug("keyword: " + keyword)
-     logger.debug("------ query ------  %o ", query)
       let highlight = shared.generateHighlight();
       elastic.query(config.index_p, query, "enum", highlight, (result) => {
-        if (result.hits === undefined) {
+        if (result?.body?.hits === undefined) {
           res.json({ total: 0, returnList: [], timedOut: true });
           //return writeError.error(res, result);
         } else {
-          let total = result.hits.total.value;
-          let data = result.hits.hits;
+          let data = result.body.hits.hits;
+          let total = result.body.hits.total.value;
           data.forEach((entry) => {
             delete entry.sort;
             delete entry._index;
@@ -506,10 +504,10 @@ export const getValuesForGraphicalView = async function (req, res) {
     query.terms.id = [];
     query.terms.id.push(uid);
     elastic.query(config.index_p, query, "", null, (data) => {
-      if (data.hits === undefined) {
+      if (data?.body?.hits === undefined) {
         return handleError.error(res, data);
       }
-      let rs = data.hits.hits;
+      let rs = data.body.hits.hits;
       result = [];
       if (rs.length > 0 && rs[0]._source.enum) {
         result = rs[0]._source.enum;
