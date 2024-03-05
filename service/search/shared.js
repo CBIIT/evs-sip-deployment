@@ -1,6 +1,6 @@
 import * as cache from '../../components/cache.js';
 import * as elastic from '../../components/elasticsearch.js';
-import config from '../../config.js';
+import config from '../../routes/index.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -761,6 +761,12 @@ export const convert2Key = (name) => {
   return result.join("_");
 };
 
+const keyNodeName = (name) => {
+  let tmp = name.split('.');
+  // Return the last value
+  return tmp[tmp.length - 1];
+};
+
 const generateICDCorCTDCData = (dc) => {
   const dcMData = dc.mData;
   const dcMPData = dc.mpData;
@@ -770,10 +776,12 @@ const generateICDCorCTDCData = (dc) => {
   for (let [key, value] of Object.entries(dcMData.Nodes)) {
     //console.log(key);
     //console.log(value.Category);
+
+    const nodeName = keyNodeName(key);
     const item = {};
     item["$schema"] = "http://json-schema.org/draft-06/schema#";
-    item["id"] = key;
-    item["title"] = convert2Title(key);
+    item["id"] = nodeName;
+    item["title"] = convert2Title(nodeName);
     if ("Category" in value) {
       item["category"] = value.Category;
     } else if ("Tags" in value) {
@@ -787,7 +795,6 @@ const generateICDCorCTDCData = (dc) => {
     item["additionalProperties"] = false;
     item["submittable"] = true;
     item["constraints"] = null;
-    //item["links"]=[];
 
     item["type"] = "object";
     const link = [];
@@ -796,23 +803,26 @@ const generateICDCorCTDCData = (dc) => {
 
     if (dcMData.Nodes[key].Props != null) {
       for (var i = 0; i < dcMData.Nodes[key].Props.length; i++) {
-        //console.log(icdcMData.Nodes[key].Props[i]);
-        const nodeP = dcMData.Nodes[key].Props[i];
+        const fullNodeProp = key + '.' + dcMData.Nodes[key].Props[i];
+        const nodeProp = dcMData.Nodes[key].Props[i];
         const propertiesItem = {};
         for (var propertyName in dcMPData.PropDefinitions) {
-          if (propertyName == nodeP) {
+          if (propertyName === nodeProp || propertyName == fullNodeProp ) {
             propertiesItem["description"] =
               dcMPData.PropDefinitions[propertyName].Desc;
-            propertiesItem["type"] =
-              dcMPData.PropDefinitions[propertyName].Type;
+            propertiesItem['type'] =
+              dcMPData.PropDefinitions[propertyName].Enum === undefined
+                ? dcMPData.PropDefinitions[propertyName].Type
+                : dcMPData.PropDefinitions[propertyName].Enum;
             propertiesItem["src"] = dcMPData.PropDefinitions[propertyName].Src;
 
-            if (dcMPData.PropDefinitions[propertyName].Req == true) {
-              pRequired.push(nodeP);
+            if (dcMPData.PropDefinitions[propertyName].Req == true || 
+                dcMPData.PropDefinitions[propertyName].Req == 'Yes') {
+              pRequired.push(nodeProp);
             }
           }
         }
-        properties[nodeP] = propertiesItem;
+        properties[nodeProp] = propertiesItem;
       }
 
       item["properties"] = properties;
@@ -1040,6 +1050,70 @@ export const getGraphicalCTDCDictionary = () => {
   }
   return result;
 }
+
+function filterResultByProject(obj, project) {
+  const filteredObject = {};
+
+  for (const key in obj) {
+    if (key.startsWith(project)) {
+
+      filteredObject[keyNodeName(key)] = obj[key];
+    }
+  }
+
+  return filteredObject;
+}
+
+export const getNewGraphicalPCDCDictionary = (project) => {
+  
+  let project_result = undefined;
+
+  if(project !== undefined){
+    project_result = cache.getValue("pcdc_dict_" + project);
+  }
+
+  if (project_result === undefined) {
+
+    let result = cache.getValue("pcdc_dict_new");
+    if (result == undefined) {
+      let jsonData = {};
+      var mpJson = yaml.load(dataFilesPath + "/PCDC/pcdc-model-properties.yaml");
+      jsonData.mpData = mpJson;
+      var mJson = yaml.load(dataFilesPath + "/PCDC/pcdc-model.yaml");
+      jsonData.mData = mJson;
+      result = generateICDCorCTDCData(jsonData);
+      cache.setValue("pcdc_dict_new", result, config.item_ttl);
+    }
+
+    if(project === undefined) {
+      project_result = result;
+    } else {
+      project_result = filterResultByProject(result, project);
+    }
+
+    let nodes = Object.keys(project_result);
+    //create fake relationship for graphical display purpose
+  
+    nodes.forEach((n, i) => {
+      if (i - 4 >= 0) {
+        let linkItem = {};
+        linkItem["name"] = nodes[i - 4];
+        linkItem["backref"] = n;
+        linkItem["label"] = "of_pcdc";
+        linkItem["target_type"] = nodes[i - 4];
+        linkItem["required"] = false;
+  
+        project_result[n].links.push(linkItem);
+      }
+    });
+  }
+
+  if(project !== undefined){
+    cache.setValue("pcdc_dict_" + project, project_result, config.item_ttl);
+  }
+
+  return project_result;
+};
 
 const processGDCDictionaryEnumData = (prop) => {
 	const enums = prop.enum;
@@ -1310,13 +1384,17 @@ export const getGraphicalPCDCDictionary = (project) => {
   if (project_result == undefined) {
     let result = cache.getValue("pcdc_dict");
     if (result == undefined) {
+
+
       let jsonData = readPCDCMapping();
       result = generatePCDCData(jsonData, {});
+
       //result = generatePCDCData(jsonData, {Relationships: {}});
       cache.setValue("pcdc_dict", result, config.item_ttl);
     }
 
     project_result = result[project];
+
     let nodes = Object.keys(project_result);
     //create fake relationship for graphical display purpose
 

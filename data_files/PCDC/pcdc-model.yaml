@@ -1,0 +1,1839 @@
+Nodes:
+  AML.subject_characteristics:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - honest_broker_subject_id
+      - data_contributor_id
+      - study_id
+      - age_at_enrollment
+      - treatment_arm
+      - enrolled_status
+  AML.off_protocol_therapy_study:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_off
+      - off_type
+      - reason_off
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+  AML.disease_phase_timing:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - age_at_disease_phase
+      - year_at_disease_phase
+  AML.course_timing:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - course
+      - course_number
+      - age_at_course_start
+      - age_at_course_end
+      - age_at_course_anc_500
+  AML.demographics:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - sex
+      - race
+      - ethnicity
+  AML.medical_history:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - medical_history
+  AML.survival_characteristics:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_lkss
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lkss
+      - age_lost_to_follow_up
+      - cause_of_death
+      - trm_type
+      - cause_of_death_detail
+      - cause_of_death_ranking
+  AML.disease_characteristics:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - fab_type
+      - who_aml
+      - detection_method
+      - disease_site
+      - cns_disease_status
+      - mpal
+      - mlds
+      - tam
+      - secondary_aml
+  AML.myeloid_sarcoma_involvement:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_disease_phase
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - myeloid_sarcoma
+      - myeloid_sarcoma_site
+  AML.vitals:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_vitals
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - vitals_test
+      - vitals_result
+      - vitals_result_numeric
+      - vitals_result_unit
+  AML.lab:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_lab
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lab_category
+      - lab_test
+      - lab_spec_type
+      - lab_result
+      - lab_result_numeric
+      - lab_result_unit
+      - lab_method
+      - traumatic_tap
+  AML.molecular_analysis:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_molecular_analysis
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - molecular_analysis_method
+      - iscn
+      - indepen_ab
+      - num_metaphases
+      - molecular_abnormality
+      - chromosome
+      - gene1
+      - gene2
+      - variant_type
+      - genetic_seq
+      - aa_mutation
+      - molecular_abnormality_result
+      - allelic_ratio
+  AML.radiation_therapy:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_rt_start
+      - age_at_rt_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - rt_site
+      - rt_dose
+      - rt_unit
+  AML.transfusion_medicine_procedures:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_tmp_start
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tmp_type
+      - tmp_product
+  AML.cellular_immunotherapy:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_imt_start
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - imt_type
+  AML.total_dose:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_total_dose_start
+      - age_at_total_dose_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - route
+      - antineoplastic_agent
+      - number_doses
+      - total_dose_administered
+      - total_dose_intended
+      - total_dose_units
+  AML.concomitant_medication:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_medication_start
+      - age_at_medication_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - medication
+      - medication_admn_status
+  AML.stem_cell_transplant:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_sct
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - sct_type
+      - sct_source
+      - sct_donor_relationship
+      - hla_match
+      - number_hla
+      - number_matches
+      - hla_a_result
+      - hla_b_result
+      - hla_c_result
+      - hla_drb1_result
+      - hla_dq_result
+      - sct_conditioning_type
+      - sct_tbi
+  AML.minimal_residual_disease:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_mrd_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - mrd_method
+      - flow_cytometry_type
+      - mrd_result
+      - mrd_result_numeric
+      - mrd_result_unit
+      - mrd_sensitivty
+      - mrd_sample_source
+      - mrd_molecular_markers
+  AML.subject_response:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_response
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - response_category
+      - response
+      - bm_pct_blasts_at_response
+      - bm_analysis_method_at_response
+      - anc_at_response
+      - anc_threshold_at_response
+      - platelet_count_at_response
+      - platelet_threshold_at_response
+  AML.function_test:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_function_test
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - function_category
+      - function_result_measurement
+      - function_result
+      - function_result_numeric
+      - function_result_unit
+  AML.adverse_events:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_ae
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - adverse_event
+      - ae_code
+      - ae_system
+      - ae_system_version
+      - ae_grade
+      - ae_attribution
+      - ae_outcome
+      - ae_icu
+      - ae_medication
+      - ae_intervention
+      - ae_med_intervention_detail
+      - ae_pathogen
+      - ae_pathogen_confirmation
+      - gvhd_acuity
+      - gvhd_organ
+  AML.secondary_malignant_neoplasm:
+    Tags:
+      Category: AML
+    Props:
+      - pcdc_subject_id
+      - age_at_smn
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - smn_icd_o_morph
+      - smn_icd_o_top
+  EWS.subject_characteristics:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - honest_broker_subject_id
+      - data_contributor_id
+      - study_id
+      - age_at_enrollment
+      - treatment_arm
+  EWS.disease_phase_timing:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - age_at_disease_phase
+      - year_at_disease_phase
+  EWS.course_timing:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - course
+      - course_number
+      - age_at_course_start
+      - age_at_course_end
+      - age_at_txassign
+  EWS.off_protocol_therapy_study:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_off
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - off_type
+      - reason_off
+  EWS.demographics:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - sex
+      - race
+      - ethnicity
+  EWS.medical_history:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - medical_history
+  EWS.survival_characteristics:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_lkss
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lkss
+      - cause_of_death
+      - cause_of_death_ranking
+  EWS.disease_characteristics:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - lansky
+      - karnofsky
+      - gpoh_score
+  EWS.tumor_assessment:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_tumor_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tumor_detection_method
+      - tumor_classification
+      - tumor_tissue_type
+      - tumor_site
+      - tumor_laterality
+      - site_within_bone
+      - fracture
+      - longest_diam_dim1
+      - longest_diam_dim2
+      - longest_diam_dim3
+      - computed_volume
+      - estimated_volume
+      - tumor_volume
+      - joint_involvement
+      - nodal_involvement
+      - skip_lesion
+      - ipsilateral_nodules
+      - pleural_effusion
+      - pleural_cytology
+      - peritoneal_effusion
+      - peritoneal_cytology
+      - extension_site
+  EWS.histology:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_hist_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - histology
+  EWS.vitals:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_vitals
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - vitals_test
+      - vitals_result
+      - vitals_result_numeric
+      - vitals_result_unit
+  EWS.lab:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_lab
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lab_test
+      - lab_spec_type
+      - lab_result
+      - lab_result_numeric
+      - lab_result_unit
+      - threshold_high
+  EWS.immunohistochemistry:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_ihc
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - ihc_test
+      - ihc_result
+  EWS.molecular_analysis:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_molecular_analysis
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tumor_classification
+      - molecular_analysis_method
+      - molecular_abnormality
+      - variant_type
+      - chromosome
+      - gene1
+      - gene2
+  EWS.biopsy_surgical_procedures:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_procedure
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tumor_classification
+      - tumor_tissue_type
+      - procedure_site
+      - procedure_laterality
+      - procedure_type
+      - surgery
+      - surgery_type_limb
+      - amputation_type
+      - surgery_type_limb_salvage
+      - reconstruction_type
+      - procedure_extent
+      - margins
+      - biopsy_type
+      - met_non_lung_mgmt
+      - met_lung_mgmt
+      - localization_technique
+      - tumor_from_margin
+  EWS.radiation_therapy:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_rt_start
+      - age_at_rt_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tumor_classification
+      - tumor_tissue_type
+      - rt_site
+      - rt_laterality
+      - energy_type
+      - rt_dose
+      - rt_unit
+      - num_fraction
+      - transposition_organ
+  EWS.stem_cell_transplant:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_sct
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - sct_type
+      - sct_source
+      - sct_cd34_coll
+      - sct_cd34_transplant
+  EWS.non_protocol_therapy:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - npt_timing
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - npt_type
+  EWS.subject_response:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_response
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - response
+      - response_system
+      - necrosis
+      - necrosis_pct
+      - response_system_version
+  EWS.adverse_events:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_ae
+      - age_at_ae_resolved
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - ae_code
+      - ae_system
+      - ae_system_version
+      - ae_grade
+      - ae_attribution
+  EWS.secondary_malignant_neoplasm:
+    Tags:
+      Category: EWS
+    Props:
+      - pcdc_subject_id
+      - age_at_smn
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - smn_icd_o_morph
+      - smn_icd_o_top
+      - smn_field
+  GCT.subject_characteristics:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - honest_broker_subject_id
+      - data_contributor_id
+      - study_id
+      - age_at_enrollment
+      - year_at_enrollment
+      - treatment_arm
+  GCT.disease_phase_timing:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - age_at_disease_phase
+      - year_at_disease_phase
+  GCT.demographics:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - sex
+      - race
+      - ethnicity
+  GCT.medical_history:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - medical_history
+      - dysgenetic_gonad
+  GCT.survival_characteristics:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_lkss
+      - disease_phase
+      - disease_phase_number
+      - lkss
+      - cause_of_death
+  GCT.disease_characteristics:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - igccc_risk_group
+      - magic_risk_group
+      - detection_method
+  GCT.tumor_assessment:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_tumor_assessment
+      - disease_phase
+      - disease_phase_number
+      - tumor_detection_method
+      - tumor_classification
+      - tumor_site
+      - tumor_laterality
+      - nodal_involvement
+      - nodal_site
+  GCT.staging:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_staging
+      - disease_phase
+      - disease_phase_number
+      - stage_system
+      - stage
+  GCT.histology:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_hist_assessment
+      - disease_phase
+      - disease_phase_number
+      - hist_assessment_review
+      - histology
+      - histology_result
+      - histology_result_numeric
+      - histology_result_unit
+      - hist_icd_o_morph
+      - histology_grade
+      - mature_glial_implants
+      - somatic_malignancy_type
+  GCT.vitals:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_vitals
+      - disease_phase
+      - disease_phase_number
+      - vitals_test
+      - vitals_result
+      - vitals_result_numeric
+      - vitals_result_unit
+  GCT.lab:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_lab
+      - disease_phase
+      - disease_phase_number
+      - lab_category
+      - lab_test
+      - lab_spec_type
+      - lab_result
+      - lab_result_numeric
+      - lab_result_unit
+      - lab_method
+      - lab_seq_method
+      - threshold_high
+      - threshold_low
+      - pmid_ref
+  GCT.immunohistochemistry:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_ihc
+      - disease_phase
+      - disease_phase_number
+      - ihc_test
+      - ihc_result
+      - ihc_result_numeric
+  GCT.cytology:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_cytology
+      - disease_phase
+      - disease_phase_number
+      - malignant_cells
+      - cytology_spec_type
+  GCT.molecular_analysis:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_molecular_analysis
+      - disease_phase
+      - disease_phase_number
+      - molecular_analysis_method
+      - karyotype_status
+      - iscn
+      - num_chromosomes
+      - indepen_ab
+      - molecular_abnormality
+      - chromosome
+      - gene1
+      - gene2
+      - variant_type
+  GCT.biopsy_surgical_procedures:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_procedure
+      - disease_phase
+      - disease_phase_number
+      - procedure_site
+      - procedure_laterality
+      - procedure_type
+      - surgery
+      - margins
+      - procedure_extent
+  GCT.radiation_therapy:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_rt_start
+      - age_at_rt_end
+      - disease_phase
+      - disease_phase_number
+      - rt_site
+      - energy_type
+      - rt_dose
+      - rt_unit
+      - boost
+      - num_fraction
+  GCT.concomitant_medication:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_medication_start
+      - age_at_medication_end
+      - disease_phase
+      - disease_phase_number
+      - medication
+  GCT.stem_cell_transplant:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_sct
+      - disease_phase
+      - disease_phase_number
+      - sct_cycles
+  GCT.total_dose:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_total_dose_start
+      - age_at_total_dose_end
+      - disease_phase
+      - disease_phase_number
+      - antineoplastic_agent
+      - total_dose_administered
+      - total_dose_units
+  GCT.subject_response:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_response
+      - disease_phase
+      - disease_phase_number
+      - response_category
+      - response
+      - response_method
+      - response_system
+      - response_system_version
+  GCT.adverse_events:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_ae
+      - disease_phase
+      - disease_phase_number
+      - adverse_event
+      - ae_grade
+      - ae_attribution
+      - ae_outcome
+  GCT.secondary_malignant_neoplasm:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_smn
+      - disease_phase
+      - disease_phase_number
+      - smn_icd_o_morph
+      - smn_icd_o_top
+  GCT.growing_teratoma_syndrome:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - age_at_gts
+      - disease_phase
+      - disease_phase_number
+      - gts_treatment
+      - surgery
+  GCT.patient_reported_outcomes_metadata:
+    Tags:
+      Category: GCT
+    Props:
+      - pcdc_subject_id
+      - study_id
+      - pro_measures
+  ALL.subject_characteristics:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - honest_broker_subject_id
+      - data_contributor_id
+      - study_id
+      - age_at_enrollment
+      - treatment_arm
+      - enrolled_status
+  ALL.disease_phase_timing:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - age_at_disease_phase
+      - year_at_disease_phase
+  ALL.course_timing:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - course
+      - course_number
+      - age_at_course_start
+      - age_at_course_end
+  ALL.off_protocol_therapy_study:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_off
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - off_type
+      - reason_off
+      - another_study
+  ALL.demographics:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - sex
+      - race
+      - ethnicity
+  ALL.medical_history:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - medical_history
+  ALL.survival_characteristics:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_lkss
+      - lkss
+      - lkss_with_disease
+      - age_lost_to_follow_up
+      - cause_of_death
+      - trm_type
+      - cause_of_death_detail
+      - cause_of_death_ranking
+  ALL.disease_characteristics:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - all_type
+      - disease_site
+      - cns_disease_status
+      - bulk_med_mass
+      - prior_steroids_week
+      - prior_steroids_month
+  ALL.vitals:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_vitals
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - vitals_test
+      - vitals_result
+      - vitals_result_numeric
+      - vitals_result_unit
+  ALL.lab:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_lab
+      - lab_category
+      - lab_test
+      - lab_spec_type
+      - lab_result
+      - lab_result_numeric
+      - lab_result_unit
+      - lab_method
+      - bm_morphology
+      - traumatic_tap
+  ALL.molecular_analysis:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_molecular_analysis
+      - molecular_analysis_method
+      - molecular_analysis_sample_source
+      - karyotype_status
+      - iscn
+      - num_chromosomes
+      - molecular_abnormality
+      - chromosome
+      - gene1
+      - gene2
+      - variant_type
+      - genetic_seq
+      - aa_mutation
+      - molecular_abnormality_result
+      - dna_index_numeric
+      - translocation_status
+  ALL.radiation_therapy:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_rt_start
+      - age_at_rt_end
+      - rt_site
+  ALL.stem_cell_transplant:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_sct
+      - sct_type
+      - sct_source
+      - sct_donor_relationship
+      - hla_match
+      - number_hla
+      - number_matches
+      - sct_conditioning_type
+      - sct_tbi
+  ALL.minimal_residual_disease:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_mrd_assessment
+      - mrd_method
+      - flow_cytometry_type
+      - mrd_result
+      - mrd_result_numeric
+      - mrd_result_unit
+      - mrd_sensitivty
+      - mrd_sample_source
+  ALL.adverse_events:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_ae
+      - ae_code
+      - ae_system
+      - ae_system_version
+      - ae_grade
+      - ae_attribution
+      - avn_joint
+      - avn_joint_laterality
+      - avn_method
+      - orthopedic_procedure
+      - ae_pathogen
+      - infection_classification
+  ALL.secondary_malignant_neoplasm:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_smn
+      - smn_icd_o_morph
+      - smn_icd_o_top
+  ALL.non_protocol_therapy:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - npt_timing
+      - npt_type
+      - surgery
+  ALL.histology:
+    Tags:
+      Category: ALL
+    Props:
+      - pcdc_subject_id
+      - age_at_hist_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - hist_icd_o_morph
+  HL.subject_characteristics:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - honest_broker_subject_id
+      - data_contributor_id
+      - study_id
+      - study_phase
+      - study_type
+      - age_at_enrollment
+      - treatment_arm
+  HL.off_protocol_therapy_study:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_off
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - off_type
+      - reason_off
+      - another_study
+  HL.disease_phase_timing:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - age_at_disease_phase
+      - year_at_disease_phase
+  HL.course_timing:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - course
+      - course_number
+      - age_at_course_start
+      - age_at_course_end
+      - cycle_number
+      - age_at_cycle_start
+      - age_at_cycle_end
+  HL.demographics:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - sex
+      - race
+      - ethnicity
+  HL.family_medical_history:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - family_history
+      - relative
+      - prior_cancer
+  HL.medical_history:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - medical_history_category
+      - medical_history
+      - assisted_conception
+  HL.survival_characteristics:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_lkss
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lkss
+      - lkss_with_disease
+      - age_lost_to_follow_up
+      - cause_of_death
+      - trm_type
+      - cause_of_death_detail
+      - cause_of_death_ranking
+  HL.disease_characteristics:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - detection_method
+      - bulk_disease
+      - bulk_nodal_aggregate
+      - bulk_med_mass
+      - med_ratio
+      - fever
+      - night_sweats
+      - weight_loss
+      - nodular_splenic
+      - karnofsky
+      - lansky
+  HL.histology:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_hist_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - histology
+  HL.staging:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_staging
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - stage_system
+      - stage
+      - ann_arbor_mod_ab
+      - ann_arbor_mod_e
+      - ann_arbor_mod_s
+  HL.lesion_characteristics:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_lesion_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lesion_assessment_review
+      - lesion_detection_method
+      - lesion_classification
+      - lesion_site
+      - e_extension_site
+      - lesion_laterality
+      - lesion_bulky
+      - longest_diam_dim1
+      - diam_dim1_type
+      - longest_diam_dim2
+      - diam_dim2_type
+      - longest_diam_dim3
+      - diam_dim3_type
+      - pleural_effusion
+      - pericardial_effusion
+      - lesion_response
+      - lesion_pct_change
+  HL.biopsy_surgical_procedures:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_procedure
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - procedure_type
+      - biopsy_type
+      - procedure_site
+      - number_nodes
+      - number_nodes_numeric
+      - procedure_extent
+      - procedure_purpose
+  HL.vitals:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_vitals
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - vitals_test
+      - vitals_result
+      - vitals_result_numeric
+      - vitals_result_unit
+  HL.lab:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_lab
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lab_category
+      - lab_test
+      - lab_spec_type
+      - lab_result
+      - lab_result_numeric
+      - lab_result_unit
+      - lab_method
+      - threshold_high
+      - threshold_low
+  HL.immunohistochemistry:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_ihc
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - ihc_test
+      - ihc_spec_type
+      - ihc_result
+      - ihc_result_numeric
+      - ihc_result_unit
+  HL.imaging:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_imaging
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - imaging_method
+      - imaging_result
+      - deauville_score
+      - qpet_score
+  HL.function_test:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_function_test
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - function_category
+      - function_result_measurement
+      - function_result
+      - function_result_numeric
+      - function_result_unit
+  HL.protocol_treatment_modifications:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_mod
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - mod_type
+      - mod_rationale
+      - mod_reason
+      - toxicity_details
+      - toxicity_immune
+      - toxicity_infusion
+      - original_agent
+      - sub_agent
+  HL.total_dose:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_total_dose_start
+      - age_at_total_dose_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - cycle_number
+      - route
+      - route_detail
+      - antineoplastic_agent
+      - number_doses
+      - total_dose_administered
+      - total_dose_intended
+      - total_dose_units
+  HL.concomitant_medication:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_medication_start
+      - age_at_medication_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - medication
+      - medication_reason
+  HL.radiation_therapy:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_rt_start
+      - age_at_rt_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - rt_site
+      - rt_laterality
+      - energy_type
+      - rt_dose
+      - rt_unit
+      - boost_dose
+  HL.transfusion_medicine_procedures:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_tmp_start
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tmp_type
+      - tmp_product
+      - tmp_product_type
+      - tmp_number_units
+  HL.stem_cell_transplant:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_sct
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - sct_type
+      - sct_source
+      - sct_donor_relationship
+      - sct_cd34_coll
+      - sct_conditioning_type
+  HL.subject_response:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_response
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - response_category
+      - response_method
+      - interim_response
+      - response
+      - symptoms
+      - palpable_nodes
+      - nodular_splenic
+  HL.adverse_events:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_ae
+      - age_at_ae_resolved
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - adverse_event
+      - ae_immune
+      - ae_infusion
+      - ae_code
+      - ae_system
+      - ae_system_version
+      - ae_grade
+      - ae_reported
+      - ae_attribution
+      - ae_expected
+      - ae_tx_mod
+      - ae_hospitalization
+      - ae_medication
+      - ae_intervention
+      - ae_pathogen
+      - ae_pathogen_confirmation
+      - ae_outcome
+  HL.secondary_malignant_neoplasm:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_smn
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - smn_icd_o_morph
+      - smn_icd_o_top
+      - smn_field
+  HL.late_effects:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - age_at_le_eval
+      - le
+      - le_detail
+      - le_sub_detail
+      - le_severity_grade
+      - le_ctcae_version
+  HL.non_protocol_therapy:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - npt_timing
+      - npt_type
+      - npt_sct_type
+  HL.patient_reported_outcomes_metadata:
+    Tags:
+      Category: HL
+    Props:
+      - pcdc_subject_id
+      - study_id
+      - pro_measures
+      - pro_measurement_type
+      - raters
+      - eligible_age_lower
+      - eligible_age_upper
+      - time_point
+  OS.subject_characteristics:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - honest_broker_subject_id
+      - data_contributor_id
+      - data_source
+      - randomized_status
+      - study_id
+      - age_at_enrollment
+      - treatment_arm
+  OS.disease_phase_timing:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - disease_phase
+      - disease_phase_number
+      - age_at_disease_phase
+      - year_at_disease_phase
+  OS.course_timing:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - course
+      - course_number
+      - age_at_course_start
+      - age_at_course_end
+      - age_at_txassign
+  OS.off_protocol_therapy_study:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_off
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - off_type
+      - reason_off
+  OS.demographics:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - sex
+      - race
+      - ethnicity
+  OS.medical_history:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - medical_history
+  OS.survival_characteristics:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_lkss
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lkss
+      - cause_of_death
+      - cause_of_death_ranking
+  OS.tumor_assessment:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_tumor_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tumor_detection_method
+      - tumor_classification
+      - tumor_tissue_type
+      - tumor_site
+      - tumor_laterality
+      - site_within_bone
+      - skip_lesion
+      - skip_met_involvement
+      - longest_diam_dim1
+      - longest_diam_dim2
+      - longest_diam_dim3
+      - computed_volume
+      - cartilage_percent
+      - tumor_volume
+      - fracture_site
+      - depth
+      - joint_involvement
+      - nodal_involvement
+      - extension_site
+  OS.histology:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_hist_assessment
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - histology
+      - histology_grade
+  OS.vitals:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_vitals
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - vitals_test
+      - vitals_result
+      - vitals_result_numeric
+      - vitals_result_unit
+  OS.lab:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_lab
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - lab_test
+      - lab_spec_type
+      - lab_result
+      - lab_result_numeric
+      - lab_result_unit
+      - threshold_high
+  OS.molecular_analysis:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_molecular_analysis
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - molecular_analysis_method
+  OS.biopsy_surgical_procedures:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_procedure
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - surgery
+      - tumor_classification
+      - tumor_tissue_type
+      - procedure_site
+      - procedure_laterality
+      - procedure_type
+      - surgery_type_limb
+      - limb_salvage
+      - amputation_type
+      - resection_type
+      - reconstruction_type
+      - procedure_extent
+      - margins
+      - pelvic_involvement
+      - internal_hemi_site
+      - external_hemi_site
+      - biopsy_type
+      - met_non_lung_mgmt
+      - met_lung_mgmt
+      - intraop_adjuvant
+      - tumor_from_margin
+  OS.radiation_therapy:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_rt_start
+      - age_at_rt_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - tumor_classification
+      - tumor_tissue_type
+      - rt_site
+      - rt_laterality
+      - energy_type
+      - rt_dose
+      - rt_unit
+      - num_fraction
+      - transposition_organ
+  OS.total_dose:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_total_dose_start
+      - age_at_total_dose_end
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - antineoplastic_agent
+      - normalization_basis
+      - total_dose_administered
+      - total_dose_units
+  OS.subject_response:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_response
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - response
+      - response_system
+      - response_system_version
+      - necrosis
+      - necrosis_pct
+  OS.adverse_event:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_ae
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - ae_code
+      - ae_system
+      - ae_system_version
+      - ae_grade
+      - ae_attribution
+  OS.secondary_malignant_neoplasm:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_smn
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - smn_icd_o_morph
+      - smn_icd_o_top
+  OS.patient_reported_outcomes_metadata:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - pro_measures
+  OS.function_test:
+    Tags:
+      Category: OS
+    Props:
+      - pcdc_subject_id
+      - age_at_function_test
+      - disease_phase
+      - disease_phase_number
+      - course
+      - course_number
+      - function_category
+      - function_test
+      - function_result_measurement
+      - function_result
+      - function_result_numeric
+      - function_result_unit
+Relationships: {}

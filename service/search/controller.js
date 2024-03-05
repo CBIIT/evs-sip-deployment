@@ -491,7 +491,7 @@ export const getGraphicalCTDCDictionary = (req, res) => {
 
 export const getGraphicalPCDCDictionary = (req, res) => {
   let project = req.query.project == "" ? "AML" : req.query.project;
-  let jsonData = shared.getGraphicalPCDCDictionary(project);
+  let jsonData = shared.getNewGraphicalPCDCDictionary(project);
   res.json(jsonData);
 };
 
