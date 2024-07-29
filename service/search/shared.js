@@ -32,14 +32,14 @@ const generateHighlightInnerHits = () => {
     pre_tags: ["<b>"],
     post_tags: ["</b>"],
     fields: {
-      "enum.n.have": { number_of_fragments: 0 },
-      "enum.n": { number_of_fragments: 0 },
-      "enum.ncit.c.have": { number_of_fragments: 0 },
-      "enum.ncit.c": { number_of_fragments: 0 },
-      "enum.ncit.s.n.have": { number_of_fragments: 0 },
-      "enum.ncit.s.n": { number_of_fragments: 0 },
-      "enum.icdo.have": { number_of_fragments: 0 },
-      "enum.icdo.c": { number_of_fragments: 0 },
+      "enum.value_name.have": { number_of_fragments: 0 },
+      "enum.value_name": { number_of_fragments: 0 },
+      "enum.value_ncit.ncit_code.have": { number_of_fragments: 0 },
+      "enum.value_ncit.ncit_code": { number_of_fragments: 0 },
+      "enum.value_ncit.ncit_synonyms.name.have": { number_of_fragments: 0 },
+      "enum.value_ncit.ncit_synonyms.name": { number_of_fragments: 0 },
+      "enum.value_icdo3.icdo3_code.have": { number_of_fragments: 0 },
+      "enum.value_icdo3.icdo3_code": { number_of_fragments: 0 },
     },
   };
   return highlight;
@@ -50,13 +50,13 @@ const generateHighlightInnerHits_node = () => {
     "pre_tags": ["<b>"],
     "post_tags": ["</b>"],
     "fields": {
-      "node.n.have": {"number_of_fragments": 0},
-      "node.n": {"number_of_fragments": 0},
-      "node.d": {"number_of_fragments": 0},
-      "node.ncit.c.have": {"number_of_fragments": 0},
-      "node.ncit.c": {"number_of_fragments": 0},
-      "node.ncit.s.n.have": {"number_of_fragments": 0},
-      "node.ncit.s.n": {"number_of_fragments": 0}
+      "node.node_name.have": {"number_of_fragments": 0},
+      "node.node_name": {"number_of_fragments": 0},
+      "node.node_description": {"number_of_fragments": 0},
+      "node.node_ncit.ncit_code.have": {"number_of_fragments": 0},
+      "node.node_ncit.ncit_code": {"number_of_fragments": 0},
+      "node.node_ncit.ncit_synonyms.name.have": {"number_of_fragments": 0},
+      "node.node_ncit.ncit_synonyms.name": {"number_of_fragments": 0}
     }
   };
   return highlight;
@@ -67,14 +67,14 @@ const generateHighlightInnerHits_prop = () => {
     "pre_tags": ["<b>"],
     "post_tags": ["</b>"],
     "fields": {
-      "prop.n.have": {"number_of_fragments": 0},
-      "prop.n": {"number_of_fragments": 0},
-      "prop.d": {"number_of_fragments": 0},
-      "prop.ncit.c.have": {"number_of_fragments": 0},
-      "prop.ncit.c": {"number_of_fragments": 0},
-      "prop.ncit.s.n.have": {"number_of_fragments": 0},
-      "prop.ncit.s.n": {"number_of_fragments": 0},
-      "prop.cde.c": {"number_of_fragments": 0},
+      "property.property_name.have": {"number_of_fragments": 0},
+      "property.property_name": {"number_of_fragments": 0},
+      "property.property_description": {"number_of_fragments": 0},
+      "property.property_ncit.ncit_code.have": {"number_of_fragments": 0},
+      "property.property_ncit.ncit_code": {"number_of_fragments": 0},
+      "property.property_ncit.ncit_synonyms.name.have": {"number_of_fragments": 0},
+      "property.property_ncit.ncit_synonyms.name": {"number_of_fragments": 0},
+      // "prop.cde.c": {"number_of_fragments": 0},
     }
   };
   return highlight;
@@ -126,10 +126,10 @@ export const generateQuery = (keyword, option) => {
     m.nested.query.query_string = {};
     m.nested.query.query_string.fields = [];
     
-    m.nested.query.query_string.fields.push("node.n");
-    m.nested.query.query_string.fields.push("node.ncit.c");
+    m.nested.query.query_string.fields.push("node.node_name");
+    m.nested.query.query_string.fields.push("node.node_ncit.ncit_code");
     if (option.n_syn) {
-      m.nested.query.query_string.fields.push("node.ncit.s.n");
+      m.nested.query.query_string.fields.push("node.node_ncit.ncit_synonyms.name");
     }
     m.nested.query.query_string.query = exact_keyword;
     
@@ -142,7 +142,7 @@ export const generateQuery = (keyword, option) => {
 
     m = {};
     m.nested = {};
-    m.nested.path = "prop"
+    m.nested.path = "property"
     m.nested.query = {};
     m.nested.query.bool = {};
     m.nested.query.bool.should = [];
@@ -152,28 +152,28 @@ export const generateQuery = (keyword, option) => {
     if (option.desc) {
       n = {};
       n.match_phrase_prefix = {};
-      n.match_phrase_prefix["prop.d"] = {};
-      n.match_phrase_prefix["prop.d"].query = keyword;
-      n.match_phrase_prefix["prop.d"].analyzer = "my_whitespace";
+      n.match_phrase_prefix["property.property_description"] = {};
+      n.match_phrase_prefix["property.property_description"].query = keyword;
+      n.match_phrase_prefix["property.property_description"].analyzer = "my_whitespace";
       m.nested.query.bool.should.push(n);
     }
 
     n = {};
     n.query_string = {};
     n.query_string.fields = [];
-    n.query_string.fields.push("prop.n");
-    n.query_string.fields.push("prop.ncit.c");
+    n.query_string.fields.push("property.property_name");
+    n.query_string.fields.push("property.property_ncit.ncit_code");
     if (option.p_syn) {
-      n.query_string.fields.push("prop.ncit.s.n");
+      n.query_string.fields.push("property.property_ncit.ncit_synonyms.name");
     }
-    n.query_string.fields.push("prop.cde.c");
+    // n.query_string.fields.push("property.cde.c");
     n.query_string.query = exact_keyword;
     m.nested.query.bool.should.push(n);
 
     m.nested.inner_hits = {};
     m.nested.inner_hits.from = 0;
     m.nested.inner_hits.size = 10000;
-    m.nested.inner_hits.name = "prop";
+    m.nested.inner_hits.name = "property";
     m.nested.inner_hits.highlight = generateHighlightInnerHits_prop();
     clause.bool.should.push(m);
 
@@ -184,12 +184,12 @@ export const generateQuery = (keyword, option) => {
     m.nested.query.query_string = {};
     m.nested.query.query_string.fields = [];
     
-    m.nested.query.query_string.fields.push("enum.n");
-    m.nested.query.query_string.fields.push("enum.ncit.c");
+    m.nested.query.query_string.fields.push("enum.value_name");
+    m.nested.query.query_string.fields.push("enum.value_ncit.ncit_code");
     if (option.syn) {
-      m.nested.query.query_string.fields.push("enum.ncit.s.n");
+      m.nested.query.query_string.fields.push("enum.value_ncit.ncit_synonyms.name");
     }
-    m.nested.query.query_string.fields.push("enum.icdo.c");
+    m.nested.query.query_string.fields.push("enum.value_icdo3.icdo3_code");
     m.nested.query.query_string.query = exact_keyword;
     
     m.nested.inner_hits = {};
@@ -199,7 +199,7 @@ export const generateQuery = (keyword, option) => {
     m.nested.inner_hits.highlight = generateHighlightInnerHits();
     clause.bool.should.push(m);
   }
-  else{
+  else {
     let m = {};
     m.nested = {};
     m.nested.path = "node";
@@ -209,24 +209,24 @@ export const generateQuery = (keyword, option) => {
 
     let n = {};
     n.match_phrase_prefix = {};
-    n.match_phrase_prefix["node.n.have"] = {};
-    n.match_phrase_prefix["node.n.have"].query = keyword;
-    n.match_phrase_prefix["node.n.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["node.node_name.have"] = {};
+    n.match_phrase_prefix["node.node_name.have"].query = keyword;
+    n.match_phrase_prefix["node.node_name.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
 
     n = {};
     n.match_phrase_prefix = {};
-    n.match_phrase_prefix["node.ncit.c.have"] = {};
-    n.match_phrase_prefix["node.ncit.c.have"].query = keyword;
-    n.match_phrase_prefix["node.ncit.c.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["node.node_ncit.ncit_code.have"] = {};
+    n.match_phrase_prefix["node.node_ncit.ncit_code.have"].query = keyword;
+    n.match_phrase_prefix["node.node_ncit.ncit_code.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
 
     if (option.n_syn) {
       n = {};
       n.match_phrase_prefix = {};
-      n.match_phrase_prefix["node.ncit.s.n.have"] = {};
-      n.match_phrase_prefix["node.ncit.s.n.have"].query = keyword;
-      n.match_phrase_prefix["node.ncit.s.n.have"].analyzer = "my_whitespace";
+      n.match_phrase_prefix["node.node_ncit.ncit_synonyms.name.have"] = {};
+      n.match_phrase_prefix["node.node_ncit.ncit_synonyms.name.have"].query = keyword;
+      n.match_phrase_prefix["node.node_ncit.ncit_synonyms.name.have"].analyzer = "my_whitespace";
       m.nested.query.bool.should.push(n);
     }
 
@@ -239,7 +239,7 @@ export const generateQuery = (keyword, option) => {
 
     m = {};
     m.nested = {};
-    m.nested.path = "prop";
+    m.nested.path = "property";
     m.nested.query = {};
     m.nested.query.bool = {};
     m.nested.query.bool.should = [];
@@ -247,44 +247,44 @@ export const generateQuery = (keyword, option) => {
     if (option.desc) {
       n = {};
       n.match_phrase_prefix = {};
-      n.match_phrase_prefix["prop.d"] = {};
-      n.match_phrase_prefix["prop.d"].query = keyword;
-      n.match_phrase_prefix["prop.d"].analyzer = "my_whitespace";
+      n.match_phrase_prefix["property.property_description"] = {};
+      n.match_phrase_prefix["property.property_description"].query = keyword;
+      n.match_phrase_prefix["property.property_description"].analyzer = "my_whitespace";
       m.nested.query.bool.should.push(n);
     }
 
     n = {};
     n.match_phrase_prefix = {};
-    n.match_phrase_prefix["prop.n.have"] = {};
-    n.match_phrase_prefix["prop.n.have"].query = keyword;
-    n.match_phrase_prefix["prop.n.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["property.property_name.have"] = {};
+    n.match_phrase_prefix["property.property_name.have"].query = keyword;
+    n.match_phrase_prefix["property.property_name.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
 
     n = {};
     n.match_phrase_prefix = {};
-    n.match_phrase_prefix["prop.ncit.c.have"] = {};
-    n.match_phrase_prefix["prop.ncit.c.have"].query = keyword;
-    n.match_phrase_prefix["prop.ncit.c.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["property.property_ncit.ncit_code.have"] = {};
+    n.match_phrase_prefix["property.property_ncit.ncit_code.have"].query = keyword;
+    n.match_phrase_prefix["property.property_ncit.ncit_code.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
 
     if (option.p_syn) {
       n = {};
       n.match_phrase_prefix = {};
-      n.match_phrase_prefix["prop.ncit.s.n.have"] = {};
-      n.match_phrase_prefix["prop.ncit.s.n.have"].query = keyword;
-      n.match_phrase_prefix["prop.ncit.s.n.have"].analyzer = "my_whitespace";
+      n.match_phrase_prefix["property.property_ncit.ncit_synonyms.name.have"] = {};
+      n.match_phrase_prefix["property.property_ncit.ncit_synonyms.name.have"].query = keyword;
+      n.match_phrase_prefix["property.property_ncit.ncit_synonyms.name.have"].analyzer = "my_whitespace";
       m.nested.query.bool.should.push(n);
     }
 
-    n = {};
-    n.match_phrase_prefix = {};
-    n.match_phrase_prefix["prop.cde.c"] = keyword;
-    m.nested.query.bool.should.push(n);
+    // n = {};
+    // n.match_phrase_prefix = {};
+    // n.match_phrase_prefix["prop.cde.c"] = keyword;
+    // m.nested.query.bool.should.push(n);
 
     m.nested.inner_hits = {};
     m.nested.inner_hits.from = 0;
     m.nested.inner_hits.size = 10000;
-    m.nested.inner_hits.name = "prop";
+    m.nested.inner_hits.name = "property";
     m.nested.inner_hits.highlight = generateHighlightInnerHits_prop();
     clause.bool.should.push(m);
 
@@ -298,31 +298,31 @@ export const generateQuery = (keyword, option) => {
     if (option.syn) {
       n = {};
       n.match_phrase_prefix = {};
-      n.match_phrase_prefix["enum.ncit.s.n.have"] = {};
-      n.match_phrase_prefix["enum.ncit.s.n.have"].query = keyword;
-      n.match_phrase_prefix["enum.ncit.s.n.have"].analyzer = "my_whitespace";
+      n.match_phrase_prefix["enum.value_ncit.ncit_synonyms.name.have"] = {};
+      n.match_phrase_prefix["enum.value_ncit.ncit_synonyms.name.have"].query = keyword;
+      n.match_phrase_prefix["enum.value_ncit.ncit_synonyms.name.have"].analyzer = "my_whitespace";
       m.nested.query.bool.should.push(n);
     }
     n = {};
     n.match_phrase_prefix = {};
-    n.match_phrase_prefix["enum.ncit.c.have"] = {};
-    n.match_phrase_prefix["enum.ncit.c.have"].query = keyword;
-    n.match_phrase_prefix["enum.ncit.c.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["enum.value_ncit.ncit_code.have"] = {};
+    n.match_phrase_prefix["enum.value_ncit.ncit_code.have"].query = keyword;
+    n.match_phrase_prefix["enum.value_ncit.ncit_code.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
     
     n = {};
     n.match_phrase_prefix = {};
     
-    n.match_phrase_prefix["enum.n.have"] = {};
-    n.match_phrase_prefix["enum.n.have"].query = keyword;
-    n.match_phrase_prefix["enum.n.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["enum.value_name.have"] = {};
+    n.match_phrase_prefix["enum.value_name.have"].query = keyword;
+    n.match_phrase_prefix["enum.value_name.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
 
     n = {};
     n.match_phrase_prefix = {};
-    n.match_phrase_prefix["enum.icdo.have"] = {};
-    n.match_phrase_prefix["enum.icdo.have"].query = keyword;
-    n.match_phrase_prefix["enum.icdo.have"].analyzer = "my_whitespace";
+    n.match_phrase_prefix["enum.value_icdo3.icdo3_code.have"] = {};
+    n.match_phrase_prefix["enum.value_icdo3.icdo3_code.have"].query = keyword;
+    n.match_phrase_prefix["enum.value_icdo3.icdo3_code.have"].analyzer = "my_whitespace";
     m.nested.query.bool.should.push(n);
 
     m.nested.inner_hits = {};

@@ -1199,15 +1199,15 @@ const helper_gdc = (fileJson, syns) => {
    });
  }
  
- export const query = (index, dsl, source_excludes, highlight, next) => {
+ export const query = (index, dsl, source_excludes, next) => {
    var body = {
      size: config.search_result_limit,
      from: 0
    };
    body.query = dsl;
-   if (highlight) {
-     body.highlight = highlight;
-   }
+  //  if (highlight) {
+  //    body.highlight = highlight;
+  //  }
    /*
    body.sort = [{
      "category": "asc"

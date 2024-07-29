@@ -414,8 +414,8 @@ export const searchP = (req, res, formatFlag) => {
     }
     if (keyword && keyword.trim() !== "") {
       let query = shared.generateQuery(keyword, option);
-      let highlight = shared.generateHighlight();
-      elastic.query(config.index_p, query, "enum", highlight, (result) => {
+      // let highlight = shared.generateHighlight();
+      elastic.query(config.index_p, query, "enum", (result) => {
         if (result?.body?.hits === undefined) {
           res.json({ total: 0, returnList: [], timedOut: true });
           //return writeError.error(res, result);

@@ -39,7 +39,7 @@ const all = {
   suggestionName: "evssip-suggestion",
 
   // index name for properties
-  index_p: "evssip-p",
+  index_p: "evssip-properties",
 
   // GDC searchable nodes
   gdc_searchable_nodes: [
