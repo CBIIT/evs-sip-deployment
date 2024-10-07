@@ -118,7 +118,7 @@ export const generateQuery = (keyword, option) => {
   //adding double escaping
   if(option.match === "exact"){ // Perform exact search
     //The reserved characters in elasticsearch are: + - = && || > < ! ( ) { } [ ] ^ " ~ * ? : \ /
-    let exact_keyword = keyword.replace(/\//g, '\\/').replace(/\+/g, "\\+").replace(/-/g, "\\-").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+    let exact_keyword = keyword.replace(/\//g, '\\/').replace(/\+/g, "\\+").replace(/-/g, "\\-").replace(/\^/g, "\\^").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
     let m = {};
     m.nested = {};
     m.nested.path = "node";

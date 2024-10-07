@@ -2,6 +2,7 @@ import express from 'express';
 import * as controller from '../service/search/controller.js';
 import * as metauser from '../service/user/user.js';
 import * as metamodel from '../service/datamodel/dataModel.js';
+import * as graph from '../service/graph/graph.js';
 // import report from '../service/search/report.js';
 
 const router = express.Router();
@@ -42,6 +43,9 @@ router.post("/user/createuser", metauser.createUser);
 // neo4j datamodel
 router.get("/datamodel/search", metamodel.getSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
+
+// neo4j graphical dictionary
+router.get("/newgraph/:model", graph.getGraphicalDictionary);
 
 //get report Diff from mysql table
 //router.get('/report/reportDiff', report.getReportDiff);
