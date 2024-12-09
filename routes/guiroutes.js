@@ -45,7 +45,7 @@ router.get("/datamodel/search", metamodel.getSearch);
 router.get("/datamodel/source/:model", metamodel.getApiSource);
 
 // neo4j graphical dictionary
-router.get("/newgraph/:model", graph.getGraphicalDictionary);
+router.get("/new-graph/:model", graph.getGraphicalDictionary);
 
 //get report Diff from mysql table
 //router.get('/report/reportDiff', report.getReportDiff);

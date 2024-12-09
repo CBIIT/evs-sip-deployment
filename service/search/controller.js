@@ -490,7 +490,7 @@ export const getGraphicalCTDCDictionary = (req, res) => {
 };
 
 export const getGraphicalPCDCDictionary = (req, res) => {
-  let project = req.query.project == "" ? "AML" : req.query.project;
+  let project = (typeof req.query.project === 'undefined' || req.query.project === "") ? "AML" : req.query.project;
   let jsonData = shared.getGraphicalPCDCDictionary(project);
   res.json(jsonData);
 };
@@ -503,7 +503,7 @@ export const getValuesForGraphicalView = async function (req, res) {
     query.terms = {};
     query.terms.id = [];
     query.terms.id.push(uid);
-    elastic.query(config.index_p, query, "", null, (data) => {
+    elastic.query(config.index_p, query, "", (data) => {
       if (data?.body?.hits === undefined) {
         return handleError.error(res, data);
       }

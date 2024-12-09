@@ -952,6 +952,10 @@ export const getGraphicalGDCDictionary = async function () {
       }
     });
     result = await generateGDCData(jsonData);
+    delete result["_terms"];
+    delete result["_terms_enum"];
+    delete result["_definitions"]
+
     console.log("Cached:");
     console.log(Object.keys(result).length);
     cache.setValue("gdc_dict", result, config.item_ttl);
